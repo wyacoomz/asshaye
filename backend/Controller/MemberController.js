@@ -12,6 +12,7 @@ const Sucesserstudent = async (req, res) => {
       Teamposition,
       size,
       altText,
+      staticUrl,
     } = req.body;
 
     const parsedSize = typeof size === "string" ? JSON.parse(size) : size;
@@ -41,6 +42,7 @@ const Sucesserstudent = async (req, res) => {
       altText,
       images: uploadedImages,
       size: parsedSize,
+      staticUrl,
     });
 
     res.status(201).json(banner);
@@ -97,68 +99,6 @@ const editDisplay = async (req, res) => {
   }
 };
 
-// const editDataSave = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const formData = req.body;
-//     const files = req.files;
-
-//     // Find existing member
-//     const existingMember = await Banner.findById(id);
-//     if (!existingMember) {
-//       return res.status(404).json({ message: "Member not found." });
-//     }
-
-//     // Prepare update data
-//     const updateData = {
-//       Membername: formData.Membername || existingMember.Membername,
-//       Teamposition: formData.Teamposition || existingMember.Teamposition,
-//       phone: formData.phone || existingMember.phone,
-//       email: formData.email || existingMember.email,
-//       address: formData.address || existingMember.address,
-//       desciption: formData.desciption || existingMember.desciption,
-//       altText: formData.altText || existingMember.altText,
-//       images: existingMember.images, // Keep existing images by default
-//       size: formData.size ? JSON.parse(formData.size) : existingMember.size,
-//     };
-
-//     // Handle image upload if new images are provided
-//     if (files && files.images) {
-//       const uploadedImages = [];
-//       const imageFiles = Array.isArray(files.images)
-//         ? files.images
-//         : [files.images];
-
-//       for (let file of imageFiles) {
-//         const uploadResponse = await imagekit.upload({
-//           file: file.data,
-//           fileName: file.name,
-//         });
-//         uploadedImages.push(uploadResponse.url);
-//       }
-
-//       // Combine new images with existing ones (or replace based on your requirement)
-//       updateData.images = [...existingMember.images, ...uploadedImages];
-//     }
-
-//     const updatedRecord = await Banner.findByIdAndUpdate(id, updateData, {
-//       new: true,
-//     });
-
-//     res.status(200).json({
-//       success: true,
-//       message: "Member updated successfully.",
-//       data: updatedRecord,
-//     });
-//   } catch (error) {
-//     console.error("Error updating member:", error);
-//     res.status(500).json({
-//       success: false,
-//       message: error.message,
-//     });
-//   }
-// };
-
 const editDataSave = async (req, res) => {
   try {
     const { id } = req.params;
@@ -179,6 +119,7 @@ const editDataSave = async (req, res) => {
       address: formData.address || existingMember.address,
       desciption: formData.desciption || existingMember.desciption,
       altText: formData.altText || existingMember.altText,
+      staticUrl: formData.staticUrl || existingMember.staticUrl,
       images: existingMember.images, // default, replaced below if new images uploaded
       size: formData.size ? JSON.parse(formData.size) : existingMember.size,
     };

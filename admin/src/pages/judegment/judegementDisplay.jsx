@@ -39,6 +39,7 @@ const JudgementDisplay = () => {
     altText: "",
     images: [],
     newImages: null,
+    staticUrl: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [expandedDescriptions, setExpandedDescriptions] = useState({});
@@ -120,6 +121,7 @@ const JudgementDisplay = () => {
       category: judgement.judementCategory?._id || "",
       images: judgement.images || [],
       altText: judgement.altText || "",
+      staticUrl: judgement.staticUrl || "",
       newImages: null,
     });
     setImagePreviews([]);
@@ -142,6 +144,7 @@ const JudgementDisplay = () => {
       category: "",
       altText: "",
       images: [],
+      staticUrl: "",
       newImages: null,
     });
     setImagePreviews([]);
@@ -167,6 +170,7 @@ const JudgementDisplay = () => {
       formData.append("lastDate", editFormData.lastDate);
       formData.append("category", editFormData.category);
       formData.append("altText", editFormData.altText);
+      formData.append("staticUrl", editFormData.staticUrl);
 
       if (editFormData.newImages) {
         Array.from(editFormData.newImages).forEach((file) => {
@@ -179,7 +183,7 @@ const JudgementDisplay = () => {
         formData.append("id", editingJudgement);
         response = await axios.put(
           // `https://backend.aashayeinjudiciary.com/judement/editsave/${editingJudgement}`,
-          `http://localhost:8000/judement/editsave/${editingJudgement}`,
+          `https://backend.aashayeinjudiciary.com/judement/editsave/${editingJudgement}`,
           formData,
           {
             headers: {
@@ -659,6 +663,18 @@ const JudgementDisplay = () => {
                 />
               </div>
 
+              <div>
+                <label className='block text-sm font-medium text-gray-700 mb-1'>
+                  Static Url
+                </label>
+                <input
+                  type='text'
+                  name='staticUrl'
+                  value={editFormData.staticUrl}
+                  onChange={handleInputChange}
+                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                />
+              </div>
               <div>
                 <label className='block text-sm font-medium text-gray-700 mb-1'>
                   altText

@@ -71,7 +71,7 @@ const BlogDisplay = () => {
   }, []);
 
   // const API_BASE_URL = "https://backend.aashayeinjudiciary.com/blog";
-  const API_BASE_URL = "http://localhost:8000/blog";
+  const API_BASE_URL = "https://backend.aashayeinjudiciary.com/blog";
 
   const fetchBlogs = useCallback(async () => {
     setLoading(true);

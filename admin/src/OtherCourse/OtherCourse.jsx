@@ -21,6 +21,7 @@ const CreateCourse = () => {
     altText: "",
     InstructorCourse: "Published",
     URL: "",
+    staticUrl: "",
   });
 
   const [imageFiles, setImageFiles] = useState([]);
@@ -59,33 +60,6 @@ const CreateCourse = () => {
     setErrors((prev) => ({ ...prev, images: "" }));
   };
 
-  // const handleImageChange = (e) => {
-  //   const files = Array.from(e.target.files);
-  //   if (files.length + imageFiles.length > 5) {
-  //     setErrors((prev) => ({
-  //       ...prev,
-  //       images: "You can upload a maximum of 5 images",
-  //     }));
-  //     return;
-  //   }
-
-  //   const newPreviews = [];
-  //   const validFiles = files.slice(0, 5 - imageFiles.length);
-  //   validFiles.forEach((file) => {
-  //     const reader = new FileReader();
-  //     reader.onload = (event) => {
-  //       newPreviews.push(event.target.result);
-  //       if (newPreviews.length === validFiles.length) {
-  //         setImagePreviews((prev) => [...prev, ...newPreviews]);
-  //       }
-  //     };
-  //     reader.readAsDataURL(file);
-  //   });
-
-  //   setImageFiles((prev) => [...prev, ...validFiles]);
-  //   setErrors((prev) => ({ ...prev, images: "" }));
-  // };
-
   const removeImage = (index) => {
     setImageFiles((prev) => prev.filter((_, i) => i !== index));
     setImagePreviews((prev) => prev.filter((_, i) => i !== index));
@@ -110,7 +84,7 @@ const CreateCourse = () => {
       });
 
       await axios.post(
-        "https://backend.aashayeinjudiciary.com/othercourse",
+        "http://backend.aashayeinjudiciary.com/othercourse",
         formData,
         {
           headers: {
@@ -131,6 +105,7 @@ const CreateCourse = () => {
         Coursename: "",
         InstructorCourse: "Published",
         URL: "",
+        staticUrl: "",
       });
       setImageFiles([]);
       setImagePreviews([]);
@@ -259,6 +234,19 @@ const CreateCourse = () => {
               onChange={handleChange}
               className='w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500'
               placeholder='https://example.com'
+            />
+          </div>
+          <div className='space-y-1'>
+            <label className='block text-sm font-medium text-gray-700 flex items-center'>
+              <FiLink className='mr-2' /> Static URL
+            </label>
+            <input
+              type='text'
+              name='staticUrl'
+              value={courseData.staticUrl}
+              onChange={handleChange}
+              className='w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500'
+              placeholder='Static_Url'
             />
           </div>
 

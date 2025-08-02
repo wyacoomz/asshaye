@@ -6,10 +6,12 @@
   cursor: pointer;
 }
 
-.td_footer_col li{
+.td_footer_col li {
   list-style: none;
 
 }
+
+
 
 .td_card.td_style_5 .td_card_thumb {
   border-radius: 10px;

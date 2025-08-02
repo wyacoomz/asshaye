@@ -546,6 +546,14 @@ const OtherCourseManager = () => {
                         {viewingCourse.InstructorCourse || "N/A"}
                       </p>
                     </div>
+                    <div>
+                      <h3 className='flex items-center text-lg font-semibold text-gray-700 mb-2'>
+                        Static Url
+                      </h3>
+                      <p className='text-gray-600'>
+                        {viewingCourse?.staticUrl || "N/A"}
+                      </p>
+                    </div>
                   </div>
 
                   <div className='md:col-span-2'>
@@ -700,6 +708,19 @@ const OtherCourseManager = () => {
                         placeholder='https://example.com (optional)'
                       />
                     </div>
+                    <div>
+                      <label className='block text-sm font-medium text-gray-700 mb-2'>
+                        Static URL
+                      </label>
+                      <input
+                        type='text'
+                        name='staticUrl'
+                        value={editingCourse.staticUrl || ""}
+                        onChange={handleInputChange}
+                        className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500'
+                        placeholder='Static_Url'
+                      />
+                    </div>
 
                     <div>
                       <label className='block text-sm font-medium text-gray-700 mb-2'>
@@ -776,19 +797,19 @@ const OtherCourseManager = () => {
                           onChange={handleEditorChange}
                           config={{
                             toolbar: [
-                                "heading",
-          "|",
-          "bold",
-          "italic",
-          "link",
-          "bulletedList",
-          "numberedList",
-          "|",
-    
-          "blockQuote",
-          "insertTable",
-          "undo",
-          "redo",
+                              "heading",
+                              "|",
+                              "bold",
+                              "italic",
+                              "link",
+                              "bulletedList",
+                              "numberedList",
+                              "|",
+
+                              "blockQuote",
+                              "insertTable",
+                              "undo",
+                              "redo",
                             ],
                           }}
                         />

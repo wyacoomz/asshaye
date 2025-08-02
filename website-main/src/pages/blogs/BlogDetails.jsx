@@ -26,7 +26,7 @@ export const BlogDetails = ({ courseId }) => {
 
   const blogRoute = routesData.find((route) => route.element === "BlogDetails");
 
-  console.log(blogRoute?.path, "adsasjdahdjkahdkashdkjashjLOG");
+  // console.log(blogRoute?.path, "adsasjdahdjkahdkashdkjashjLOG");
 
   useEffect(() => {
     if (courseId) {

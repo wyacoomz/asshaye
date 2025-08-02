@@ -11,6 +11,7 @@ const judegemntcreate = async (req, res) => {
       publicerName,
       category,
       altText,
+      staticUrl,
       size, // assuming you want to handle size as in your original code, though your schema doesn't have it
     } = req.body;
 
@@ -55,6 +56,7 @@ const judegemntcreate = async (req, res) => {
       judementCategory: category,
       publicerName,
       images: uploadedImages,
+      staticUrl,
       // add size if you want to save it and schema supports it
     });
 
@@ -155,6 +157,7 @@ const editDataSave = async (req, res) => {
       publicerName,
       category,
       altText,
+      staticUrl,
     } = req.body;
 
     console.log(req.body);
@@ -184,6 +187,7 @@ const editDataSave = async (req, res) => {
       description,
       publicerName,
       altText,
+      staticUrl,
       judementCategory: category,
       ...(lastDate && { lastDate: new Date(lastDate) }),
       ...(images.length > 0 && { images }),

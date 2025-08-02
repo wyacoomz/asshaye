@@ -50,7 +50,7 @@ const CourseDisplay = () => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
-  const api = "http://localhost:8000/api/alldisplay";
+  const api = "https://backend.aashayeinjudiciary.com/api/alldisplay";
 
   const fetchCourses = async () => {
     try {
@@ -131,7 +131,9 @@ const CourseDisplay = () => {
     if (!window.confirm("Are you sure you want to delete this course?")) return;
 
     try {
-      await axios.delete(`http://localhost:8000/api/coursedelte/${id}`);
+      await axios.delete(
+        `https://backend.aashayeinjudiciary.com/api/coursedelte/${id}`
+      );
       toast.success("Course deleted successfully");
       setCourses((prev) => prev.filter((course) => course._id !== id));
     } catch (error) {
@@ -149,7 +151,9 @@ const CourseDisplay = () => {
 
   const startEdit = async (id) => {
     try {
-      const res = await axios.get(`http://localhost:8000/api/courses/${id}`);
+      const res = await axios.get(
+        `https://backend.aashayeinjudiciary.com/api/courses/${id}`
+      );
       const course = res.data;
 
       setEditId(id);
@@ -195,9 +199,12 @@ const CourseDisplay = () => {
   const handleToggle = async (id, checked) => {
     const newStatus = !checked;
     try {
-      await axios.put(`http://localhost:8000/api/${id}/home-visibility`, {
-        homeVisibility: newStatus,
-      });
+      await axios.put(
+        `https://backend.aashayeinjudiciary.com/api/${id}/home-visibility`,
+        {
+          homeVisibility: newStatus,
+        }
+      );
       fetchCourses();
       toast.success("Visibility updated successfully");
     } catch (error) {
@@ -243,7 +250,7 @@ const CourseDisplay = () => {
       });
 
       const response = await axios.put(
-        `http://localhost:8000/api/editsave/${editId}`,
+        `https://backend.aashayeinjudiciary.com/api/editsave/${editId}`,
         formData,
         {
           headers: {

@@ -1,14 +1,3 @@
-// const mongoose= require("mongoose");
-// const DynamicSchema = new mongoose.Schema({
-
-//       DynamicName : {
-//             type: String
-//         },
-
-// })
-
-// module.exports = mongoose.model("Dynamic", DynamicSchema);
-
 const mongoose = require("mongoose");
 
 const dynamicRouteSchema = new mongoose.Schema(

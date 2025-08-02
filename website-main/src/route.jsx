@@ -75,7 +75,7 @@ function App() {
         <Route path='/courses-list-view' element={<CoursesListView />} />
         <Route path='/judgements' element={<Judgement />} />
         <Route path='/judgements/:id' element={<Judgement />} />
-        <Route path='/judgements/:id' element={<Judgement />} />
+        {/* <Route path='/judgements/:id' element={<Judgement />} /> */}
 
         <Route path='/otherCourse' element={<OtherCoursePage />} />
 

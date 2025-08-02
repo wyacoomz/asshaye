@@ -28,7 +28,9 @@ const SyllabusDisplay = () => {
 
   const fetchSyllabus = async () => {
     try {
-      const response = await fetch("https://backend.aashayeinjudiciary.com/syllabus/alldisplay");
+      const response = await fetch(
+        "https://backend.aashayeinjudiciary.com/syllabus/alldisplay"
+      );
       if (!response.ok) throw new Error("Failed to fetch syllabus data");
       const data = await response.json();
       setSyllabusData(Array.isArray(data.data) ? data.data : []);
@@ -39,16 +41,6 @@ const SyllabusDisplay = () => {
       setLoading(false);
     }
   };
-
-  // const fetchCategories = async () => {
-  //   try {
-  //     const response = await fetch('https://backend.aashayeinjudiciary.com/syllabuscategory');
-  //     const data = await response.json();
-  //     setCategories(data.data || []);
-  //   } catch (err) {
-  //     toast.error('Error fetching categories: ' + err.message);
-  //   }
-  // };
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -228,9 +220,9 @@ const SyllabusDisplay = () => {
         row.PDFbrochure ? (
           <a
             href={row.PDFbrochure}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-500 hover:underline"
+            target='_blank'
+            rel='noopener noreferrer'
+            className='text-blue-500 hover:underline'
           >
             View PDF
           </a>
@@ -253,18 +245,18 @@ const SyllabusDisplay = () => {
     {
       name: "Actions",
       cell: (row) => (
-        <div className="flex space-x-2">
+        <div className='flex space-x-2'>
           <button
             onClick={() => handleEdit(row._id)}
-            className="text-blue-500 hover:text-blue-700"
-            title="Edit"
+            className='text-blue-500 hover:text-blue-700'
+            title='Edit'
           >
             <FaEdit />
           </button>
           <button
             onClick={() => handleDelete(row._id)}
-            className="text-red-500 hover:text-red-700"
-            title="Delete"
+            className='text-red-500 hover:text-red-700'
+            title='Delete'
           >
             <FaTrash />
           </button>
@@ -285,31 +277,31 @@ const SyllabusDisplay = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex justify-center items-center bg-gray-50">
-        <p className="text-gray-700">Loading syllabus data...</p>
+      <div className='min-h-screen flex justify-center items-center bg-gray-50'>
+        <p className='text-gray-700'>Loading syllabus data...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="min-h-screen flex justify-center items-center bg-gray-50">
-        <p className="text-red-500">Error: {error}</p>
+      <div className='min-h-screen flex justify-center items-center bg-gray-50'>
+        <p className='text-red-500'>Error: {error}</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <ToastContainer position="top-right" autoClose={3000} />
-      <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-6">Syllabus Data</h1>
+    <div className='min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8'>
+      <ToastContainer position='top-right' autoClose={3000} />
+      <div className='max-w-7xl mx-auto'>
+        <h1 className='text-3xl font-bold text-gray-900 mb-6'>Syllabus Data</h1>
 
-        <div className="mb-4">
+        <div className='mb-4'>
           <input
-            type="text"
-            placeholder="Search by Course Name or Category..."
-            className="w-full p-2 border rounded-md shadow-sm focus:ring focus:ring-indigo-200"
+            type='text'
+            placeholder='Search by Course Name or Category...'
+            className='w-full p-2 border rounded-md shadow-sm focus:ring focus:ring-indigo-200'
             value={filterText}
             onChange={(e) => setFilterText(e.target.value)}
           />
@@ -322,51 +314,51 @@ const SyllabusDisplay = () => {
           highlightOnHover
           striped
           responsive
-          noDataComponent="No syllabus entries found."
-          className="mb-8"
+          noDataComponent='No syllabus entries found.'
+          className='mb-8'
         />
 
         {editingId && (
-          <div className="bg-white p-6 rounded-lg shadow-md mb-8">
-            <h2 className="text-xl font-semibold mb-4">Edit Syllabus Entry</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className='bg-white p-6 rounded-lg shadow-md mb-8'>
+            <h2 className='text-xl font-semibold mb-4'>Edit Syllabus Entry</h2>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className='block text-sm font-medium text-gray-700 mb-1'>
                   Course Name
                 </label>
                 <input
-                  type="text"
-                  name="Coursename"
+                  type='text'
+                  name='Coursename'
                   value={editFormData.Coursename}
                   onChange={handleEditChange}
-                  className="w-full p-2 border rounded-md"
+                  className='w-full p-2 border rounded-md'
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className='block text-sm font-medium text-gray-700 mb-1'>
                   altText
                 </label>
                 <input
-                  type="text"
-                  name="altText"
+                  type='text'
+                  name='altText'
                   value={editFormData.altText}
                   onChange={handleEditChange}
-                  className="w-full p-2 border rounded-md"
+                  className='w-full p-2 border rounded-md'
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className='block text-sm font-medium text-gray-700 mb-1'>
                   Category
                 </label>
                 <select
-                  name="category"
+                  name='category'
                   value={editFormData.category}
                   onChange={handleEditChange}
-                  className="w-full p-2 border rounded-md"
+                  className='w-full p-2 border rounded-md'
                 >
-                  <option value="">Select Category</option>
+                  <option value=''>Select Category</option>
                   {categories.map((cat) => (
                     <option key={cat._id} value={cat._id}>
                       {cat.name}
@@ -374,44 +366,44 @@ const SyllabusDisplay = () => {
                   ))}
                 </select>
               </div>
-              <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+              <div className='md:col-span-2'>
+                <label className='block text-sm font-medium text-gray-700 mb-1'>
                   PDF Brochure
                 </label>
                 {editFormData.PDFbrochure && !newPdfFile && (
-                  <div className="mb-2">
-                    <span className="text-sm">Current: </span>
+                  <div className='mb-2'>
+                    <span className='text-sm'>Current: </span>
                     <a
                       href={editFormData.PDFbrochure}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-500 hover:underline text-sm"
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='text-blue-500 hover:underline text-sm'
                     >
                       View PDF
                     </a>
                   </div>
                 )}
                 <input
-                  type="file"
-                  accept="application/pdf"
+                  type='file'
+                  accept='application/pdf'
                   onChange={handleFileChange}
-                  className="text-sm"
+                  className='text-sm'
                 />
                 {newPdfFile && (
-                  <span className="text-sm ml-2">{newPdfFile.name}</span>
+                  <span className='text-sm ml-2'>{newPdfFile.name}</span>
                 )}
               </div>
             </div>
-            <div className="flex justify-end space-x-4 mt-6">
+            <div className='flex justify-end space-x-4 mt-6'>
               <button
                 onClick={handleCancelEdit}
-                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
+                className='px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400'
               >
                 Cancel
               </button>
               <button
                 onClick={handleSaveEdit}
-                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                className='px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600'
               >
                 Save Changes
               </button>

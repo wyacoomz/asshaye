@@ -1,50 +1,53 @@
 const mongoose = require("mongoose");
 
-const MainSchema = new mongoose.Schema({
+const MainSchema = new mongoose.Schema(
+  {
+    images: [
+      {
+        type: String,
+      },
+    ],
 
-   images: [
-        {
-            type: String
-        }
-      
-    ], 
-
-    altText:{
-      type:String
+    altText: {
+      type: String,
     },
- 
 
-  Price: {
-    type: Number,
-  },
-  testmodule: {
-    type: String,
-  },
-  Durations: {
-    type: String,
-  },
- 
-   category: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Category"
-  },
-     subCategory: {
+    Price: {
+      type: Number,
+    },
+    testmodule: {
+      type: String,
+    },
+    Durations: {
+      type: String,
+    },
+
+    category: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Subcategory"
+      ref: "Category",
     },
-  
-       subsubCategory: {
+    subCategory: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Subsubcategory"
+      ref: "Subcategory",
     },
 
-  CourseDescription: {
-    type: String,
-  },
+    subsubCategory: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Subsubcategory",
+    },
 
-  LastDate: { // Changed to Date if it's a date field
-    type: Date,
+    CourseDescription: {
+      type: String,
+    },
+
+    LastDate: {
+      // Changed to Date if it's a date field
+      type: Date,
+    },
   },
-});
+  {
+    timestamps: true,
+  }
+);
 
 module.exports = mongoose.model("coursemaintest", MainSchema);

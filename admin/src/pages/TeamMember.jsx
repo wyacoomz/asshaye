@@ -19,6 +19,7 @@ const TeamMember = () => {
     address: "",
     desciption: "",
     altText: "",
+    staticUrl: "",
   });
 
   const [imageFiles, setImageFiles] = useState([]);
@@ -37,6 +38,7 @@ const TeamMember = () => {
         address: "",
         desciption: "",
         altText: "",
+        staticUrl: "",
       });
       setImageFiles([]);
       setImagePreviews([]);
@@ -103,6 +105,7 @@ const TeamMember = () => {
     formData.append("address", input.address);
     formData.append("desciption", input.desciption);
     formData.append("altText", input.altText);
+    formData.append("staticUrl", input.staticUrl);
 
     imageFiles.forEach((file) => formData.append("images", file));
 

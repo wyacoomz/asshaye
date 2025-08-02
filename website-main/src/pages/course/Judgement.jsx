@@ -1,6 +1,3 @@
-
-
-
 import React, { useState } from "react";
 import { Layout } from "../../layouts/Layout";
 import { CoursesAllContainerSidebar } from "../../components/courses/CoursesAllContainerSidebar";
@@ -11,7 +8,7 @@ export const Judgement = () => {
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
 
   const handleCategorySelect = (category) => {
-    console.log("Selected category ID:", category.id); // Debug log
+    // console.log("Selected category ID:", category.id); // Debug log
     setSelectedCategoryId(category.id);
   };
 
@@ -22,9 +19,8 @@ export const Judgement = () => {
         onCategorySelect={handleCategorySelect}
       >
         <CoursesAllList selectedCategoryId={selectedCategoryId} />
-
       </CoursesAllContainerSidebar>
-       <OtherCoursesSlider />
+      <OtherCoursesSlider />
     </Layout>
   );
 };

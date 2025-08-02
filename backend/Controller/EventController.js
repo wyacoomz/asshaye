@@ -11,9 +11,9 @@ const ContactSave = async (req, res) => {
       Location,
       Cost,
       altText,
-
+      staticUrl,
       Slot,
-      subTitle
+      subTitle,
     } = req.body;
 
     // Handle image uploads
@@ -36,7 +36,7 @@ const ContactSave = async (req, res) => {
     // Parse and validate StartDate
     const parsedStartDate = new Date(StartDate);
     if (isNaN(parsedStartDate)) {
-      return res.status(400).json({ error: 'Invalid StartDate format' });
+      return res.status(400).json({ error: "Invalid StartDate format" });
     }
 
     // Create Contact
@@ -48,15 +48,16 @@ const ContactSave = async (req, res) => {
       StartDate: parsedStartDate,
       Description,
       Location,
+      staticUrl,
       Cost: Number(Cost),
       Slot: Number(Slot),
-      subTitle
+      subTitle,
     });
 
     res.status(201).json(contact);
   } catch (error) {
-    console.error('ContactSave error:', error);
-    res.status(500).json({ error: error.message || 'Internal Server Error' });
+    console.error("ContactSave error:", error);
+    res.status(500).json({ error: error.message || "Internal Server Error" });
   }
 };
 
@@ -75,7 +76,7 @@ const getContactById = async (req, res) => {
   try {
     const contact = await Contact.findById(req.params.id);
     if (!contact) {
-      return res.status(404).json({ message: 'Contact not found' });
+      return res.status(404).json({ message: "Contact not found" });
     }
     res.status(200).json(contact);
   } catch (error) {
@@ -92,13 +93,15 @@ const updateContact = async (req, res) => {
     if (updatedData.StartDate) {
       updatedData.StartDate = new Date(updatedData.StartDate);
       if (isNaN(updatedData.StartDate)) {
-        return res.status(400).json({ error: 'Invalid StartDate format' });
+        return res.status(400).json({ error: "Invalid StartDate format" });
       }
     }
 
-    const updatedContact = await Contact.findByIdAndUpdate(id, updatedData, { new: true });
+    const updatedContact = await Contact.findByIdAndUpdate(id, updatedData, {
+      new: true,
+    });
     if (!updatedContact) {
-      return res.status(404).json({ message: 'Contact not found' });
+      return res.status(404).json({ message: "Contact not found" });
     }
     res.status(200).json(updatedContact);
   } catch (error) {
@@ -112,28 +115,25 @@ const deleteContact = async (req, res) => {
     const { id } = req.params;
     const deletedContact = await Contact.findByIdAndDelete(id);
     if (!deletedContact) {
-      return res.status(404).json({ message: 'Contact not found' });
+      return res.status(404).json({ message: "Contact not found" });
     }
-    res.status(200).json({ message: 'Contact deleted successfully' });
+    res.status(200).json({ message: "Contact deleted successfully" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-
 const getProductById = async (req, res) => {
   try {
     const product = await Course.findById(req.params.id);
     if (!product) {
-      return res.status(404).json({ message: 'Product not found' });
+      return res.status(404).json({ message: "Product not found" });
     }
     res.status(200).json(product);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
-
-
 
 // Get course by ID
 const getCourseById = async (req, res) => {
@@ -179,10 +179,10 @@ const editDataSave = async (req, res) => {
       Description,
       Location,
       altText,
-
+      staticUrl,
       Cost,
       Slot,
-      subTitle
+      subTitle,
     } = req.body;
 
     // Handle image uploads if any
@@ -208,16 +208,16 @@ const editDataSave = async (req, res) => {
       Description,
       Location,
       altText,
-
+      staticUrl,
       Cost: Number(Cost),
       Slot: Number(Slot),
-      subTitle
+      subTitle,
     };
 
     if (StartDate) {
       const parsedStartDate = new Date(StartDate);
       if (isNaN(parsedStartDate)) {
-        return res.status(400).json({ error: 'Invalid StartDate format' });
+        return res.status(400).json({ error: "Invalid StartDate format" });
       }
       updateData.StartDate = parsedStartDate;
     }
@@ -226,26 +226,23 @@ const editDataSave = async (req, res) => {
       updateData.images = uploadedImages;
     }
 
-    const updatedContact = await Contact.findByIdAndUpdate(
-      id,
-      updateData,
-      { new: true }
-    );
+    const updatedContact = await Contact.findByIdAndUpdate(id, updateData, {
+      new: true,
+    });
 
     if (!updatedContact) {
       return res.status(404).json({ message: "Contact not found." });
     }
 
-    res.status(200).json({ 
-      message: "Contact updated successfully", 
-      data: updatedContact 
+    res.status(200).json({
+      message: "Contact updated successfully",
+      data: updatedContact,
     });
   } catch (error) {
     console.error("Error updating contact:", error);
     res.status(500).json({ message: error.message });
   }
 };
-
 
 module.exports = {
   ContactSave,
@@ -255,5 +252,5 @@ module.exports = {
   deleteContact,
   getCourseById,
   editDataSave,
-  editDisplay
+  editDisplay,
 };

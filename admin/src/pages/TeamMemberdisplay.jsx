@@ -31,6 +31,7 @@ const TeamMemberDisplay = () => {
     email: "",
     address: "",
     altText: "",
+    staticUrl: "",
     images: [],
   });
 
@@ -76,6 +77,7 @@ const TeamMemberDisplay = () => {
         email: currentMember.email || "",
         address: currentMember.address || "",
         altText: currentMember.altText || "",
+        staticUrl: currentMember.staticUrl || "",
         images: currentMember.images || [],
       });
       setImagePreviews(currentMember.images || []);
@@ -113,7 +115,7 @@ const TeamMemberDisplay = () => {
       setLoading(true);
       // Fetch the specific member data using the getMemberById endpoint
       const response = await axios.get(
-        `http://localhost:8000/member/${member._id}`
+        `https://backend.aashayeinjudiciary.com/member/${member._id}`
       );
       setCurrentMember(response.data);
       setIsEditing(true);
@@ -203,6 +205,7 @@ const TeamMemberDisplay = () => {
     formData.append("email", editFormData.email || "");
     formData.append("address", editFormData.address || "");
     formData.append("altText", editFormData.altText || "");
+    formData.append("staticUrl", editFormData.staticUrl || "");
     formData.append(
       "desciption",
       DOMPurify.sanitize(editFormData.desciption || "")
@@ -215,7 +218,7 @@ const TeamMemberDisplay = () => {
     try {
       setLoading(true);
       const response = await axios.put(
-        `http://localhost:8000/member/editsave/${currentMember._id}`,
+        `https://backend.aashayeinjudiciary.com/member/editsave/${currentMember._id}`,
         formData,
         {
           headers: {
@@ -524,6 +527,19 @@ const TeamMemberDisplay = () => {
                   type='text'
                   name='altText'
                   value={editFormData.altText}
+                  onChange={handleEditChange}
+                  className='w-full p-2 border border-gray-300 rounded'
+                  required
+                />
+              </div>
+              <div>
+                <label className='block text-sm font-medium text-gray-700 mb-1'>
+                  Static Url
+                </label>
+                <input
+                  type='text'
+                  name='staticUrl'
+                  value={editFormData.staticUrl}
                   onChange={handleEditChange}
                   className='w-full p-2 border border-gray-300 rounded'
                   required
