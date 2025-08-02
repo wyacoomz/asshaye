@@ -8,8 +8,7 @@ export const EventDetails = () => {
    console.log("dfghjfdsdfghjhgfdsdfghjk")
   return (
     <Layout
-      breadcrumbTitle={"Event Details"}
-      breadcrumbSubtitle={"Event Details"}
+    
     >
       <EventDetailsContent conatctId={id}  />
     </Layout>

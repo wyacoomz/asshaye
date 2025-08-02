@@ -1,56 +1,57 @@
+
 // import React, { useState, useEffect } from "react";
-// import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
+// import axios from "axios";
+// import "bootstrap/dist/css/bootstrap.min.css";
 
 // export const CallbackPopup = () => {
 //   const [isOpen, setIsOpen] = useState(false);
 //   const [name, setName] = useState("");
 //   const [phone, setPhone] = useState("");
+//   const [isSubmitting, setIsSubmitting] = useState(false);
 
-//   // Show popup after 10 seconds when page loads or refreshes
+//   // Show popup after 10 seconds
 //   useEffect(() => {
 //     const timer = setTimeout(() => {
 //       setIsOpen(true);
-//     }, 10000); // 10 seconds delay
-
-//     return () => clearTimeout(timer); // Cleanup timeout
+//     }, 10000);
+//     return () => clearTimeout(timer);
 //   }, []);
 
-//   // Close popup function
 //   const closePopup = () => {
 //     setIsOpen(false);
 //   };
 
-//   // Handle form submission
-//   // const submitCallback = () => {
-//   //   const api = "https://backend.aashayeinjudiciary.com/Callback/add"
-//   //     axios.post(api)
-//   //   if (!name || !phone) {
-//   //     alert("Please fill out both fields.");
-//   //     return;
-//   //   }
-//   //   alert("Thank you! We will call you soon.");
-//   //   closePopup();
-//   // };
+//   const submitCallback = () => {
+//     if (!name || !phone) {
+//       alert("Please fill out both fields.");
+//       return;
+//     }
 
-// const submitCallback = () => {
-//   if (!name || !phone) {
-//     alert("Please fill out both fields.");
-//     return;
-//   }
+//     // Phone validation: 10 digit number
+//     if (!/^\d{10}$/.test(phone)) {
+//       alert("Please enter a valid 10-digit phone number.");
+//       return;
+//     }
 
-//   const api = "https://backend.aashayeinjudiciary.com/Callback/add";
-//   const data = { name, phone };
+//     setIsSubmitting(true);
 
-//   axios.post(api, data)
-//     .then(() => {
-//       alert("Thank you! We will call you soon.");
-//       closePopup();
-//     })
-//     .catch((error) => {
-//       console.error("Error submitting callback:", error);
-//       alert("There was an error. Please try again later.");
-//     });
-// };
+//     const api = "https://backend.aashayeinjudiciary.com/Callback/add";
+//     const data = { name, phone };
+
+//     axios
+//       .post(api, data)
+//       .then(() => {
+//         alert("Thank you! We will call you soon.");
+//         closePopup();
+//       })
+//       .catch((error) => {
+//         console.error("Error submitting callback:", error);
+//         alert("There was an error. Please try again later.");
+//       })
+//       .finally(() => {
+//         setIsSubmitting(false);
+//       });
+//   };
 
 //   return (
 //     <>
@@ -59,22 +60,22 @@
 //           className="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex justify-content-center align-items-center"
 //           style={{ zIndex: 1050 }}
 //         >
-//           <div id="callback"
-//             className="bg-light p-4 rounded shadow-lg  text-center position-relative"
-
+//           <div
+//             id="callback"
+//             className="bg-light p-4 rounded shadow-lg text-center position-relative"
 //           >
-//             {/* Close button */}
 //             <button
 //               onClick={closePopup}
 //               className="btn-close position-absolute top-0 end-0 m-2"
 //             ></button>
 
-//             <h4 className="fw-bold mb-3 text-primary">📞 REQUEST A CALL BACK</h4>
+//             <h4 className="fw-bold mb-3 text-primary">
+//               📞 REQUEST A CALL BACK
+//             </h4>
 //             <p className="text-muted mb-3">
 //               We will give you a call between <b>10:00 AM to 6:00 PM</b>
 //             </p>
 
-//             {/* Input Fields */}
 //             <div className="mb-4 text-start">
 //               <label className="form-label fw-semibold">Full Name</label>
 //               <input
@@ -97,13 +98,13 @@
 //               />
 //             </div>
 
-//             {/* Submit Button */}
 //             <button
 //               onClick={submitCallback}
 //               className="td_btn_in td_white_color td_accent_bg w-100 border-0 mt-4 py-2 fw-semibold"
 //               style={{ borderRadius: "8px" }}
+//               disabled={isSubmitting}
 //             >
-//               Request Call
+//               {isSubmitting ? "Submitting..." : "Request Call"}
 //             </button>
 //           </div>
 //         </div>
@@ -111,7 +112,6 @@
 //     </>
 //   );
 // };
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -122,11 +122,11 @@ export const CallbackPopup = () => {
   const [phone, setPhone] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Show popup after 10 seconds
+  // Auto-open popup after 10 seconds
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsOpen(true);
-    }, 10000);
+    }, 10000); // 10 seconds
     return () => clearTimeout(timer);
   }, []);
 
@@ -135,12 +135,12 @@ export const CallbackPopup = () => {
   };
 
   const submitCallback = () => {
+    // Validate name and phone
     if (!name || !phone) {
       alert("Please fill out both fields.");
       return;
     }
 
-    // Phone validation: 10 digit number
     if (!/^\d{10}$/.test(phone)) {
       alert("Please enter a valid 10-digit phone number.");
       return;
@@ -156,6 +156,8 @@ export const CallbackPopup = () => {
       .then(() => {
         alert("Thank you! We will call you soon.");
         closePopup();
+        setName("");
+        setPhone("");
       })
       .catch((error) => {
         console.error("Error submitting callback:", error);
@@ -177,18 +179,20 @@ export const CallbackPopup = () => {
             id="callback"
             className="bg-light p-4 rounded shadow-lg text-center position-relative"
           >
+            {/* Close Button */}
             <button
               onClick={closePopup}
               className="btn-close position-absolute top-0 end-0 m-2"
+              aria-label="Close"
             ></button>
 
-            <h4 className="fw-bold mb-3 text-primary">
-              📞 REQUEST A CALL BACK
-            </h4>
+            {/* Title & Subtext */}
+            <h4 className="fw-bold mb-3 text-primary">📞 REQUEST A CALL BACK</h4>
             <p className="text-muted mb-3">
               We will give you a call between <b>10:00 AM to 6:00 PM</b>
             </p>
 
+            {/* Name Input */}
             <div className="mb-4 text-start">
               <label className="form-label fw-semibold">Full Name</label>
               <input
@@ -200,6 +204,7 @@ export const CallbackPopup = () => {
               />
             </div>
 
+            {/* Phone Input */}
             <div className="mb-3 text-start">
               <label className="form-label fw-semibold">Phone Number</label>
               <input
@@ -211,6 +216,7 @@ export const CallbackPopup = () => {
               />
             </div>
 
+            {/* Submit Button */}
             <button
               onClick={submitCallback}
               className="td_btn_in td_white_color td_accent_bg w-100 border-0 mt-4 py-2 fw-semibold"
