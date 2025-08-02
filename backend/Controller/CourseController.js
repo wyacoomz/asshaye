@@ -148,6 +148,7 @@ const CourseSave = async (req, res) => {
       size,
       category,
       payNow,
+      staticUrl,
     } = req.body;
 
     // if (!subCategory || !category) {
@@ -208,6 +209,7 @@ const CourseSave = async (req, res) => {
       subsubCategory,
       images: uploadedImages,
       payNow,
+      staticUrl,
     });
 
     res.status(201).json(course);
@@ -306,7 +308,7 @@ const getrecorededcourse = async (req, res) => {
     //   return res.status(400).json({ message: "Invalid ID format" });
     // }
 
-    console.log("Fetching courses for subsubCategory ID:", id);
+    // console.log("Fetching courses for subsubCategory ID:", id);
 
     const courses = await Course.find({ subsubCategory: id })
       .populate("category")
@@ -332,7 +334,7 @@ const getproducthome = async (req, res) => {
   const newHomeVisibility = homeVisibility;
 
   try {
-    console.log(homeVisibility, "sdafsa");
+    // console.log(homeVisibility, "sdafsa");
     const updatedProduct = await Course.findByIdAndUpdate(
       req.params.id,
       { homeVisibility: homeVisibility },

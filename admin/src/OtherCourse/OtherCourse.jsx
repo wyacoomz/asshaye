@@ -292,18 +292,18 @@ const CreateCourse = () => {
             config={{
               toolbar: [
                 "heading",
-          "|",
-          "bold",
-          "italic",
-          "link",
-          "bulletedList",
-          "numberedList",
-          "|",
-          "imageUpload",
-          "blockQuote",
-          "insertTable",
-          "undo",
-          "redo",
+                "|",
+                "bold",
+                "italic",
+                "link",
+                "bulletedList",
+                "numberedList",
+                "|",
+
+                "blockQuote",
+                "insertTable",
+                "undo",
+                "redo",
               ],
             }}
           />

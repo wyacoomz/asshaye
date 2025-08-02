@@ -511,7 +511,7 @@ const Event = () => {
           "bulletedList",
           "numberedList",
           "|",
-          "imageUpload",
+   
           "blockQuote",
           "insertTable",
           "undo",

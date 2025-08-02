@@ -56,6 +56,9 @@ const courseSchema = new mongoose.Schema({
   language: {
     type: String,
   },
+  staticUrl: {
+    type: String,
+  },
   Certification: {
     // Corrected the typo here
     type: String,

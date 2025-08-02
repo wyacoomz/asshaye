@@ -31,6 +31,7 @@ const Course = () => {
     Alttage: "",
     LastDate: "",
     payNow: "",
+    staticUrl: "",
   };
 
   const [formData, setFormData] = useState(initialFormState);
@@ -185,7 +186,7 @@ const Course = () => {
 
     try {
       const response = await axios.post(
-        "https://backend.aashayeinjudiciary.com/api/course",
+        "http://localhost:8000/api/course",
         formDataToSend,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -216,6 +217,7 @@ const Course = () => {
     { name: "URL", label: "Course URL", type: "text" },
     { name: "Alttage", label: "Alt tag", type: "text" },
     { name: "payNow", label: "Pay Now Url", type: "text" },
+    { name: "staticUrl", label: "Static Url", type: "text" },
   ];
 
   const courseDetailsFields = [
@@ -330,7 +332,6 @@ const Course = () => {
                 "bulletedList",
                 "numberedList",
                 "|",
-                "imageUpload",
                 "blockQuote",
                 "insertTable",
                 "undo",
@@ -377,6 +378,18 @@ const Course = () => {
     );
   };
 
+  // Check if selected category is 'test series'
+  const isTestSeries = categories.find(
+    (cat) =>
+      cat._id === formData.category && cat.name.toLowerCase() === "test series"
+  );
+
+  // Dynamically filter Course URL field
+  const basicInfoFieldsToRender = basicInfoFields.filter((field) => {
+    if (field.name === "URL" && isTestSeries) return false;
+    return true;
+  });
+
   return (
     <div className='min-h-screen bg-gray-50 py-8 px-4'>
       <form
@@ -396,7 +409,8 @@ const Course = () => {
             {renderCategorySelect()}
             {renderSubCategorySelect()}
             {renderSubsubCategorySelect()}
-            {basicInfoFields.map(renderInputField)}
+            {/* //{basicInfoFields.map(renderInputField)} */}
+            {basicInfoFieldsToRender.map(renderInputField)}
           </div>
         </div>
 

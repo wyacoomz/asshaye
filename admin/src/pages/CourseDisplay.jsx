@@ -40,6 +40,7 @@ const CourseDisplay = () => {
     InstructorCourse: "",
     URL: "",
     payNow: "",
+    staticUrl: "",
     images: [],
   });
   const [categories, setCategories] = useState([]);
@@ -49,7 +50,7 @@ const CourseDisplay = () => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
-  const api = "https://backend.aashayeinjudiciary.com/api/alldisplay";
+  const api = "http://localhost:8000/api/alldisplay";
 
   const fetchCourses = async () => {
     try {
@@ -130,9 +131,7 @@ const CourseDisplay = () => {
     if (!window.confirm("Are you sure you want to delete this course?")) return;
 
     try {
-      await axios.delete(
-        `https://backend.aashayeinjudiciary.com/api/coursedelte/${id}`
-      );
+      await axios.delete(`http://localhost:8000/api/coursedelte/${id}`);
       toast.success("Course deleted successfully");
       setCourses((prev) => prev.filter((course) => course._id !== id));
     } catch (error) {
@@ -150,9 +149,7 @@ const CourseDisplay = () => {
 
   const startEdit = async (id) => {
     try {
-      const res = await axios.get(
-        `https://backend.aashayeinjudiciary.com/api/courses/${id}`
-      );
+      const res = await axios.get(`http://localhost:8000/api/courses/${id}`);
       const course = res.data;
 
       setEditId(id);
@@ -168,6 +165,7 @@ const CourseDisplay = () => {
         CourseDescription: course.CourseDescription || "",
         InstructorCourse: course.InstructorCourse || "",
         URL: course.URL || "",
+        staticUrl: course.staticUrl || "",
         payNow: course.payNow || "",
         images: course.images || [],
       });
@@ -197,12 +195,9 @@ const CourseDisplay = () => {
   const handleToggle = async (id, checked) => {
     const newStatus = !checked;
     try {
-      await axios.put(
-        `https://backend.aashayeinjudiciary.com/api/${id}/home-visibility`,
-        {
-          homeVisibility: newStatus,
-        }
-      );
+      await axios.put(`http://localhost:8000/api/${id}/home-visibility`, {
+        homeVisibility: newStatus,
+      });
       fetchCourses();
       toast.success("Visibility updated successfully");
     } catch (error) {
@@ -248,7 +243,7 @@ const CourseDisplay = () => {
       });
 
       const response = await axios.put(
-        `https://backend.aashayeinjudiciary.com/api/editsave/${editId}`,
+        `http://localhost:8000/api/editsave/${editId}`,
         formData,
         {
           headers: {
@@ -390,6 +385,17 @@ const CourseDisplay = () => {
           <span>{row.TrainerName}</span>
         </div>
       ),
+      width: "150px",
+    },
+    {
+      name: "Static Url",
+      selector: (row) => row.staticUrl,
+      cell: (row) => (
+        <div className='flex items-center'>
+          <span>{row.staticUrl.slice(0, 10)}</span>
+        </div>
+      ),
+      width: "150px",
     },
     {
       name: "URL",
@@ -842,6 +848,20 @@ const CourseDisplay = () => {
                       placeholder='https://example.com'
                     />
                   </div>
+
+                  <div>
+                    <label className='block text-sm font-medium text-gray-700 mb-1'>
+                      Static Url
+                    </label>
+                    <input
+                      type='text'
+                      name='staticUrl'
+                      value={editForm.staticUrl}
+                      onChange={handleEditChange}
+                      className='w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500'
+                      placeholder='do something'
+                    />
+                  </div>
                   <div>
                     <label className='block text-sm font-medium text-gray-700 mb-1'>
                       Category
@@ -914,19 +934,19 @@ const CourseDisplay = () => {
                       }}
                       config={{
                         toolbar: [
-                            "heading",
-          "|",
-          "bold",
-          "italic",
-          "link",
-          "bulletedList",
-          "numberedList",
-          "|",
-          "imageUpload",
-          "blockQuote",
-          "insertTable",
-          "undo",
-          "redo",
+                          "heading",
+                          "|",
+                          "bold",
+                          "italic",
+                          "link",
+                          "bulletedList",
+                          "numberedList",
+                          "|",
+
+                          "blockQuote",
+                          "insertTable",
+                          "undo",
+                          "redo",
                         ],
                       }}
                     />

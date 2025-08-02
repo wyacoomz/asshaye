@@ -293,7 +293,7 @@ const Blog = () => {
                 "bulletedList",
                 "numberedList",
                 "|",
-                "imageUpload",
+
                 "blockQuote",
                 "insertTable",
                 "undo",

@@ -784,7 +784,7 @@ const OtherCourseManager = () => {
           "bulletedList",
           "numberedList",
           "|",
-          "imageUpload",
+    
           "blockQuote",
           "insertTable",
           "undo",

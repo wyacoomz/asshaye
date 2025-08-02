@@ -118,7 +118,7 @@ const Sidebar = () => {
         { to: "/allquerydisplay", name: "View Call Back" },
         { name: "View CallbackPop", to: "/callbackpop" },
         { to: "/enroll", name: "View Courses Enroll" },
-        { to: "/enquirydisplay", name: "View Student" },
+        { to: "/enquirydisplay", name: "Enquiry Student" },
         { to: "/contactdisplay", name: "View Contact" },
         { to: "/syllabusstudent", name: "Syllabus student" },
       ],
