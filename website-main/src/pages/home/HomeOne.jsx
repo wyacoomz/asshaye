@@ -1,7 +1,6 @@
 import React from "react";
 import { Layout } from "../../layouts/Layout";
-// import { HeroOne } from "../../components/hero/HeroOne";
-// import { AboutOne } from "../../components/about/AboutOne";
+
 import { WhyChooseOne } from "../../components/why_choose/WhyChooseOne";
 import { FunfactTwo } from "../../components/fun_facts/FunfactTwo";
 import { TeamOne } from "../../components/teams/TeamOne";
@@ -19,53 +18,23 @@ import WhatsNew from "../../components/fun_facts/WhatsNew";
 import { HeroThree } from "../../components/hero/HeroThree";
 import PriceTag from "../../components/hero/PriceTag";
 import { CoursesAllGrid } from "../../components/courses/CoursesAllGrid";
-// import { HomeTwo } from "./HomeTwo";
 
 export const HomeOne = () => {
   return (
     <Layout header={9} footer={1}>
-      {/* hero */}
       <HeroThree />
-
-      {/* <HeroOne /> */}
-
       <MarqueeStrike />
-
-      {/* <PriceTag /> */}
-
-      {/* <HomeTwo /> */}
-
-      {/* popular */}
       <CoursesOne />
-
-      {/* <CoursesAllGrid/> */}
-
-      {/* popular */}
       <WhatsNew />
-
       <SuccessStory />
-      {/* feature */}
       <FunfactTwo />
       <Slider />
-
-      {/* event schedule */}
       <EventOne />
-
-      {/* team */}
       <TeamOne />
-
-      {/* why choose */}
       <WhyChooseOne />
-
-      {/* blog */}
       <BlogOne />
-
-      {/* faqs */}
       <FaqOne />
-
       <CallbackPopup />
-
-      {/* <AdPopup/> */}
     </Layout>
   );
 };

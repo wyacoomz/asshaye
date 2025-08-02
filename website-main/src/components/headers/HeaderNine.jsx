@@ -166,7 +166,7 @@ export const HeaderNine = () => {
                         <Link to='/'>Home</Link>
                       </li>
                       <li className='menu-item-has-children'>
-                        <Link to='#'>About</Link>
+                        <Link>About</Link>
                         <ul>
                           <li>
                             <Link to='/about'>About the institute</Link>

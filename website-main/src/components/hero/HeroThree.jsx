@@ -49,15 +49,12 @@
 //     captchaToken: "",
 //   });
 
-
 //   const handleCaptcha = (value) => {
 //     setFormData((prev) => ({
 //       ...prev,
 //       captchaToken: value,
 //     }));
 //   };
-
-
 
 //   const handleChange = (e) => {
 //     const { name, value } = e.target;
@@ -244,8 +241,6 @@
 //   padding-right: 30px;
 // }
 
-
-
 // @media (max-width: 768px) {
 //   .form-floating select {
 //     font-size: 14px;
@@ -272,8 +267,6 @@
 //     padding: 10px;
 //   }
 // }
-
-
 
 //         @media (max-width: 768px) {
 //           .neumorphic-form {
@@ -350,8 +343,6 @@
 //                   />
 //                   <label>Phone Number*</label>
 //                 </div>
-
-
 
 //                 <div className="form-floating">
 //                   <select
@@ -702,12 +693,12 @@ export const HeroThree = () => {
         }
       `}</style>
 
-      <div className="td_height_60 td_height_lg_60" />
-      <div className="container-fluid mt-0 px-4 " id="contact-sec">
-        <div className="row g-4 align-items-stretch my-3">
+      <div className='td_height_60 td_height_lg_60' />
+      <div className='container-fluid mt-0 px-4 ' id='contact-sec'>
+        <div className='row g-4 align-items-stretch my-3'>
           {/* Slider */}
-          <div className="col-12 col-xl-8">
-            <div className="glass-slider h-100">
+          <div className='col-12 col-xl-8'>
+            <div className='glass-slider h-100'>
               <Swiper
                 modules={[Autoplay, Pagination]}
                 autoplay={{ delay: 3000, disableOnInteraction: false }}
@@ -737,88 +728,92 @@ export const HeroThree = () => {
           </div>
 
           {/* Form */}
-          <div className="col-12 col-xl-4">
-            <div className="neumorphic-form h-100">
-              <h5 className="text-center fw-bold mb-4 td_accent_color">
+          <div className='col-12 col-xl-4'>
+            <div className='neumorphic-form h-100'>
+              <h5 className='text-center fw-bold mb-4 td_accent_color'>
                 Do you have any query? <br /> Get a call back!
               </h5>
 
               <form onSubmit={handleSubmit}>
-                <div className="form-floating">
+                <div className='form-floating'>
                   <input
-                    type="text"
-                    name="Name"
+                    type='text'
+                    name='Name'
                     value={formData.Name}
                     onChange={handleChange}
                     required
-                    placeholder=" "
+                    placeholder=' '
                   />
                   <label>Your Name*</label>
                 </div>
 
-                <div className="form-floating">
+                <div className='form-floating'>
                   <input
-                    type="tel"
-                    name="Phone"
+                    type='tel'
+                    name='Phone'
                     value={formData.Phone}
                     onChange={handleChange}
-                    inputMode="numeric"
-                    maxLength="10"
-                    pattern="[0-9]{10}"
+                    inputMode='numeric'
+                    maxLength='10'
+                    pattern='[0-9]{10}'
                     required
-                    placeholder=" "
+                    placeholder=' '
                   />
                   <label>Phone Number*</label>
                 </div>
 
-                <div className="form-floating">
+                <div className='form-floating'>
                   <select
-                    className="form-select"
-                    name="State"
+                    className='form-select'
+                    name='State'
                     value={formData.State}
                     onChange={handleChange}
                     required
                   >
-                    <option value="">Select your State</option>
-                    <option value="Madhya Pradesh">Madhya Pradesh</option>
-                    <option value="Uttar Pradesh">Uttar Pradesh</option>
-                    <option value="Chhattisgarh">Chhattisgarh</option>
-                    <option value="Delhi">Delhi</option>
+                    <option value=''>Select your State</option>
+                    <option value='Madhya Pradesh'>Madhya Pradesh</option>
+                    <option value='Uttar Pradesh'>Uttar Pradesh</option>
+                    <option value='Chhattisgarh'>Chhattisgarh</option>
+                    <option value='Delhi'>Delhi</option>
                     {/* Add all other states if needed */}
                   </select>
                 </div>
 
-                <div className="form-floating">
+                <div className='form-floating'>
                   <select
-                    name="Medium"
+                    name='Medium'
                     value={formData.Medium}
                     onChange={handleChange}
                     required
-                    className="form-select"
+                    className='form-select'
                   >
-                    <option value="">Select Medium</option>
-                    <option value="English">English</option>
-                    <option value="Hindi">Hindi</option>
+                    <option value=''>Select Medium</option>
+                    <option value='English'>English</option>
+                    <option value='Hindi'>Hindi</option>
                   </select>
                 </div>
 
-                <div className="form-floating">
+                <div className='form-floating'>
                   <textarea
-                    name="message"
+                    name='message'
                     value={formData.message}
                     onChange={handleChange}
-                    rows="2"
-                    placeholder=" "
+                    rows='2'
+                    placeholder=' '
                   ></textarea>
                   <label>Your message</label>
                 </div>
 
-                <div className="mb-4">
+                <div className='mb-4'>
                   <ReCAPTCHA sitekey={SITE_KEY} onChange={handleCaptcha} />
                 </div>
 
-                <div className="mt-3">
-                  <button type="submit" className="form-submit" disabled={loading}>
+                <div className='mt-3'>
+                  <button
+                    type='submit'
+                    className='form-submit'
+                    disabled={loading}
+                  >
                     {loading ? "Submitting..." : "Submit"}
                   </button>
                 </div>
