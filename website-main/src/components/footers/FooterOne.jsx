@@ -35,6 +35,8 @@ export const FooterOne = () => {
     (state) => state.routes
   );
 
+  // sbsbsbsbsbssb
+
   const routeData = routesData.find((route) => route.element === "CourseNew");
 
   useEffect(() => {
