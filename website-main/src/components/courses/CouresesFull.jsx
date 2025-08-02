@@ -469,5 +469,5 @@ const CouresesFull = () => {
     </>
   );
 };
-
-export default CouresesFull;
+export default CouresesFull
+// export default ;
