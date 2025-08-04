@@ -43,8 +43,7 @@ export const SliderCard = ({ selectedSubCategoryId, onSlideClick }) => {
             className={`p-2 ${
               _id === selectedSubCategoryId ? "selected-slide" : ""
             } cursor-pointer`}
-            // onClick={() => onSlideClick?.(_id)} // <-- Call parent handler
-              onClick={() => onSlideClick?.({ id: _id, name })}
+            onClick={() => onSlideClick?.({ id: _id, name })}
             style={{ cursor: "pointer" }}
           >
             <div className='td_card td_style_3 d-block td_radius_10'>
@@ -53,7 +52,6 @@ export const SliderCard = ({ selectedSubCategoryId, onSlideClick }) => {
                 alt={name || "Course"}
                 className='img-fluid'
                 style={{
-                  // height: "120px",
                   width: "100%",
                   objectFit: "cover",
                 }}

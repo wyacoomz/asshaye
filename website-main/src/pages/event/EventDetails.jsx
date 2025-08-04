@@ -3,14 +3,12 @@ import { Layout } from "../../layouts/Layout";
 import { EventDetailsContent } from "../../components/events/EventDetailsContent";
 import { useParams } from "react-router-dom";
 export const EventDetails = () => {
-   const { id } = useParams();
+  const { id } = useParams();
 
-   console.log("dfghjfdsdfghjhgfdsdfghjk")
+
   return (
-    <Layout
-    
-    >
-      <EventDetailsContent conatctId={id}  />
+    <Layout>
+      <EventDetailsContent conatctId={id} />
     </Layout>
   );
 };

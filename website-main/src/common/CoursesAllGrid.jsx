@@ -1,24 +1,3 @@
-// // src/components/courses/CoursesAllGrid.jsx
-// import React from "react";
-// import CourseCardSimple from "./CourseCardSimple";
-
-// export const CoursesAllGrid = ({ courses, loading, error }) => {
-//   if (loading) return <p>Loading courses...</p>;
-//   if (error) return <p className='text-danger'>{error}</p>;
-//   if (!courses || courses.length === 0) return <p>No courses found.</p>;
-
-//   return (
-//     <div className='container'>
-//       <div className='row g-4'>
-//         {courses.map((course) => (
-//           <CourseCardSimple key={course._id} course={course} />
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-// src/components/courses/CoursesAllGrid.jsx
 import React from "react";
 import CourseCardSimple from "./CourseCardSimple";
 
@@ -39,14 +18,14 @@ export const CoursesAllGrid = ({ courses, loading, error }) => {
     <div className='container'>
       {Object.entries(groupedCourses).map(([judiciaryName, grouped]) => (
         <div key={judiciaryName} className='mb-5'>
-          <div
-            className={`row g-4 ${
-              grouped.length === 1 ? "justify-content-center" : ""
-            }`}
-          >
+          <div className={`row g-4 ${grouped.length === 1 ? "" : ""}`}>
+            <h4>{judiciaryName}</h4>
             {grouped.map((course) => (
               <div key={course._id} className='col-lg-4 col-md-6 col-sm-12'>
-                <CourseCardSimple course={course} />
+                <CourseCardSimple
+                  course={course}
+                  currentFilter={{ judiciaryName }}
+                />
               </div>
             ))}
           </div>

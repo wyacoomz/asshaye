@@ -33,9 +33,9 @@ const CourseNew = () => {
 
   const { state } = useLocation();
 
-  // console.log(state, "course new page");
-
   const { name: paramName, id: paramId } = state;
+
+  // console.log(paramName, paramId, "sourabh");
 
   const slugToLabel = (slug) =>
     slug
@@ -46,10 +46,8 @@ const CourseNew = () => {
           .replace(/\b\w/g, (c) => c.toUpperCase())
       : "";
 
-  // const { name: paramName, id: paramId } = useParams();
   const location = useLocation();
 
-  // Query fallback (agar kabhi /new-course?id=... se aaye)
   const search = useMemo(
     () => new URLSearchParams(location.search),
     [location.search]

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { Container, Card, Button, Spinner, Alert } from "react-bootstrap";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -13,7 +13,7 @@ import OtherCoursesSlider from "../../pages/course/OtherCourses";
 import { SliderCard } from "../../common/SliderCard";
 
 const CouresesFull = () => {
-  const { id } = useParams();
+  // const { id } = useParams();
   const navigate = useNavigate();
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -21,15 +21,35 @@ const CouresesFull = () => {
   const [relatedCourses, setRelatedCourses] = useState([]);
   const [relatedLoading, setRelatedLoading] = useState(false);
 
-
   const handleSubSubcategoryClick = ({ id, name }) => {
-  // Navigate to /new-course with query params
-  navigate(`/new-course?id=${id}&name=${name}`);
-};
+    navigate("/new-course", { state: { id, name } });
+  };
+
+  const { state } = useLocation();
+
+  const id = state?.id;
 
   const handleCourseClick = (courseId) => {
     navigate(`/enroll/${courseId}`);
   };
+
+  // ! url
+  useEffect(() => {
+    if (course && course.staticUrl) {
+      const slug = course.staticUrl
+        .toLowerCase()
+        .replace(/"/g, "")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)+/g, "");
+
+      const newUrl = `/course-details/${slug}`;
+      const currentPath = window.location.pathname;
+
+      if (!currentPath.includes(slug)) {
+        window.history.replaceState(null, "", newUrl);
+      }
+    }
+  }, [course]);
 
   useEffect(() => {
     const fetchCourseData = async () => {
@@ -53,11 +73,6 @@ const CouresesFull = () => {
             typeof courseResponse.data.category === "object"
               ? courseResponse.data.category._id
               : courseResponse.data.category;
-
-          // const relatedResponse = await axios.get(
-          //   `https://backend.aashayeinjudiciary.com/api/courses?category=${categoryId}&limit=4&exclude=${id}`
-          // );
-          // setRelatedCourses(relatedResponse.data);
         }
       } catch (err) {
         console.error("Failed to fetch course:", {
@@ -68,8 +83,8 @@ const CouresesFull = () => {
         });
         setError(
           err.response?.data?.message ||
-          err.message ||
-          "Failed to load course details"
+            err.message ||
+            "Failed to load course details"
         );
         if (err.response?.status === 404) {
           navigate("/not-found", { replace: true });
@@ -175,11 +190,19 @@ const CouresesFull = () => {
     );
   }
 
+  const handleBack = () => {
+    if (state?.filter) {
+      navigate("/new-course", { state: { filter: state.filter } });
+    } else {
+      navigate(-1);
+    }
+  };
+
   return (
     <>
       <div className='col-md-12'>
-        <div className="td_height_112 td_height_lg_60" />
-    <SliderCard onSlideClick={handleSubSubcategoryClick} />
+        <div className='td_height_112 td_height_lg_60' />
+        <SliderCard onSlideClick={handleSubSubcategoryClick} />
       </div>
       <Layout header={9} footer={1}>
         <Container className='my-5'>
@@ -191,24 +214,13 @@ const CouresesFull = () => {
               <h2 className='mb-0 fs-4 text-white'>
                 {course.title || "Course Title"}
 
-                {/* <strong>⏳ courseaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:</strong> */}
                 <span className='ms-2'>
                   - {course?.subsubCategory?.name || "Self-paced"}
                 </span>
               </h2>
-             <Button
-  variant="light"
-  size="sm"
-  onClick={() => {
-    if (window.history.length > 2) {
-      navigate(-1);
-    } else {
-      navigate("/judgements"); // fallback path, you can change this
-    }
-  }}
->
-  ⬅ Back
-</Button>
+              <Button variant='light' size='sm' onClick={handleBack}>
+                ⬅ Back
+              </Button>
             </Card.Header>
 
             <Card.Body className='px-0 py-0'>
@@ -240,7 +252,7 @@ const CouresesFull = () => {
                       dangerouslySetInnerHTML={{
                         __html: sanitize(
                           course.CourseDescription ||
-                          "No description available."
+                            "No description available."
                         ),
                       }}
                     />
@@ -263,92 +275,91 @@ const CouresesFull = () => {
                   </div>
                 </div>
 
-<div className="col-md-5 p-4 border-start">
- {/* Right Column - Course Details */}
-                <div className=''>
+                <div className='col-md-5 p-4 border-start'>
+                  {/* Right Column - Course Details */}
+                  <div className=''>
+                    <h4 className='mb-3 text-secondary d-flex align-items-center gap-2'>
+                      <span>🔹</span> Course Details
+                    </h4>
 
-                  <h4 className='mb-3 text-secondary d-flex align-items-center gap-2'>
-                    <span>🔹</span> Course Details
-                  </h4>
+                    {course.features && course.features.length > 0 && (
+                      <>
+                        <h5>Features</h5>
+                        <ul className='mb-4'>
+                          {course.features.map((feature, i) => (
+                            <li
+                              key={i}
+                              className='mb-2 d-flex align-items-start gap-2'
+                            >
+                              <span className='text-success'>✓</span> {feature}
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    )}
 
-                  {course.features && course.features.length > 0 && (
-                    <>
-                      <h5>Features</h5>
-                      <ul className='mb-4'>
-                        {course.features.map((feature, i) => (
-                          <li
-                            key={i}
-                            className='mb-2 d-flex align-items-start gap-2'
-                          >
-                            <span className='text-success'>✓</span> {feature}
-                          </li>
-                        ))}
-                      </ul>
-                    </>
-                  )}
+                    <div className='bg-light p-3 rounded-3 mb-4'>
+                      <div className='mb-2'>
+                        <strong>💰 Price:</strong>
+                        <span className='text-success fw-bold ms-2'>
+                          {course.Price ? `₹${course.Price}` : "Free"}
+                        </span>
+                        {course.originalPrice &&
+                          course.originalPrice > course.price && (
+                            <span className='text-decoration-line-through text-muted ms-2'>
+                              ₹{course.originalPrice}
+                            </span>
+                          )}
+                      </div>
+                      <div className='mb-2'>
+                        <strong>⏳ Duration:</strong>
+                        <span className='ms-2'>
+                          {course.Durations || "Self-paced"}
+                        </span>
+                      </div>
+                      <div className='mb-2'>
+                        <strong>👨‍🏫 Instructor:</strong>
+                        <span className='ms-2'>
+                          {course.InstructorCourse || "Expert Team"}
+                        </span>
+                      </div>
+                      <div className='mb-2'>
+                        <strong>📅 Start Date:</strong>
+                        <span className='ms-2'>
+                          {formatDate(course.LastDate)}
+                        </span>
+                      </div>
+                      <div>
+                        <strong>🎓 Level:</strong>
+                        <span className='ms-2'>
+                          {course.level || "All levels"}
+                        </span>
+                      </div>
+                    </div>
 
-                  <div className='bg-light p-3 rounded-3 mb-4'>
-                    <div className='mb-2'>
-                      <strong>💰 Price:</strong>
-                      <span className='text-success fw-bold ms-2'>
-                        {course.Price ? `₹${course.Price}` : "Free"}
-                      </span>
-                      {course.originalPrice &&
-                        course.originalPrice > course.price && (
-                          <span className='text-decoration-line-through text-muted ms-2'>
-                            ₹{course.originalPrice}
-                          </span>
-                        )}
-                    </div>
-                    <div className='mb-2'>
-                      <strong>⏳ Duration:</strong>
-                      <span className='ms-2'>
-                        {course.Durations || "Self-paced"}
-                      </span>
-                    </div>
-                    <div className='mb-2'>
-                      <strong>👨‍🏫 Instructor:</strong>
-                      <span className='ms-2'>
-                        {course.InstructorCourse || "Expert Team"}
-                      </span>
-                    </div>
-                    <div className='mb-2'>
-                      <strong>📅 Start Date:</strong>
-                      <span className='ms-2'>
-                        {formatDate(course.LastDate)}
-                      </span>
-                    </div>
-                    <div>
-                      <strong>🎓 Level:</strong>
-                      <span className='ms-2'>
-                        {course.level || "All levels"}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className='d-flex gap-2'>
-                    <Button
-                      variant='primary'
-                      size='lg'
-                      className='th-btn td_btn_in td_white_color td_accent_bg py-2 mb-2 border-0 rounded w-100 fw-semibold'
-                      onClick={() => handleCourseClick(course._id)}
-                    >
-                      🚀 Enroll Now
-                    </Button>
-
-                    {course.payNow && (
+                    <div className='d-flex gap-2'>
                       <Button
                         variant='primary'
                         size='lg'
                         className='th-btn td_btn_in td_white_color td_accent_bg py-2 mb-2 border-0 rounded w-100 fw-semibold'
-                        onClick={() => window.open(course.payNow, "_blank")}
+                        onClick={() => handleCourseClick(course._id)}
                       >
-                        🚀 Pay Now
+                        🚀 Enroll Now
                       </Button>
-                    )}
-                  </div>
 
-                  {/* <Button
+                      {course.payNow && (
+                        <Button
+                          variant='primary'
+                          size='lg'
+                          className='th-btn td_btn_in td_white_color td_accent_bg py-2 mb-2 border-0 rounded w-100 fw-semibold'
+                          onClick={() => window.open(course.payNow, "_blank")}
+                        >
+                          🚀 Pay Now
+                        </Button>
+                      )}
+                    </div>
+
+                    {/* <Button
                     variant="primary"
                     size="lg"
                     className="th-btn td_btn_in td_white_color td_accent_bg py-2 mb-2 border-0 rounded w-100 fw-semibold"
@@ -357,38 +368,38 @@ const CouresesFull = () => {
                     🚀 Enroll Now
                   </Button> */}
 
-                  <div className='border p-3 rounded-3'>
-                    <h5 className='mb-3'>What's Included</h5>
-                    <ul className='list-unstyled'>
-                      <li className='mb-2 d-flex align-items-start'>
-                        <span className='text-success me-2'>✔</span>
-                        <span>Certificate of completion</span>
-                      </li>
-                      <li className='mb-2 d-flex align-items-start'>
-                        <span className='text-success me-2'>✔</span>
-                        <span>Lifetime access to course materials</span>
-                      </li>
-                      <li className='mb-2 d-flex align-items-start'>
-                        <span className='text-success me-2'>✔</span>
-                        <span>Q&A support</span>
-                      </li>
-                      {course.downloadableResources && (
-                        <li className='d-flex align-items-start'>
+                    <div className='border p-3 rounded-3'>
+                      <h5 className='mb-3'>What's Included</h5>
+                      <ul className='list-unstyled'>
+                        <li className='mb-2 d-flex align-items-start'>
                           <span className='text-success me-2'>✔</span>
-                          <span>Downloadable resources</span>
+                          <span>Certificate of completion</span>
                         </li>
-                      )}
-                    </ul>
+                        <li className='mb-2 d-flex align-items-start'>
+                          <span className='text-success me-2'>✔</span>
+                          <span>Lifetime access to course materials</span>
+                        </li>
+                        <li className='mb-2 d-flex align-items-start'>
+                          <span className='text-success me-2'>✔</span>
+                          <span>Q&A support</span>
+                        </li>
+                        {course.downloadableResources && (
+                          <li className='d-flex align-items-start'>
+                            <span className='text-success me-2'>✔</span>
+                            <span>Downloadable resources</span>
+                          </li>
+                        )}
+                      </ul>
+                    </div>
                   </div>
-                </div>
 
- <div className='mt-4 d-block d-lg-none'>
+                  <div className='mt-4 d-block d-lg-none'>
                     <h4>Course Description</h4>
                     <div
                       dangerouslySetInnerHTML={{
                         __html: sanitize(
                           course.CourseDescription ||
-                          "No description available."
+                            "No description available."
                         ),
                       }}
                     />
@@ -409,9 +420,7 @@ const CouresesFull = () => {
                       </>
                     )}
                   </div>
-
-</div>
-
+                </div>
               </div>
             </Card.Body>
           </Card>
@@ -469,5 +478,5 @@ const CouresesFull = () => {
     </>
   );
 };
-export default CouresesFull
+export default CouresesFull;
 // export default ;

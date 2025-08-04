@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Slider from "react-slick";
 import { Card } from "react-bootstrap";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { useSelector } from "react-redux";
 
 const OtherCoursesSlider = () => {
   const [courses, setCourses] = useState([]);
@@ -14,6 +15,10 @@ const OtherCoursesSlider = () => {
 
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const { routesData } = useSelector((state) => state.routes);
+
+  const { path } = routesData.find((route) => route.element === "OtherCourse");
 
   const fetchCourses = async () => {
     setLoading(true);
@@ -30,7 +35,7 @@ const OtherCoursesSlider = () => {
             course.subCategory?._id ===
               response.data.find((c) => c._id === id)?.subCategory?._id
         );
-        setcourses(filtered);
+        // setcourses(filtered);
       }
     } catch (error) {
       console.error("Error fetching courses:", error);
@@ -79,62 +84,65 @@ const OtherCoursesSlider = () => {
   };
 
   if (loading) {
-    return <div className="text-center py-5">Loading courses...</div>;
+    return <div className='text-center py-5'>Loading courses...</div>;
   }
 
   return (
-    <div className="mt-5 mb-5">
-      <h3 className="mb-4">Other Courses</h3>
+    <div className='mt-5 mb-5'>
+      <h3 className='mb-4'>Other Courses</h3>
       {courses.length > 0 ? (
         <Slider {...sliderSettings}>
           {courses.map((course) => (
-            <div key={course._id} className="px-2">
-              <Card
-                className="h-100 cursor-pointer shadow-sm"
-                onClick={() => navigate(`/otherseries/${course._id}`)}
-              >
-                <div className="d-flex flex-row" style={{ minHeight: "150px" }}>
+            <div key={course._id} className='px-2'>
+              <Card className='h-100 cursor-pointer shadow-sm'>
+                <Link to={`${path}`} state={course._id}>
                   <div
-                    style={{
-                      width: "150px",
-                      height: "150px",
-                      overflow: "hidden",
-                    }}
+                    className='d-flex flex-row'
+                    style={{ minHeight: "150px" }}
                   >
-                    <Card.Img
-                      src={getImageUrl(course)}
-                      alt={course.Coursename || "Course image"}
+                    <div
                       style={{
                         width: "150px",
                         height: "150px",
-                        // objectFit: 'cover'
+                        overflow: "hidden",
                       }}
-                    />
+                    >
+                      <Card.Img
+                        src={getImageUrl(course)}
+                        alt={course.Coursename || "Course image"}
+                        style={{
+                          width: "150px",
+                          height: "150px",
+                          // objectFit: 'cover'
+                        }}
+                      />
+                    </div>
+                    <Card.Body className='flex-grow-1'>
+                      <Card.Title className='h6'>
+                        {course.Coursename || "Untitled Course"}
+                      </Card.Title>
+                      <Card.Text className='small'>
+                        <div>
+                          <strong>Duration:</strong> {course.Durations || "N/A"}{" "}
+                          months
+                        </div>
+                        <div>
+                          <strong>Price:</strong> ₹{course.Price || "N/A"}
+                        </div>
+                        <div>
+                          <strong>Trainer:</strong>{" "}
+                          {course.TrainerName || "N/A"}
+                        </div>
+                      </Card.Text>
+                    </Card.Body>
                   </div>
-                  <Card.Body className="flex-grow-1">
-                    <Card.Title className="h6">
-                      {course.Coursename || "Untitled Course"}
-                    </Card.Title>
-                    <Card.Text className="small">
-                      <div>
-                        <strong>Duration:</strong> {course.Durations || "N/A"}{" "}
-                        months
-                      </div>
-                      <div>
-                        <strong>Price:</strong> ₹{course.Price || "N/A"}
-                      </div>
-                      <div>
-                        <strong>Trainer:</strong> {course.TrainerName || "N/A"}
-                      </div>
-                    </Card.Text>
-                  </Card.Body>
-                </div>
+                </Link>
               </Card>
             </div>
           ))}
         </Slider>
       ) : (
-        <div className="text-center py-3">
+        <div className='text-center py-3'>
           <p>No related courses available at the moment.</p>
         </div>
       )}

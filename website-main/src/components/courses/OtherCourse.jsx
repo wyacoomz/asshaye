@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { Container, Card, Button, Spinner, Alert } from "react-bootstrap";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -13,7 +13,7 @@ import OtherCoursesSlider from "../../pages/course/OtherCourses";
 import { SliderCard } from "../../common/SliderCard";
 
 const OtherCourse = () => {
-  const { id } = useParams();
+  // const { id } = useParams();
   const navigate = useNavigate();
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -21,10 +21,33 @@ const OtherCourse = () => {
   const [relatedCourses, setRelatedCourses] = useState([]);
   const [relatedLoading, setRelatedLoading] = useState(false);
 
-    const handleSubSubcategoryClick = ({ id, name }) => {
-  // Navigate to /new-course with query params
-  navigate(`/new-course?id=${id}&name=${name}`);
-};
+  const { state } = useLocation();
+
+  const id = state;
+  // console.log(state, "state course page");
+
+  // ! url
+  useEffect(() => {
+    if (course && course.staticUrl) {
+      const slug = course.staticUrl
+        .toLowerCase()
+        .replace(/"/g, "")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)+/g, "");
+
+      const newUrl = `/other-course-details/${slug}`;
+      const currentPath = window.location.pathname;
+
+      if (!currentPath.includes(slug)) {
+        window.history.replaceState(null, "", newUrl);
+      }
+    }
+  }, [course]);
+
+  const handleSubSubcategoryClick = ({ id, name }) => {
+    console.log(id, name, "other course");
+    navigate("/new-course", { state: { id, name } });
+  };
   const handleCourseClick = (courseId) => {
     navigate(`/enroll/${courseId}`);
   };
@@ -118,22 +141,22 @@ const OtherCourse = () => {
   if (loading) {
     return (
       <Container
-        className="d-flex justify-content-center align-items-center"
+        className='d-flex justify-content-center align-items-center'
         style={{ minHeight: "50vh" }}
       >
-        <Spinner animation="border" variant="primary" />
-        <span className="ms-3">Loading course details...</span>
+        <Spinner animation='border' variant='primary' />
+        <span className='ms-3'>Loading course details...</span>
       </Container>
     );
   }
 
   if (error) {
     return (
-      <Container className="my-5">
-        <Alert variant="danger" className="text-center">
+      <Container className='my-5'>
+        <Alert variant='danger' className='text-center'>
           <h4>Error Loading Course</h4>
           <p>{error}</p>
-          <Button variant="primary" onClick={() => window.location.reload()}>
+          <Button variant='primary' onClick={() => window.location.reload()}>
             Try Again
           </Button>
         </Alert>
@@ -143,11 +166,11 @@ const OtherCourse = () => {
 
   if (!course) {
     return (
-      <Container className="my-5">
-        <Alert variant="warning" className="text-center">
+      <Container className='my-5'>
+        <Alert variant='warning' className='text-center'>
           <h4>Course Not Found</h4>
           <p>The requested course could not be found.</p>
-          <Button variant="primary" onClick={() => navigate("/courses")}>
+          <Button variant='primary' onClick={() => navigate("/courses")}>
             Browse All Courses
           </Button>
         </Alert>
@@ -157,51 +180,49 @@ const OtherCourse = () => {
 
   return (
     <>
-     <div className="td_height_120 td_height_lg_80" />
-      <div className="col-md-12">
+      <div className='td_height_120 td_height_lg_80' />
+      <div className='col-md-12'>
         <SliderCard onSlideClick={handleSubSubcategoryClick} />
       </div>
       <Layout header={9} footer={1}>
-        <Container className="my-5">
-          <Card className="mb-5 shadow rounded-4 border-0">
+        <Container className='my-5'>
+          <Card className='mb-5 shadow rounded-4 border-0'>
             <Card.Header
               style={{ backgroundColor: "#BE191D" }}
-              className=" text-white d-flex justify-content-between align-items-center rounded-top-4 px-4 py-3"
+              className=' text-white d-flex justify-content-between align-items-center rounded-top-4 px-4 py-3'
             >
-              <h2 className="mb-0 fs-4 text-white">
+              <h2 className='mb-0 fs-4 text-white'>
                 {course.title || "Course Title"}
-
-                {/* <strong>⏳ courseaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:</strong> */}
               </h2>
-              <Button variant="light" size="sm" onClick={() => navigate(-1)}>
+              <Button variant='light' size='sm' onClick={() => navigate(-1)}>
                 ⬅ Back
               </Button>
             </Card.Header>
 
-            <Card.Body className="px-0 py-0">
-              <div className="row g-0">
+            <Card.Body className='px-0 py-0'>
+              <div className='row g-0'>
                 {/* Left Column - Video and Description */}
-                <div className="col-md-7 p-4">
-                  <div className="ratio ratio-16x9 rounded-3 overflow-hidden shadow-sm bg-dark">
+                <div className='col-md-7 p-4'>
+                  <div className='ratio ratio-16x9 rounded-3 overflow-hidden shadow-sm bg-dark'>
                     {course.URL ? (
                       <iframe
                         src={course.URL}
                         title={`${course.title} preview`}
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
                         allowFullScreen
-                        className="border-0"
+                        className='border-0'
                       ></iframe>
                     ) : (
-                      <div className="d-flex justify-content-center align-items-center h-100 text-white">
-                        <div className="text-center">
-                          <div className="fs-1 mb-2">🎬</div>
+                      <div className='d-flex justify-content-center align-items-center h-100 text-white'>
+                        <div className='text-center'>
+                          <div className='fs-1 mb-2'>🎬</div>
                           <p>Video Coming Soon</p>
                         </div>
                       </div>
                     )}
                   </div>
 
-                  <div className="mt-4">
+                  <div className='mt-4'>
                     <h4>Course Description</h4>
                     <div
                       dangerouslySetInnerHTML={{
@@ -214,12 +235,12 @@ const OtherCourse = () => {
 
                     {course.curriculum && course.curriculum.length > 0 && (
                       <>
-                        <h5 className="mt-4">Curriculum</h5>
-                        <ul className="list-group">
+                        <h5 className='mt-4'>Curriculum</h5>
+                        <ul className='list-group'>
                           {course.curriculum.map((item, index) => (
                             <li
                               key={index}
-                              className="list-group-item border-0 ps-0"
+                              className='list-group-item border-0 ps-0'
                             >
                               <strong>Module {index + 1}:</strong> {item}
                             </li>
@@ -231,93 +252,93 @@ const OtherCourse = () => {
                 </div>
 
                 {/* Right Column - Course Details */}
-                <div className="col-md-5 p-4 border-start">
-                  <h4 className="mb-3 text-secondary d-flex align-items-center gap-2">
+                <div className='col-md-5 p-4 border-start'>
+                  <h4 className='mb-3 text-secondary d-flex align-items-center gap-2'>
                     <span>🔹</span> Course Details
                   </h4>
 
                   {course.features && course.features.length > 0 && (
                     <>
                       <h5>Features</h5>
-                      <ul className="mb-4">
+                      <ul className='mb-4'>
                         {course.features.map((feature, i) => (
                           <li
                             key={i}
-                            className="mb-2 d-flex align-items-start gap-2"
+                            className='mb-2 d-flex align-items-start gap-2'
                           >
-                            <span className="text-success">✓</span> {feature}
+                            <span className='text-success'>✓</span> {feature}
                           </li>
                         ))}
                       </ul>
                     </>
                   )}
 
-                  <div className="bg-light p-3 rounded-3 mb-4">
-                    <div className="mb-2">
+                  <div className='bg-light p-3 rounded-3 mb-4'>
+                    <div className='mb-2'>
                       <strong>💰 Price:</strong>
-                      <span className="text-success fw-bold ms-2">
+                      <span className='text-success fw-bold ms-2'>
                         {course.Price ? `₹${course.Price}` : "Free"}
                       </span>
                       {course.originalPrice &&
                         course.originalPrice > course.price && (
-                          <span className="text-decoration-line-through text-muted ms-2">
+                          <span className='text-decoration-line-through text-muted ms-2'>
                             ₹{course.originalPrice}
                           </span>
                         )}
                     </div>
-                    <div className="mb-2">
+                    <div className='mb-2'>
                       <strong>⏳ Duration:</strong>
-                      <span className="ms-2">
+                      <span className='ms-2'>
                         {course.Durations || "Self-paced"}
                       </span>
                     </div>
-                    <div className="mb-2">
+                    <div className='mb-2'>
                       <strong>👨‍🏫 Instructor:</strong>
-                      <span className="ms-2">
+                      <span className='ms-2'>
                         {course.InstructorCourse || "Expert Team"}
                       </span>
                     </div>
-                    <div className="mb-2">
+                    <div className='mb-2'>
                       <strong>📅 Start Date:</strong>
-                      <span className="ms-2">
+                      <span className='ms-2'>
                         {formatDate(course.LastDate)}
                       </span>
                     </div>
                     <div>
                       <strong>🎓 Level:</strong>
-                      <span className="ms-2">
+                      <span className='ms-2'>
                         {course.level || "All levels"}
                       </span>
                     </div>
                   </div>
 
                   <Button
-                    variant="primary"
-                    size="lg"
-                    className="th-btn td_btn_in td_white_color td_accent_bg py-2 mb-2 border-0 rounded w-100 fw-semibold"
+                    variant='primary'
+                    size='lg'
+                    className='th-btn td_btn_in td_white_color td_accent_bg py-2 mb-2 border-0 rounded w-100 fw-semibold'
                     onClick={() => handleCourseClick(course._id)}
                   >
                     🚀 Enroll Now
                   </Button>
 
-                  <div className="border p-3 rounded-3">
-                    <h5 className="mb-3">What's Included</h5>
-                    <ul className="list-unstyled">
-                      <li className="mb-2 d-flex align-items-start">
-                        <span className="text-success me-2">✔</span>
+                  <div className='border p-3 rounded-3'>
+                    <h5 className='mb-3'>What's Included</h5>
+                    <ul className='list-unstyled'>
+                      <li className='mb-2 d-flex align-items-start'>
+                        <span className='text-success me-2'>✔</span>
                         <span>Certificate of completion</span>
                       </li>
-                      <li className="mb-2 d-flex align-items-start">
-                        <span className="text-success me-2">✔</span>
+                      <li className='mb-2 d-flex align-items-start'>
+                        <span className='text-success me-2'>✔</span>
                         <span>Lifetime access to course materials</span>
                       </li>
-                      <li className="mb-2 d-flex align-items-start">
-                        <span className="text-success me-2">✔</span>
+                      <li className='mb-2 d-flex align-items-start'>
+                        <span className='text-success me-2'>✔</span>
                         <span>Q&A support</span>
                       </li>
                       {course.downloadableResources && (
-                        <li className="d-flex align-items-start">
-                          <span className="text-success me-2">✔</span>
+                        <li className='d-flex align-items-start'>
+                          <span className='text-success me-2'>✔</span>
                           <span>Downloadable resources</span>
                         </li>
                       )}
@@ -329,22 +350,22 @@ const OtherCourse = () => {
           </Card>
 
           {relatedLoading ? (
-            <div className="text-center my-4">
-              <Spinner animation="border" variant="secondary" />
-              <p className="mt-2">Loading related courses...</p>
+            <div className='text-center my-4'>
+              <Spinner animation='border' variant='secondary' />
+              <p className='mt-2'>Loading related courses...</p>
             </div>
           ) : relatedCourses.length > 0 ? (
-            <div className="mt-5">
-              <h3 className="mb-4">You Might Also Like</h3>
+            <div className='mt-5'>
+              <h3 className='mb-4'>You Might Also Like</h3>
               <Slider {...sliderSettings}>
                 {relatedCourses.map((relatedCourse) => (
-                  <div key={relatedCourse._id} className="px-2">
+                  <div key={relatedCourse._id} className='px-2'>
                     <Card
-                      className="h-100 cursor-pointer shadow-sm"
+                      className='h-100 cursor-pointer shadow-sm'
                       onClick={() => navigate(`/courses/${relatedCourse._id}`)}
                     >
                       <Card.Img
-                        variant="top"
+                        variant='top'
                         src={
                           relatedCourse.imageUrl ||
                           "https://via.placeholder.com/300x200?text=Course+Image"
@@ -353,14 +374,14 @@ const OtherCourse = () => {
                         style={{ height: "160px", objectFit: "cover" }}
                       />
                       <Card.Body>
-                        <Card.Title className="fs-6">
+                        <Card.Title className='fs-6'>
                           {relatedCourse.title}
                         </Card.Title>
-                        <div className="d-flex justify-content-between align-items-center mt-3">
-                          <span className="badge bg-secondary">
+                        <div className='d-flex justify-content-between align-items-center mt-3'>
+                          <span className='badge bg-secondary'>
                             {relatedCourse.level || "All Levels"}
                           </span>
-                          <strong className="text-primary">
+                          <strong className='text-primary'>
                             {relatedCourse.price
                               ? `$${relatedCourse.price}`
                               : "Free"}
@@ -374,7 +395,7 @@ const OtherCourse = () => {
             </div>
           ) : null}
         </Container>
-        <div className="col-md-12">
+        <div className='col-md-12'>
           <OtherCoursesSlider />
         </div>
       </Layout>

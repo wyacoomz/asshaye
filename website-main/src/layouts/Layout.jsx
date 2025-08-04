@@ -54,9 +54,9 @@ export const Layout = ({
       {header === 9 && <HeaderNine />}
 
       {/* breadcrumb */}
-      {breadcrumbTitle && (
+      {/* {breadcrumbTitle && (
         <Breadcrumb title={breadcrumbTitle} subtitle={breadcrumbSubtitle} />
-      )}
+      )} */}
 
       {children}
 

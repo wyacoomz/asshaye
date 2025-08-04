@@ -17,8 +17,9 @@ import courseThumb1 from "../../assets/alec-img/courses/course-1.jpg";
 import courseThumb2 from "../../assets/alec-img/courses/up-course.jpg";
 import courseThumb3 from "../../assets/alec-img/courses/jh-course.jpg";
 import courseThumb4 from "../../assets/alec-img/courses/bihar-course.jpg";
-import courseThumb5 from "../../assets/alec-img/courses/uttarakhand-course.jpg";
 import courseThumb6 from "../../assets/alec-img/courses/rj-course.jpg";
+import courseThumb5 from "../../assets/alec-img/courses/uttarakhand-course.jpg";
+import { useSelector } from "react-redux";
 
 export const CoursesOne = () => {
   const [courses, setCourses] = useState([]);
@@ -47,8 +48,12 @@ export const CoursesOne = () => {
     fetchCourses();
   }, []);
 
+  const { routesData } = useSelector((state) => state.routes);
+
+  const { path } = routesData.find((route) => route.element === "CouresesFull");
+
   const handleCourseClick = (courseId) => {
-    navigate(`/courses/${courseId}`);
+    navigate(`${path}`, { state: { id: courseId } });
   };
 
   // Fallback images in case API data doesn't include images
@@ -62,25 +67,25 @@ export const CoursesOne = () => {
   ];
 
   if (loading) {
-    return <div className="text-center py-5">Loading courses...</div>;
+    return <div className='text-center py-5'>Loading courses...</div>;
   }
 
   if (error) {
-    return <div className="text-center py-5 text-danger">Error: {error}</div>;
+    return <div className='text-center py-5 text-danger'>Error: {error}</div>;
   }
 
   return (
-    <section style={{ backgroundColor: "#f8f9fa" }} className="back-cover">
-      <div className="td_height_20 td_height_lg_20" />
-      <div className="px-2 px-md-5">
+    <section style={{ backgroundColor: "#f8f9fa" }} className='back-cover'>
+      <div className='td_height_20 td_height_lg_20' />
+      <div className='px-2 px-md-5'>
         {/* Header */}
-        <div className="td_section_heading td_style_1 text-center">
-          <p className="td_section_subtitle_up td_fs_30 td_semibold td_spacing_1 td_mb_10 text-uppercase td_accent_color">
+        <div className='td_section_heading td_style_1 text-center'>
+          <p className='td_section_subtitle_up td_fs_30 td_semibold td_spacing_1 td_mb_10 text-uppercase td_accent_color'>
             Popular Courses
           </p>
-          <h2 className="td_section_title td_fs_30 mb-0">Academic Courses</h2>
+          <h2 className='td_section_title td_fs_30 mb-0'>Academic Courses</h2>
         </div>
-        <div className="td_height_30 td_height_lg_30" />
+        <div className='td_height_30 td_height_lg_30' />
 
         {/* Swiper Carousel */}
         <Swiper
@@ -96,12 +101,12 @@ export const CoursesOne = () => {
             768: { slidesPerView: 2 },
             1024: { slidesPerView: 3 },
           }}
-          className="course-slider"
+          className='course-slider'
         >
           {courses.map((course, idx) => (
             <SwiperSlide key={course._id || idx}>
               <div
-                className="course-item"
+                className='course-item'
                 onClick={() => handleCourseClick(course._id)}
                 style={{ cursor: "pointer" }}
               >
@@ -128,7 +133,7 @@ export const CoursesOne = () => {
           ))}
         </Swiper>
       </div>
-      <div className="td_height_20 td_height_lg_20" />
+      <div className='td_height_20 td_height_lg_20' />
     </section>
   );
 };
