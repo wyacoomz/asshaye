@@ -73,8 +73,11 @@ export const SyllabusDownload = () => {
     e.preventDefault();
 
     try {
-      setSubmitting(true); // 🔑 Start loading
-      await axios.post("http://localhost:8000/register/add", formData);
+      setSubmitting(true);
+      await axios.post(
+        "https://backend.aashayeinjudiciary.com/register/add",
+        formData
+      );
       if (selectedSyllabus?.pdfUrl) {
         handleDownloadPdf(selectedSyllabus.pdfUrl, selectedSyllabus.Coursename);
       }
@@ -84,7 +87,7 @@ export const SyllabusDownload = () => {
       alert("Error submitting form. Please try again.");
       console.error(err);
     } finally {
-      setSubmitting(false); // 🔑 Stop loading
+      setSubmitting(false);
     }
   };
 

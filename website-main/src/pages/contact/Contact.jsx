@@ -42,7 +42,7 @@ export const Contact = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/contact/add",
+        "https://backend.aashayeinjudiciary.com/contact/add",
         // "https://backend.aashayeinjudiciary.com/contact/add",
         formData
       );
