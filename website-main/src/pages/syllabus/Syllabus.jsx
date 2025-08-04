@@ -12,6 +12,9 @@ export const SyllabusDownload = () => {
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [selectedSyllabus, setSelectedSyllabus] = useState(null);
+
+  const [submitting, setSubmitting] = useState(false);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -68,7 +71,9 @@ export const SyllabusDownload = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
+      setSubmitting(true); // 🔑 Start loading
       await axios.post("http://localhost:8000/register/add", formData);
       if (selectedSyllabus?.pdfUrl) {
         handleDownloadPdf(selectedSyllabus.pdfUrl, selectedSyllabus.Coursename);
@@ -78,6 +83,8 @@ export const SyllabusDownload = () => {
     } catch (err) {
       alert("Error submitting form. Please try again.");
       console.error(err);
+    } finally {
+      setSubmitting(false); // 🔑 Stop loading
     }
   };
 
@@ -107,6 +114,7 @@ export const SyllabusDownload = () => {
             formData={formData}
             onInputChange={handleInputChange}
             courseName={selectedSyllabus?.Coursename}
+            submitting={submitting}
           />
         </div>
       </section>
@@ -155,6 +163,7 @@ const DownloadModal = ({
   formData,
   onInputChange,
   courseName,
+  submitting,
 }) => (
   <Modal show={show} onHide={onHide} backdrop='static'>
     <Modal.Header closeButton>
@@ -207,8 +216,8 @@ const DownloadModal = ({
         <Button variant='secondary' onClick={onHide}>
           Close
         </Button>
-        <Button variant='primary' type='submit'>
-          Download
+        <Button variant='primary' type='submit' disabled={submitting}>
+          {submitting ? "Processing..." : "Download"}
         </Button>
       </Modal.Footer>
     </Form>

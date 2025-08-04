@@ -1,13 +1,11 @@
-
-
 import React, { useEffect, useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import $ from "jquery";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { fetchcategory } from "../../judement/api";
-import PropTypes from 'prop-types';
-
+import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
 export const CoursesSidebar = ({ onCategorySelect }) => {
   const navigate = useNavigate();
@@ -26,7 +24,9 @@ export const CoursesSidebar = ({ onCategorySelect }) => {
           },
         });
         $("#amount").val(
-          `$${$("#slider-range").slider("values", 0)} - $${$("#slider-range").slider("values", 1)}`
+          `$${$("#slider-range").slider("values", 0)} - $${$(
+            "#slider-range"
+          ).slider("values", 1)}`
         );
       }
     };
@@ -43,49 +43,56 @@ export const CoursesSidebar = ({ onCategorySelect }) => {
 
   return (
     <>
-      {/* Mobile Toggle Button */}
-      <div className="d-lg-none d-flex align-items-center mb-3 justify-content-between mt-4 ">
-          <h5 className="fs-4 mb-0">Explore Our Jugement</h5>
+      <div className='d-lg-none d-flex align-items-center mb-3 justify-content-between mt-4 '>
+        <h5 className='fs-4 mb-0'>Explore Our Jugement</h5>
         <button
-          className="btn btn-danger  shadow"
-          type="button"
-          data-bs-toggle="offcanvas"
-          data-bs-target="#mobileSidebar"
-          aria-controls="mobileSidebar"
+          className='btn btn-danger  shadow'
+          type='button'
+          data-bs-toggle='offcanvas'
+          data-bs-target='#mobileSidebar'
+          aria-controls='mobileSidebar'
         >
-          <i className="bi bi-funnel-fill "></i>Open Filter
+          <i className='bi bi-funnel-fill '></i>Open Filter
         </button>
       </div>
 
       {/* Mobile Sidebar */}
       <div
-        className="offcanvas offcanvas-start custom-offcanvas-width"
-        tabIndex="-1"
-        id="mobileSidebar"
-        aria-labelledby="mobileSidebarLabel"
+        className='offcanvas offcanvas-start custom-offcanvas-width'
+        tabIndex='-1'
+        id='mobileSidebar'
+        aria-labelledby='mobileSidebarLabel'
       >
-        <div className="offcanvas-header border-bottom">
-          <h5 className="offcanvas-title" id="mobileSidebarLabel">
+        <div className='offcanvas-header border-bottom'>
+          <h5 className='offcanvas-title' id='mobileSidebarLabel'>
             Filters
           </h5>
           <button
-            type="button"
-            className="btn-close"
-            data-bs-dismiss="offcanvas"
-            aria-label="Close"
+            type='button'
+            className='btn-close'
+            data-bs-dismiss='offcanvas'
+            aria-label='Close'
           ></button>
         </div>
-        <div className="offcanvas-body">
-          <SidebarContent onCategorySelect={onCategorySelect} navigate={navigate} />
+        <div className='offcanvas-body'>
+          <SidebarContent
+            onCategorySelect={onCategorySelect}
+            navigate={navigate}
+          />
         </div>
       </div>
 
       {/* Desktop Sidebar */}
-      <div className="d-none d-lg-block p-4 border-end" style={{ minWidth: "250px" }}>
-        <SidebarContent onCategorySelect={onCategorySelect} navigate={navigate} />
+      <div
+        className='d-none d-lg-block p-4 border-end'
+        style={{ minWidth: "250px" }}
+      >
+        <SidebarContent
+          onCategorySelect={onCategorySelect}
+          navigate={navigate}
+        />
       </div>
 
-      {/* Custom styles */}
       <style jsx>{`
         @media (max-width: 991.98px) {
           .custom-offcanvas-width {
@@ -115,7 +122,7 @@ export const CoursesSidebar = ({ onCategorySelect }) => {
 };
 
 CoursesSidebar.propTypes = {
-  onCategorySelect: PropTypes.func.isRequired
+  onCategorySelect: PropTypes.func.isRequired,
 };
 
 // Sidebar Content Component
@@ -142,30 +149,42 @@ const SidebarContent = ({ onCategorySelect, navigate }) => {
     }
   }, []);
 
+  const { routesData, loading: routesLoading } = useSelector(
+    (state) => state.routes
+  );
+
+  const judgementRoute = routesData.find(
+    (route) => route.element === "Judgement"
+  );
+
   useEffect(() => {
     fetchCategories();
   }, [fetchCategories]);
 
+  const handleCategoryClick = useCallback(
+    (e, categoryId, categoryName) => {
+      e.preventDefault();
+      if (!categoryId) return;
 
+      // Pass both ID and name through props
+      onCategorySelect?.({
+        id: categoryId,
+        name: categoryName,
+      });
 
-  const handleCategoryClick = useCallback((e, categoryId, categoryName) => {
-    e.preventDefault();
-    if (!categoryId) return;
-
-    // Pass both ID and name through props
-    onCategorySelect?.({
-      id: categoryId,
-      name: categoryName
-    });
-
-    navigate(`/judgements/${categoryId}`);
-  }, [onCategorySelect, navigate]);
+      // navigate(`/judgements/${categoryId}`);
+      navigate(`${judgementRoute.path}`, {
+        state: { blogId: courseId },
+      });
+    },
+    [onCategorySelect, navigate]
+  );
 
   if (loading) {
     return (
-      <div className="d-flex justify-content-center py-3">
-        <div className="spinner-border text-danger" role="status">
-          <span className="visually-hidden">Loading...</span>
+      <div className='d-flex justify-content-center py-3'>
+        <div className='spinner-border text-danger' role='status'>
+          <span className='visually-hidden'>Loading...</span>
         </div>
       </div>
     );
@@ -173,12 +192,9 @@ const SidebarContent = ({ onCategorySelect, navigate }) => {
 
   if (error) {
     return (
-      <div className="alert alert-danger">
+      <div className='alert alert-danger'>
         {error}
-        <button
-          className="btn btn-link p-0 ms-2"
-          onClick={fetchCategories}
-        >
+        <button className='btn btn-link p-0 ms-2' onClick={fetchCategories}>
           Retry
         </button>
       </div>
@@ -186,14 +202,15 @@ const SidebarContent = ({ onCategorySelect, navigate }) => {
   }
 
   return (
-    <div className="td_sidebar_filter m-0 me-0">
-      <div className="td_filter_widget mb-4">
-        <h3 className="td_filter_widget_title h5 mb-3 text-uppercase border-bottom pb-2">
+    <div className='td_sidebar_filter m-0 me-0'>
+      <div className='td_filter_widget mb-4'>
+        <h3 className='td_filter_widget_title h5 mb-3 text-uppercase border-bottom pb-2'>
           Categories
         </h3>
-        <div className="td_filter_category fw-semibold">
-        {categories.map((category) => {
-            const categoryId = category.id || category._id || category.categoryId;
+        <div className='td_filter_category fw-semibold'>
+          {categories.map((category) => {
+            const categoryId =
+              category.id || category._id || category.categoryId;
             const categoryName = category.name || "Unnamed Category";
 
             if (!categoryId) return null;
@@ -201,13 +218,13 @@ const SidebarContent = ({ onCategorySelect, navigate }) => {
             return (
               <Link
                 key={categoryId}
-                to={`/judgements/${categoryId}`}
-                className="d-block mb-2 text-dark text-decoration-none category-link"
-                onClick={(e) => handleCategoryClick(e, categoryId, categoryName)}
+                className='d-block mb-2 text-dark text-decoration-none category-link'
+                onClick={(e) =>
+                  handleCategoryClick(e, categoryId, categoryName)
+                }
               >
                 {categoryName}
               </Link>
-
             );
           })}
         </div>
@@ -218,5 +235,5 @@ const SidebarContent = ({ onCategorySelect, navigate }) => {
 
 SidebarContent.propTypes = {
   onCategorySelect: PropTypes.func.isRequired,
-  navigate: PropTypes.func.isRequired
+  navigate: PropTypes.func.isRequired,
 };

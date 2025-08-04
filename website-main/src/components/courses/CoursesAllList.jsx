@@ -83,12 +83,6 @@ export const CoursesAllList = ({ selectedCategoryId }) => {
     }
   }, [selectedCategoryId, categoryId, allCourses]);
 
-  // const handleCourseClick = useCallback(
-  //   (courseId) => {
-  //     navigate(`/judgements-details/${courseId}`);
-  //   },
-  //   [navigate]
-  // );
   const handleCourseClick = useCallback(
     (courseId) => {
       navigate(`${judgementRoute.path}`, {
