@@ -15,6 +15,8 @@ export const SyllabusDownload = () => {
 
   const [submitting, setSubmitting] = useState(false);
 
+  
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",

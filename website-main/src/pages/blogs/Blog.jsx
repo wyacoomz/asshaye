@@ -5,6 +5,7 @@ import OtherCoursesSlider from "../course/OtherCourses";
 import MarqueeStrike from "../../components/popup/MarqueeStrike";
 
 export const Blog = () => {
+  // sourabh
   return (
     <Layout header={9} footer={1}>
       {/* <MarqueeStrike /> */}
