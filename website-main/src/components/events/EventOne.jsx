@@ -300,6 +300,7 @@ import eventThumb1 from "../../assets/alec-img/events/second.jpg";
 import eventThumb2 from "../../assets/alec-img/events/one.avif";
 import eventThumb3 from "../../assets/alec-img/events/third.jpg";
 import eventThumb4 from "../../assets/alec-img/events/fourth.avif";
+import { useSelector } from "react-redux";
 
 export const EventOne = () => {
   const [contacts, setContacts] = useState([]);
@@ -338,6 +339,10 @@ export const EventOne = () => {
     return dayjs(dateString).format("MMM D, YYYY");
   };
 
+  const { routesData } = useSelector((state) => state.routes);
+
+  const { path } = routesData.find((route) => route.element === "EventDetails");
+
   return (
     <section className=''>
       {isLoading ? (
@@ -374,7 +379,8 @@ export const EventOne = () => {
                     className='td_card td_style_1 p-4 td_type_1 border border-1'
                   >
                     <Link
-                      to={`/event-details/${course._id}`}
+                      to={`${path}`}
+                      state={course._id}
                       className='td_card_thumb d-block'
                     >
                       <img
@@ -389,7 +395,7 @@ export const EventOne = () => {
                       />
                       <i className='fa-solid fa-arrow-up-right-from-square'></i>
                     </Link>
-                    <Link to={`/event-details/${course._id}`}>
+                    <Link to={`${path}`} state={course._id}>
                       <div className='td_card_info'>
                         <div className='td_card_info_in'>
                           <div className='td_mb_20'>

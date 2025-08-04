@@ -11,6 +11,7 @@ import { Layout } from "../../layouts/Layout";
 import { CoursesAllGrid } from "./CoursesAllGrid";
 import OtherCoursesSlider from "../../pages/course/OtherCourses";
 import { SliderCard } from "../../common/SliderCard";
+import { useSelector } from "react-redux";
 
 const CouresesFull = () => {
   // const { id } = useParams();
@@ -21,8 +22,12 @@ const CouresesFull = () => {
   const [relatedCourses, setRelatedCourses] = useState([]);
   const [relatedLoading, setRelatedLoading] = useState(false);
 
+  const { routesData } = useSelector((state) => state.routes);
+
+  const { path } = routesData.find((route) => route.element === "CourseNew");
+
   const handleSubSubcategoryClick = ({ id, name }) => {
-    navigate("/new-course", { state: { id, name } });
+    navigate(`${path}`, { state: { id, name, fromDetails: true } });
   };
 
   const { state } = useLocation();
@@ -192,7 +197,7 @@ const CouresesFull = () => {
 
   const handleBack = () => {
     if (state?.filter) {
-      navigate("/new-course", { state: { filter: state.filter } });
+      navigate(`${path}`, { state: { filter: state.filter } });
     } else {
       navigate(-1);
     }
