@@ -8,6 +8,7 @@ const SuccessStory = () => {
     StudentName: "",
     Judicial: "",
     altText: "",
+    description: "",
   });
 
   const [imageFiles, setImageFiles] = useState([]);
@@ -71,6 +72,7 @@ const SuccessStory = () => {
     formData.append("StudentName", input.StudentName);
     formData.append("Judicial", input.Judicial);
     formData.append("altText", input.altText);
+    formData.append("description", input.description);
 
     imageFiles.forEach((file) => formData.append("images", file));
 
@@ -85,6 +87,7 @@ const SuccessStory = () => {
         StudentName: "",
         Judicial: "",
         altText: "",
+        description: "",
       });
       setImageFiles([]);
       setImagePreviews([]);
@@ -107,19 +110,49 @@ const SuccessStory = () => {
       </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {Object.keys(input).map((key) => (
-          <div className="" key={key}>
-            <label className="block mb-1 font-medium capitalize">{key}</label>
-            <input
-              type="text"
-              name={key}
-              value={input[key]}
-              onChange={handleInput}
-              className="w-full p-2 border border-gray-300 rounded"
-              required
-            />
-          </div>
-        ))}
+        <div>
+          <label className="block mb-1 font-medium capitalize">Student Name</label>
+          <input
+            type="text"
+            name="StudentName"
+            value={input.StudentName}
+            onChange={handleInput}
+            className="w-full p-2 border border-gray-300 rounded"
+            required
+          />
+        </div>
+        <div>
+          <label className="block mb-1 font-medium capitalize">Judicial</label>
+          <input
+            type="text"
+            name="Judicial"
+            value={input.Judicial}
+            onChange={handleInput}
+            className="w-full p-2 border border-gray-300 rounded"
+            required
+          />
+        </div>
+        <div>
+          <label className="block mb-1 font-medium capitalize">Alt Text</label>
+          <input
+            type="text"
+            name="altText"
+            value={input.altText}
+            onChange={handleInput}
+            className="w-full p-2 border border-gray-300 rounded"
+            required
+          />
+        </div>
+        <div>
+          <label className="block mb-1 font-medium capitalize">Description (optional)</label>
+          <textarea
+            name="description"
+            value={input.description}
+            onChange={handleInput}
+            className="w-full p-2 border border-gray-300 rounded"
+            rows={3}
+          />
+        </div>
       </div>
 
       <div className="my-6">

@@ -7,7 +7,7 @@ import { fetchcategory } from "../../judement/api";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 
-export const CoursesSidebar = ({ onCategorySelect }) => {
+export const CoursesSidebar = ({ onCategorySelect, selectedCategoryId }) => {
   const navigate = useNavigate();
 
   // Initialize jQuery UI slider
@@ -44,7 +44,7 @@ export const CoursesSidebar = ({ onCategorySelect }) => {
   return (
     <>
       <div className='d-lg-none d-flex align-items-center mb-3 justify-content-between mt-4 '>
-        <h5 className='fs-4 mb-0'>Explore Our Jugement</h5>
+        <h5 className='fs-4 mb-0'>Explore Our Judgement</h5>
         <button
           className='btn btn-danger  shadow'
           type='button'
@@ -78,6 +78,7 @@ export const CoursesSidebar = ({ onCategorySelect }) => {
           <SidebarContent
             onCategorySelect={onCategorySelect}
             navigate={navigate}
+            selectedCategoryId={selectedCategoryId}
           />
         </div>
       </div>
@@ -90,6 +91,7 @@ export const CoursesSidebar = ({ onCategorySelect }) => {
         <SidebarContent
           onCategorySelect={onCategorySelect}
           navigate={navigate}
+          selectedCategoryId={selectedCategoryId}
         />
       </div>
 
@@ -116,17 +118,23 @@ export const CoursesSidebar = ({ onCategorySelect }) => {
           top: -6px;
           border-radius: 50%;
         }
-      `}</style>
+          .active-category {
+  background-color: #dc3545; /* Bootstrap “danger” red */
+  color: #000 !important;      /* black text */
+  padding: 4px 6px;
+  border-radius: 4px;
+}`}</style>
     </>
   );
 };
 
 CoursesSidebar.propTypes = {
   onCategorySelect: PropTypes.func.isRequired,
+  selectedCategoryId: PropTypes.string,
 };
 
 // Sidebar Content Component
-const SidebarContent = ({ onCategorySelect, navigate }) => {
+const SidebarContent = ({ onCategorySelect, navigate, selectedCategoryId }) => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -216,15 +224,31 @@ const SidebarContent = ({ onCategorySelect, navigate }) => {
             if (!categoryId) return null;
 
             return (
+  //             <Link
+  //               key={categoryId}
+  //               // className='d-block mb-2 text-dark text-decoration-none category-link'
+  //                className={`d-block mb-2 text-decoration-none category-link ${
+  //   selectedCategoryId === categoryId ? "text-red-600 font-semibold" : "text-black"
+  // }`}
+  //               onClick={(e) =>
+  //                 handleCategoryClick(e, categoryId, categoryName)
+  //               }
+  //             >
+  //               {categoryName}
+  //             </Link>
               <Link
-                key={categoryId}
-                className='d-block mb-2 text-dark text-decoration-none category-link'
-                onClick={(e) =>
-                  handleCategoryClick(e, categoryId, categoryName)
-                }
-              >
-                {categoryName}
-              </Link>
+              key={categoryId}
+              className={`d-block mb-2 text-decoration-none category-link ${
+                selectedCategoryId === categoryId
+                  ? "active-category"        // red background, black text
+                  : "text-dark"              // default dark text
+              }`}
+              onClick={(e) =>
+                handleCategoryClick(e, categoryId, categoryName)
+              }
+            >
+              {categoryName}
+            </Link>
             );
           })}
         </div>
@@ -236,4 +260,5 @@ const SidebarContent = ({ onCategorySelect, navigate }) => {
 SidebarContent.propTypes = {
   onCategorySelect: PropTypes.func.isRequired,
   navigate: PropTypes.func.isRequired,
+  selectedCategoryId: PropTypes.string,
 };

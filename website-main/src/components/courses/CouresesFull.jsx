@@ -243,10 +243,11 @@ const CouresesFull = () => {
                       ></iframe>
                     ) : (
                       <div className='d-flex justify-content-center align-items-center h-100 text-white'>
-                        <div className='text-center'>
-                          <div className='fs-1 mb-2'>🎬</div>
-                          <p>Video Coming Soon</p>
-                        </div>
+                        {/* <div className='text-center'> */}
+                          {/* <div className='fs-1 mb-2'>🎬</div> */}
+                          {/* <p>Video Coming Soon</p> */}
+                          <img  className=" h-full w-full"src={course.images} alt="" />
+                        {/* </div> */}
                       </div>
                     )}
                   </div>

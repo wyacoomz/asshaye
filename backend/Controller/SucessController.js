@@ -8,7 +8,7 @@ const Sucesserstudent = async (req, res) => {
       Judicial,
       size,
       altText,
-
+      description,
     } = req.body;
 
     const parsedSize = typeof size === 'string' ? JSON.parse(size) : size;
@@ -33,6 +33,7 @@ const Sucesserstudent = async (req, res) => {
       StudentName,
       Judicial,
       altText,
+      description,
       images: uploadedImages,
       size: parsedSize
     });
@@ -82,7 +83,7 @@ const editDisplay = async (req, res) => {
 // Save updated success student record
 const editDataSave = async (req, res) => {
   try {
-    const { id, StudentName, Judicial, size ,altText} = req.body;
+    const { id, StudentName, Judicial, size ,altText, description } = req.body;
 
     if (!id) return res.status(400).json({ message: "ID is required." });
 
@@ -103,6 +104,7 @@ const editDataSave = async (req, res) => {
         StudentName,
         Judicial,
         altText,
+        description,
         size: size ? (typeof size === "string" ? JSON.parse(size) : size) : undefined,
         images,
       },

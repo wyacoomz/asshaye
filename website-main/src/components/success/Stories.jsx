@@ -217,6 +217,11 @@ export const SuccessStory = () => {
                   <p className="card-text text-muted">
                     {story.Judicial || story.service}
                   </p>
+                  {story.description && (
+                    <p className="card-text text-secondary mt-2" style={{ fontSize: '0.95em' }}>
+                      {story.description}
+                    </p>
+                  )}
                 </div>
               </div>
                </Link>
