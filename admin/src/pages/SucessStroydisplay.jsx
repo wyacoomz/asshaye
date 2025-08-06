@@ -25,6 +25,7 @@ const SuccessStoryDisplay = () => {
     StudentName: "",
     Judicial: "",
     altText: "",
+    description: "",
     images: [],
     newImages: null,
   });
@@ -34,6 +35,7 @@ const SuccessStoryDisplay = () => {
       setLoading(true);
       const response = await axios.get(
         "https://backend.aashayeinjudiciary.com/success/display"
+        // "http://localhost:8000/success/display"
       );
       const storiesArray = Array.isArray(response.data) ? response.data : [];
       const formattedStories = storiesArray.map((story) => ({
@@ -66,6 +68,7 @@ const SuccessStoryDisplay = () => {
       StudentName: "",
       Judicial: "",
       altText: "",
+      description: "",
       images: [],
       newImages: null,
     });
@@ -95,6 +98,7 @@ const SuccessStoryDisplay = () => {
       StudentName: story.StudentName,
       Judicial: story.Judicial,
       altText: story.altText || "",
+      description: story.description || "",
       images: story.images || [],
       newImages: null,
     });
@@ -120,6 +124,7 @@ const SuccessStoryDisplay = () => {
       formData.append("StudentName", editFormData.StudentName);
       formData.append("Judicial", editFormData.Judicial);
       formData.append("altText", editFormData.altText);
+      formData.append("description", editFormData.description);
 
       if (editingStory) {
         formData.append("id", editingStory);
@@ -192,6 +197,12 @@ const SuccessStoryDisplay = () => {
       selector: (row) => row.altText,
       sortable: true,
       cell: (row) => <div className='font-medium'>{row.altText}</div>,
+    },
+    {
+      name: "Description",
+      selector: (row) => row.description,
+      sortable: false,
+      cell: (row) => <div className='text-gray-600'>{row.description}</div>,
     },
     {
       name: "Judicial",
@@ -363,6 +374,19 @@ const SuccessStoryDisplay = () => {
                     onChange={handleInputChange}
                     className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
                     required
+                  />
+                </div>
+
+                <div>
+                  <label className='block text-sm font-medium text-gray-700 mb-1'>
+                    Description
+                  </label>
+                  <textarea
+                    name='description'
+                    value={editFormData.description}
+                    onChange={handleInputChange}
+                    className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                    rows={3}
                   />
                 </div>
               </div>

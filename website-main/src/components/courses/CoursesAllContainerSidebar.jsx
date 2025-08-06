@@ -6,6 +6,7 @@ export const CoursesAllContainerSidebar = ({
   isGrid,
   children,
   onCategorySelect,
+  selectedCategoryId,
 }) => {
   const handleCategorySelect = (category) => {
     if (onCategorySelect) {
@@ -25,7 +26,8 @@ export const CoursesAllContainerSidebar = ({
         <div className='row'>
           {/* Sidebar Column */}
           <div className='col-lg-4'>
-            <CoursesSidebar onCategorySelect={handleCategorySelect} />
+            <CoursesSidebar onCategorySelect={handleCategorySelect} 
+            selectedCategoryId={selectedCategoryId} />
           </div>
 
           <div className='col-lg-8'>{children}</div>

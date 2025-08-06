@@ -19,7 +19,7 @@ export const CoursesAllGrid = ({ courses, loading, error }) => {
       {Object.entries(groupedCourses).map(([judiciaryName, grouped]) => (
         <div key={judiciaryName} className='mb-5'>
           <div className={`row g-4 ${grouped.length === 1 ? "" : ""}`}>
-            <h4>{judiciaryName}</h4>
+            {/* <h4>{judiciaryName}</h4> */}
             {grouped.map((course) => (
               <div key={course._id} className='col-lg-4 col-md-6 col-sm-12'>
                 <CourseCardSimple
