@@ -40,6 +40,12 @@ const BlogSchema = new mongoose.Schema(
       // Changed to Date if it's a date field
       type: Date,
     },
+
+    // 🔗 Reference to BlogSEO
+    seo: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "BlogSEO",
+    },
   },
   {
     timestamps: true,

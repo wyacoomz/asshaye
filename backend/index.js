@@ -69,6 +69,8 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
 
+app.use("/api/blog-seo", require("./Routes/seo/blogSeo"));
+
 app.use("/api/seo", seoRoutes);
 app.use("/query", QueryRoutes);
 app.use("/banner", BannerRoutes);
