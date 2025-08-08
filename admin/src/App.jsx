@@ -76,6 +76,12 @@ const App = () => {
             <Route index element={<Dashboard />} />
             <Route path='/dashboard' element={<Dashboard />} />
             <Route path='/SEO' element={<AddSEO />} />
+            <Route path='/seo-course' element={<AddSEO />} />
+            <Route path='/seo-blogs' element={<AddSEO />} />
+            <Route path='/seo-whats-new' element={<AddSEO />} />
+            <Route path='/seo-event' element={<AddSEO />} />
+            <Route path='/seo-member' element={<AddSEO />} />
+            <Route path='/seo-judgment' element={<AddSEO />} />
             <Route path='/courses' element={<Course />} />
             <Route path='/banner' element={<Banner />} />
             <Route path='/allcourse' element={<CourseDisplay />} />

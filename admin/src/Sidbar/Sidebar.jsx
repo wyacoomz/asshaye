@@ -230,7 +230,18 @@ const Sidebar = () => {
       icon: <FiBook />,
       subItems: [{ name: "Dynamic", to: "/dynamic" }],
     },
-    { name: "AddSEO", to: "/SEO", icon: <FiHome /> },
+    {
+      name: "AddSEO",
+      icon: <FiHome />,
+      subItems: [
+        { name: "Course", to: "/seo-course" },
+        { name: "Blogs", to: "/seo-blogs" },
+        { name: "Whats New", to: "/seo-whats-new" },
+        { name: "Event", to: "/seo-event" },
+        { name: "Member", to: "/seo-member" },
+        { name: "Judgment", to: "/seo-judgment" },
+      ],
+    },
   ];
 
   return (

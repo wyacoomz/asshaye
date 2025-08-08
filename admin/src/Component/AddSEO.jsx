@@ -165,17 +165,6 @@ const AddSEO = () => {
           className='bg-white p-6 rounded shadow-md mb-8 space-y-4'
         >
           <div className='grid md:grid-cols-2 gap-4'>
-            {/* <div>
-              <label className='block text-sm font-medium'>Path</label>
-              <input
-                type='text'
-                name='path'
-                value={formData.path}
-                onChange={handleChange}
-                required
-                className='w-full mt-1 px-4 py-2 border rounded-md'
-              />
-            </div> */}
             <div>
               <label className='block text-sm font-medium'>Path</label>
               <select
