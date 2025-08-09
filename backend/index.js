@@ -53,6 +53,7 @@ const RefundRoute = require("./Routes/Refundpolicy/RefundRoute");
 const dynamicRoute = require("./Routes/DynamicRoute/DynamicRoute");
 const OtherCourse = require("./Routes/OtherRoute/OtherRoute");
 const SocialRoute = require("./Routes/SocialMedia/SocailRoute");
+const SocRoute = require("./Routes/Soc/SocRoute");
 const PlayStoreRoute = require("./Routes/PlayStoreRoute/PlayStoreRoute");
 const seoRoutes = require("./Routes/seo/seoRoutes");
 
@@ -105,6 +106,7 @@ app.use("/refund", RefundRoute);
 app.use("/dynamics", dynamicRoute);
 app.use("/othercourse", OtherCourse);
 app.use("/social", SocialRoute);
+app.use("/soc", SocRoute);
 app.use("/playstore", PlayStoreRoute);
 
 app.listen(PORT, function (error) {

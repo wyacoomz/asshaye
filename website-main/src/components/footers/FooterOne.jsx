@@ -28,6 +28,7 @@ export const FooterOne = () => {
   const [loading, setLoading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [socialLinks, setSocialLinks] = useState([]);
+  const [socLinks, setSocLinks] = useState([]);
   const [playstoreLinks, setPlaystoreLinks] = useState([]);
   const navigate = useNavigate();
 
@@ -57,6 +58,11 @@ export const FooterOne = () => {
           "https://backend.aashayeinjudiciary.com/playstore/alldisplay"
         );
         setPlaystoreLinks(playstoreResponse.data);
+
+        const socResponse = await axios.get(
+          "https://backend.aashayeinjudiciary.com/soc"
+        );
+        setSocLinks(socResponse.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
         toast.error("Failed to load data. Please try again.");
@@ -223,6 +229,29 @@ export const FooterOne = () => {
                   </a>
                 </ul>
               </li>
+            </div>
+          </div>
+
+          {/* SOC Links */}
+          <div className='td_footer_col'>
+            <div className='td_footer_widget'>
+              <h2 className='td_footer_widget_title td_fs_32 td_white_color td_medium td_mb_30'>
+                SOC Links
+              </h2>
+              <ul className='td_footer_widget_menu'>
+                {socLinks.map((link) => (
+                  <li key={link._id}>
+                    <a
+                      href={link.url}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='dropdown-item'
+                    >
+                      {link.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
 

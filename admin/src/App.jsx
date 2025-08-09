@@ -56,6 +56,8 @@ import OtherCoursediplay from "./OtherCourse/OtherCoursediplay";
 import SyllabusEnquiryDisplay from "./SyllabusEnquiry/SyllabusEnquiryDiplay";
 import SocialMedia from "./SocialMedia/SocialMedia";
 import SocialMediaDisplay from "./SocialMedia/SocialMediaDisplay";
+import Soc from "./Soc/Soc";
+import SocDisplay from "./Soc/SocDisplay";
 import PlayStore from "./Playstore/PlayStore";
 import AddSEO from "./Component/AddSEO";
 
@@ -142,6 +144,8 @@ const App = () => {
               path='/socialmediadisplay'
               element={<SocialMediaDisplay />}
             />
+            <Route path='/soc' element={<Soc />} />
+            <Route path='/socdisplay' element={<SocDisplay />} />
             <Route path='/playstore' element={<PlayStore />} />
           </Route>
         </Route>

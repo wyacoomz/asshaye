@@ -215,6 +215,15 @@ const Sidebar = () => {
     },
 
     {
+      name: "SOC",
+      icon: <FiLink />,
+      subItems: [
+        { name: "Add SOC", to: "/soc" },
+        { name: "View SOC", to: "/socdisplay" },
+      ],
+    },
+
+    {
       name: "Play Store",
       icon: <FiBook />,
       subItems: [{ name: "Add playstore Icon", to: "/playstore" }],
