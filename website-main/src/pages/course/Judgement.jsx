@@ -17,6 +17,7 @@ export const Judgement = () => {
       <CoursesAllContainerSidebar
         isGrid
         onCategorySelect={handleCategorySelect}
+        selectedCategoryId={selectedCategoryId}
       >
         <CoursesAllList selectedCategoryId={selectedCategoryId} />
       </CoursesAllContainerSidebar>

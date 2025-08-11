@@ -234,7 +234,7 @@ const SyllabusEnquiryDisplay = () => {
   const fetchContacts = async () => {
     try {
       const response = await axios.get(api);
-      setContacts(response.data.data);
+      setContacts(response.data.data.reverse());
       setLoading(false);
     } catch (error) {
       console.error("Error fetching contacts:", error);

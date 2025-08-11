@@ -9,7 +9,8 @@ import blogDetails1 from "../../assets/alec-img/blogs/one.jpg";
 import avatar1 from "../../assets/alec-img/testi/aryan.jpg";
 import OtherCoursesSlider from "../course/OtherCourses";
 import MarqueeStrike from "../../components/popup/MarqueeStrike";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getBlogSEOById } from "../../Redux/features/blogSeo/blogSeoThunk";
 
 export const BlogDetails = ({ courseId }) => {
   const navigate = useNavigate();
@@ -19,14 +20,53 @@ export const BlogDetails = ({ courseId }) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // console.log(product, "SBSBSBSBSB");
   const { routesData, loading: routesLoading } = useSelector(
     (state) => state.routes
   );
 
   const blogRoute = routesData.find((route) => route.element === "BlogDetails");
 
-  // console.log(blogRoute?.path, "adsasjdahdjkahdkashdkjashjLOG");
+  const { currentSEO } = useSelector((state) => state.blogSeo);
+  // console.log(currentSEO, "SBSBSBSBSB");
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (product && product?.seo) {
+      dispatch(getBlogSEOById(product.seo));
+    }
+  }, [product]);
+
+  useEffect(() => {
+    if (currentSEO) {
+      // Set document title
+      document.title = currentSEO.title || "Default Blog Title";
+
+      // Set or update meta description
+      const metaDescription = document.querySelector(
+        "meta[name='description']"
+      );
+      if (metaDescription) {
+        metaDescription.setAttribute("content", currentSEO.description || "");
+      } else {
+        const descTag = document.createElement("meta");
+        descTag.name = "description";
+        descTag.content = currentSEO.description || "";
+        document.head.appendChild(descTag);
+      }
+
+      // Set or update meta keywords
+      const metaKeywords = document.querySelector("meta[name='keywords']");
+      if (metaKeywords) {
+        metaKeywords.setAttribute("content", currentSEO.keywords || "");
+      } else {
+        const keywordTag = document.createElement("meta");
+        keywordTag.name = "keywords";
+        keywordTag.content = currentSEO.keywords || "";
+        document.head.appendChild(keywordTag);
+      }
+    }
+  }, [currentSEO]);
 
   useEffect(() => {
     if (courseId) {

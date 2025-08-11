@@ -69,6 +69,7 @@ export const CoursesAllGrid = ({ courses, loading, error }) => {
 
   return (
     <div className='container'>
+
       <div className='row g-4'>
         {courses.map((course) => (
           <div key={course._id} className='col-lg-4 col-md-6 col-sm-12'>
@@ -79,6 +80,20 @@ export const CoursesAllGrid = ({ courses, loading, error }) => {
                 judiciaryName: course?.subsubCategory?.name || "Other"
               }}
             />
+
+      {Object.entries(groupedCourses).map(([judiciaryName, grouped]) => (
+        <div key={judiciaryName} className='mb-5'>
+          <div className={`row g-4 ${grouped.length === 1 ? "" : ""}`}>
+            {/* <h4>{judiciaryName}</h4> */}
+            {grouped.map((course) => (
+              <div key={course._id} className='col-lg-4 col-md-6 col-sm-12'>
+                <CourseCardSimple
+                  course={course}
+                  currentFilter={{ judiciaryName }}
+                />
+              </div>
+            ))}
+
           </div>
         ))}
 

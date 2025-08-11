@@ -18,6 +18,9 @@ const SucessSchema = new mongoose.Schema(
     altText: {
       type: String,
     },
+    description: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

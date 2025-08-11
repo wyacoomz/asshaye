@@ -21,7 +21,8 @@ const QueryDisplay = () => {
     setIsLoading(true);
     try {
       const response = await axios.get(api);
-      setQueries(response.data);
+      // setQueries(response.data);
+      setQueries(response.data.slice().reverse());
     } catch (error) {
       toast.error("Failed to load queries. Please try again.");
     } finally {
