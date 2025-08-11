@@ -5,16 +5,22 @@ import { CoursesAllGrid } from "../courses/CoursesAllGrid";
 import OtherCoursesSlider from "../../pages/course/OtherCourses";
 import { SliderCard } from "../../common/SliderCard";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const SuccessStories = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  const { routesData } = useSelector((state) => state.routes);
+
+  const { path } = routesData.find((route) => route.element === "CourseNew");
+
   const handleSubSubcategoryClick = ({ id, name }) => {
-  // Navigate to /new-course with query params
-  navigate(`/new-course?id=${id}&name=${name}`);
-};
+    navigate(`${path}`, { state: { id, name, fromDetails: true } });
+  };
+
   useEffect(() => {
     const fetchStories = async () => {
       try {
@@ -38,37 +44,36 @@ const SuccessStories = () => {
 
   return (
     <Layout header={9} footer={1}>
-        <div className="td_height_112 td_height_lg_80" />
-      <div className="col-md-12">
-         <SliderCard onSlideClick={handleSubSubcategoryClick} />
+      <div className='td_height_112 td_height_lg_80' />
+      <div className='col-md-12'>
+        <SliderCard onSlideClick={handleSubSubcategoryClick} />
       </div>
-      <section className=" p-0 text-center bg-light mt-5">
-        <div className="container">
-          <h2 className="text-danger fw-bold text-uppercase">Success Story</h2>
-          <h3 className="fs-2 fw-bold mt-2 mb-4 text-dark">
+      <section className=' p-0 text-center bg-light mt-5'>
+        <div className='container'>
+          <h2 className='text-danger fw-bold text-uppercase'>Success Story</h2>
+          <h3 className='fs-2 fw-bold mt-2 mb-4 text-dark'>
             Our Recent Success Stories
           </h3>
 
           {loading ? (
             <div>Loading...</div>
           ) : error ? (
-            <div className="text-danger">{error}</div>
+            <div className='text-danger'>{error}</div>
           ) : (
-            <div className="row g-4">
+            <div className='row g-4'>
               {stories.map((story, index) => (
-                <div key={index} className="col-lg-3 col-md-6 col-sm-12">
-                  <div className="card border-0 shadow-sm p-3 rounded-3 h-100">
+                <div key={index} className='col-lg-3 col-md-6 col-sm-12'>
+                  <div className='card border-0 shadow-sm p-3 rounded-3 h-100'>
                     <img
                       src={story.images ? story.images[0] : story.image}
                       alt={story.StudentName}
-                      className="card-img-top rounded-3"
-                      style={{ height: "230px", objectFit: "cover" }}
+                      className='card-img-top rounded-3'
                     />
-                    <div className="card-body">
-                      <h5 className="card-title fw-bold text-dark">
+                    <div className='card-body'>
+                      <h5 className='card-title fw-bold text-dark'>
                         {story.StudentName}
                       </h5>
-                      <p className="card-text text-muted">{story.Judicial}</p>
+                      <p className='card-text text-muted'>{story.Judicial}</p>
                     </div>
                   </div>
                 </div>

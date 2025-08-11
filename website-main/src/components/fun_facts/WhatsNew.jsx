@@ -89,13 +89,20 @@ const Card = ({ date, content, images, PDFbrochure, id }) => {
         </div>
 
         {/* Download Icon */}
-        <FiDownload
+      </Link>
+      {/* <FiDownload
           size={20}
           className='text-danger fw-bolder ms-2'
           title='Download'
           onClick={handleDownload}
-        />
-      </Link>
+        /> */}
+
+      <FiDownload
+        size={20}
+        className='text-danger fw-bolder ms-2'
+        title='Download'
+        onClick={handleDownload}
+      />
     </div>
   );
 };

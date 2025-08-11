@@ -7,6 +7,7 @@ import { useMobilemenu } from "../../lib/hooks/useMobilemenu";
 import { useStickyHeader } from "../../lib/hooks/useStickyHeader";
 
 import Logo from "../../assets/alec-img/courses/alec-for-judiciary-removebg-preview.png";
+import { useSelector } from "react-redux";
 
 export const HeaderOne = () => {
   useMobilemenu();
@@ -14,6 +15,10 @@ export const HeaderOne = () => {
 
   const [showSidebar, setShowSidebar] = useState(false);
   const toggleSidebar = () => setShowSidebar((v) => !v);
+
+  const { routesData } = useSelector((state) => state.routes);
+
+  const { path } = routesData.find((route) => route.element === "CourseNew");
 
   return (
     <>

@@ -261,7 +261,7 @@ export const EventDetailsContent = () => {
                   <li>
                     <span className='td_heading_color'>Cost:</span>
                     <span className='td_accent_color'>
-                      ${event.Cost || "0"}.00
+                      ₹{event.Cost || "0"}.00
                     </span>
                   </li>
                   <li>
