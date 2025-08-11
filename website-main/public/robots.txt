@@ -1,0 +1,13 @@
+# robots.txt for https://yourdomain.com
+# Allow all crawlers to index the site
+
+User-agent: *
+Allow: /
+
+# Disallow sensitive or backend URLs (edit/remove as needed)
+Disallow: /admin
+Disallow: /login
+Disallow: /register
+
+# Sitemap location
+Sitemap: https://yourdomain.com/sitemap.xml
