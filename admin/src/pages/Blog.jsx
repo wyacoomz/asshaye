@@ -18,6 +18,9 @@ const Blog = () => {
     Description: "",
     category: "",
     blogUrl: "",
+    metaTitle: "",
+    metaDescription: "",
+    metaKeywords: "",
   });
 
   const [categories, setCategories] = useState([]);
@@ -109,6 +112,9 @@ const Blog = () => {
     formData.append("URL", input.URL);
     formData.append("blogUrl", input.blogUrl);
     formData.append("category", input.category);
+    formData.append("metaTitle", input.metaTitle);
+    formData.append("metaDescription", input.metaDescription);
+    formData.append("metaKeywords", input.metaKeywords);
 
     imageFiles.forEach((file) => formData.append("images", file));
 
@@ -245,6 +251,36 @@ const Blog = () => {
               </option>
             ))}
           </select>
+        </div>
+        <div>
+          <label className='block mb-1 font-medium'>Meta Title</label>
+          <input
+            type='text'
+            name='metaTitle'
+            value={input.metaTitle}
+            onChange={handleInput}
+            className='w-full p-2 border border-gray-300 rounded'
+          />
+        </div>
+        <div>
+          <label className='block mb-1 font-medium'>Meta Description</label>
+          <input
+            type='text'
+            name='metaDescription'
+            value={input.metaDescription}
+            onChange={handleInput}
+            className='w-full p-2 border border-gray-300 rounded'
+          />
+        </div>
+        <div>
+          <label className='block mb-1 font-medium'>Meta Keywords</label>
+          <input
+            type='text'
+            name='metaKeywords'
+            value={input.metaKeywords}
+            onChange={handleInput}
+            className='w-full p-2 border border-gray-300 rounded'
+          />
         </div>
       </div>
 

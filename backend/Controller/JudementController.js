@@ -13,6 +13,9 @@ const judegemntcreate = async (req, res) => {
       altText,
       staticUrl,
       size, // assuming you want to handle size as in your original code, though your schema doesn't have it
+      metaTitle,
+      metaDescription,
+      metaKeywords,
     } = req.body;
 
     // Parse size if needed (you may remove if not used in schema)
@@ -57,6 +60,9 @@ const judegemntcreate = async (req, res) => {
       publicerName,
       images: uploadedImages,
       staticUrl,
+      metaTitle,
+      metaDescription,
+      metaKeywords,
       // add size if you want to save it and schema supports it
     });
 

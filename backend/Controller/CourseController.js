@@ -149,6 +149,9 @@ const CourseSave = async (req, res) => {
       category,
       payNow,
       staticUrl,
+      metaTitle,
+      metaDescription,
+      metaKeywords,
     } = req.body;
 
     // if (!subCategory || !category) {
@@ -210,6 +213,9 @@ const CourseSave = async (req, res) => {
       images: uploadedImages,
       payNow,
       staticUrl,
+      metaTitle,
+      metaDescription,
+      metaKeywords,
     });
 
     res.status(201).json(course);
@@ -238,7 +244,8 @@ const getAllCourse = async (req, res) => {
     const products = await Course.find({ homeVisibility: true })
       .populate("category")
       .populate("subCategory")
-      .populate("subsubCategory");
+      .populate("subsubCategory")
+      .sort({ sortOrder: 1, createdAt: 1 });
     res.status(200).json(products);
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -251,7 +258,8 @@ const getAllCoursedisplay = async (req, res) => {
     const productsall = await Course.find()
       .populate("category")
       .populate("subCategory")
-      .populate("subsubCategory"); // Add this line to populate subcategory
+      .populate("subsubCategory") // Add this line to populate subcategory
+      .sort({ sortOrder: 1, createdAt: 1 });
 
     res.status(200).json(productsall);
   } catch (error) {
@@ -265,7 +273,8 @@ const getAllCourseHome = async (req, res) => {
     const product = await Course.find({ homeVisibility: true })
       .populate("category")
       .populate("subCategory")
-      .populate("subsubCategory");
+      .populate("subsubCategory")
+      .sort({ sortOrder: 1, createdAt: 1 });
 
     res.status(200).json(product);
   } catch (error) {
@@ -401,6 +410,42 @@ const getCoursesByCategory = async (req, res) => {
   }
 };
 
+const reorderCourses = async (req, res) => {
+  try {
+    const { order, ids } = req.body;
+
+    // Normalize payloads:
+    // - order: [{ id, sortOrder }]
+    // - ids: [id1, id2, ...] representing top-to-bottom order
+    let updates = [];
+
+    if (Array.isArray(order)) {
+      updates = order
+        .filter((it) => it && it.id != null && typeof it.sortOrder === "number")
+        .map((it) => ({ id: it.id, sortOrder: it.sortOrder }));
+    } else if (Array.isArray(ids)) {
+      updates = ids.map((id, idx) => ({ id, sortOrder: idx }));
+    }
+
+    if (!Array.isArray(updates) || updates.length === 0) {
+      return res.status(400).json({ message: "Invalid payload: expected 'order' or 'ids' array" });
+    }
+
+    const ops = updates.map((item) => ({
+      updateOne: {
+        filter: { _id: item.id },
+        update: { $set: { sortOrder: item.sortOrder } },
+      },
+    }));
+
+    await Course.bulkWrite(ops);
+    res.status(200).json({ message: "Order updated", updated: updates.length });
+  } catch (err) {
+    console.error("Error reordering courses:", err, req.body);
+    res.status(500).json({ message: err.message });
+  }
+};
+
 module.exports = {
   Querysave,
   CourseSave,
@@ -418,4 +463,5 @@ module.exports = {
   getAllCoursedisplay,
   getsubcategory,
   getrecorededcourse,
+  reorderCourses,
 };

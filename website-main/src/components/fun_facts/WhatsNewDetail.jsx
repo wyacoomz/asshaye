@@ -6,6 +6,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DOMPurify from "dompurify";
+import SEO from "../../common/Seo";
 
 const DetailSection = () => {
   const { id } = useParams();
@@ -123,6 +124,11 @@ const DetailSection = () => {
 
   return (
     <Layout header={9} footer={1}>
+      <SEO
+        title={whatsNew?.metaTitle}
+        description={whatsNew?.metaDescription}
+        keywords={whatsNew?.metaKeywords}
+      />
       <ToastContainer position='top-right' autoClose={3000} />
       <div className='td_height_120 td_height_lg_60' />
       <section className='py-5 bg-light'>
