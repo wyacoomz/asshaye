@@ -112,6 +112,9 @@ const Blog = () => {
     formData.append("URL", input.URL);
     formData.append("blogUrl", input.blogUrl);
     formData.append("category", input.category);
+    formData.append("metaTitle", input.metaTitle);
+    formData.append("metaDescription", input.metaDescription);
+    formData.append("metaKeywords", input.metaKeywords);
 
     imageFiles.forEach((file) => formData.append("images", file));
 

@@ -20,12 +20,15 @@ const BlogSave = async (req, res) => {
       metaKeywords,
     } = req.body;
 
-    const newSeo = new BlogSEO({
-      title: metaTitle,
-      description: metaDescription,
-      keywords: metaKeywords,
-    });
-    const savedSeo = await newSeo.save();
+    let savedSeo = null;
+    if (metaTitle || metaDescription || metaKeywords) {
+      const newSeo = new BlogSEO({
+        title: metaTitle,
+        description: metaDescription,
+        keywords: metaKeywords,
+      });
+      savedSeo = await newSeo.save();
+    }
 
     // Handle image uploads
     const uploadedImages = [];
@@ -65,7 +68,7 @@ const BlogSave = async (req, res) => {
       Description,
       blogUrl,
       LastDate: parsedLastDate,
-      seo: savedSeo._id,
+      seo: savedSeo ? savedSeo._id : null,
     });
 
     res.status(201).json(banner);
