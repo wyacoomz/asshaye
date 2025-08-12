@@ -1,4 +1,5 @@
 const Banner = require("../Module/BlogModule");
+const BlogSEO = require("../Module/SEO/blog");
 const imagekit = require("../Utils/imageKit");
 
 const BlogSave = async (req, res) => {
@@ -14,7 +15,17 @@ const BlogSave = async (req, res) => {
       Alttage,
       category,
       Description,
+      metaTitle,
+      metaDescription,
+      metaKeywords,
     } = req.body;
+
+    const newSeo = new BlogSEO({
+      title: metaTitle,
+      description: metaDescription,
+      keywords: metaKeywords,
+    });
+    const savedSeo = await newSeo.save();
 
     // Handle image uploads
     const uploadedImages = [];
@@ -54,6 +65,7 @@ const BlogSave = async (req, res) => {
       Description,
       blogUrl,
       LastDate: parsedLastDate,
+      seo: savedSeo._id,
     });
 
     res.status(201).json(banner);

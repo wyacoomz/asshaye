@@ -14,6 +14,9 @@ const ContactSave = async (req, res) => {
       staticUrl,
       Slot,
       subTitle,
+      metaTitle,
+      metaDescription,
+      metaKeywords,
     } = req.body;
 
     // Handle image uploads
@@ -52,6 +55,9 @@ const ContactSave = async (req, res) => {
       Cost: Number(Cost),
       Slot: Number(Slot),
       subTitle,
+      metaTitle,
+      metaDescription,
+      metaKeywords,
     });
 
     res.status(201).json(contact);

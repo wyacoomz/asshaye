@@ -33,6 +33,15 @@ const judgementSchema = new mongoose.Schema(
     staticUrl: {
       type: String,
     },
+    metaTitle: {
+      type: String,
+    },
+    metaDescription: {
+      type: String,
+    },
+    metaKeywords: {
+      type: String,
+    },
     altText: {
       type: String,
     },

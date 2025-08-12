@@ -19,7 +19,15 @@ const SucessSchema = new mongoose.Schema(
     staticUrl: {
       type: String,
     },
-
+    metaTitle: {
+      type: String,
+    },
+    metaDescription: {
+      type: String,
+    },
+    metaKeywords: {
+      type: String,
+    },
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",

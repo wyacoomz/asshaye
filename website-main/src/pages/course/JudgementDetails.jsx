@@ -6,6 +6,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import DOMPurify from "dompurify";
 import OtherCoursesSlider from "./OtherCourses";
+import SEO from "../../common/Seo";
 
 export const JudgementDetails = ({ courseId }) => {
   const { id } = useParams();
@@ -80,6 +81,11 @@ export const JudgementDetails = ({ courseId }) => {
 
   return (
     <Layout header={9} footer={1}>
+      <SEO
+        title={product?.metaTitle}
+        description={product?.metaDescription}
+        keywords={product?.metaKeywords}
+      />
       <JudgementDetailContent
         id={id}
         alt={product.altText}

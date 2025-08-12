@@ -9,6 +9,10 @@ const Sucesserstudent = async (req, res) => {
       size,
       altText,
       description,
+      staticUrl,
+      metaTitle,
+      metaDescription,
+      metaKeywords,
     } = req.body;
 
     const parsedSize = typeof size === 'string' ? JSON.parse(size) : size;
@@ -35,7 +39,11 @@ const Sucesserstudent = async (req, res) => {
       altText,
       description,
       images: uploadedImages,
-      size: parsedSize
+      size: parsedSize,
+      staticUrl,
+      metaTitle,
+      metaDescription,
+      metaKeywords,
     });
 
     res.status(201).json(banner);

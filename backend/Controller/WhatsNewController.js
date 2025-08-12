@@ -15,7 +15,16 @@ const fileUpload = async (file) => {
 
 const WhatsNewSave = async (req, res) => {
   try {
-    const { title, description, category, altText, staticUrl } = req.body;
+    const {
+      title,
+      description,
+      category,
+      altText,
+      staticUrl,
+      metaTitle,
+      metaDescription,
+      metaKeywords,
+    } = req.body;
 
     // Handle image uploads
     const imageFiles = req.files?.images || [];
@@ -33,6 +42,9 @@ const WhatsNewSave = async (req, res) => {
       staticUrl,
       images: imageUrls,
       PDFbrochure: pdfUrl,
+      metaTitle,
+      metaDescription,
+      metaKeywords,
     });
 
     res.status(201).json({

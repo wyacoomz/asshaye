@@ -149,6 +149,9 @@ const CourseSave = async (req, res) => {
       category,
       payNow,
       staticUrl,
+      metaTitle,
+      metaDescription,
+      metaKeywords,
     } = req.body;
 
     // if (!subCategory || !category) {
@@ -210,6 +213,9 @@ const CourseSave = async (req, res) => {
       images: uploadedImages,
       payNow,
       staticUrl,
+      metaTitle,
+      metaDescription,
+      metaKeywords,
     });
 
     res.status(201).json(course);
