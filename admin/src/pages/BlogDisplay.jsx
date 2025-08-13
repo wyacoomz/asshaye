@@ -170,6 +170,10 @@ const BlogDisplay = () => {
       images: [],
       newImages: null,
       previewImages: [],
+    metaTitle: "",
+    metaDescription: "",
+    metaKeywords: "",
+    metaCanonical: "",
     });
     setEditingBlog(null);
     setIsEditFormOpen(true);
@@ -968,7 +972,6 @@ const BlogDisplay = () => {
                     </div>
                   )}
               </div>
-
               <div className='flex justify-end gap-3 pt-4'>
                 <button
                   type='button'
