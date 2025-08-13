@@ -40,6 +40,9 @@ const BlogDisplay = () => {
     images: [],
     newImages: null,
     previewImages: [],
+    metaTitle: "",
+    metaDescription: "",
+    metaKeywords: "",
   });
 
   // Clean up blob URLs when component unmounts or form closes
@@ -129,7 +132,23 @@ const BlogDisplay = () => {
     setViewingBlog(blog);
   };
 
-  const handleEditClick = (blog) => {
+  const handleEditClick = async (blog) => {
+    setEditingBlog(blog._id);
+    setIsEditFormOpen(true);
+
+    let seoData = {};
+    if (blog.seo) {
+      try {
+        const response = await axios.get(
+          `https://backend.aashayeinjudiciary.com/api/blog-seo/${blog.seo}`
+        );
+        seoData = response.data;
+      } catch (error) {
+        console.error("Failed to fetch SEO data", error);
+        toast.error("Could not load SEO data for this blog.");
+      }
+    }
+
     setEditFormData({
       title: blog.title,
       author: blog.author,
@@ -143,9 +162,10 @@ const BlogDisplay = () => {
       images: blog.images || [],
       newImages: null,
       previewImages: blog.images || [],
+      metaTitle: seoData.title || "",
+      metaDescription: seoData.description || "",
+      metaKeywords: seoData.keywords || "",
     });
-    setEditingBlog(blog._id);
-    setIsEditFormOpen(true);
   };
 
   const handleAddNew = () => {
@@ -184,6 +204,11 @@ const BlogDisplay = () => {
         formData.append("URL", editFormData.URL);
         formData.append("blogUrl", editFormData.blogUrl);
       }
+
+      // Append SEO fields
+      formData.append("metaTitle", editFormData.metaTitle);
+      formData.append("metaDescription", editFormData.metaDescription);
+      formData.append("metaKeywords", editFormData.metaKeywords);
 
       formData.append("LastDate", editFormData.LastDate);
 
@@ -804,6 +829,45 @@ const BlogDisplay = () => {
                     value={editFormData.LastDate}
                     onChange={handleInputChange}
                     className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                  />
+                </div>
+              </div>
+
+              <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                <div>
+                  <label className='block text-sm font-medium text-gray-700 mb-1'>
+                    Meta Title
+                  </label>
+                  <input
+                    type='text'
+                    name='metaTitle'
+                    value={editFormData.metaTitle}
+                    onChange={handleInputChange}
+                    className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                  />
+                </div>
+                <div>
+                  <label className='block text-sm font-medium text-gray-700 mb-1'>
+                    Meta Keywords
+                  </label>
+                  <input
+                    type='text'
+                    name='metaKeywords'
+                    value={editFormData.metaKeywords}
+                    onChange={handleInputChange}
+                    className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                  />
+                </div>
+                <div className='md:col-span-2'>
+                  <label className='block text-sm font-medium text-gray-700 mb-1'>
+                    Meta Description
+                  </label>
+                  <textarea
+                    name='metaDescription'
+                    value={editFormData.metaDescription}
+                    onChange={handleInputChange}
+                    className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                    rows='3'
                   />
                 </div>
               </div>

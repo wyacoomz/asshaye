@@ -26,6 +26,7 @@ const BlogSave = async (req, res) => {
         title: metaTitle,
         description: metaDescription,
         keywords: metaKeywords,
+        canonical: blogUrl,
       });
       savedSeo = await newSeo.save();
     }
@@ -155,6 +156,9 @@ const editDataSave = async (req, res) => {
       id,
       blogUrl,
       images,
+      metaTitle,
+      metaDescription,
+      metaKeywords,
     } = req.body;
 
     // ✅ Validate required fields
@@ -232,12 +236,39 @@ const editDataSave = async (req, res) => {
     });
 
     // ✅ Update blog by ID
+    const blog = await Banner.findById(id);
+    if (!blog) {
+      return res.status(404).json({ message: "Blog not found." });
+    }
+
+    // Update SEO data
+    const { metaTitle, metaDescription, metaKeywords } = req.body;
+    if (metaTitle || metaDescription || metaKeywords) {
+      if (blog.seo) {
+        await BlogSEO.findByIdAndUpdate(blog.seo, {
+          title: metaTitle,
+          description: metaDescription,
+          keywords: metaKeywords,
+          canonical: blogUrl,
+        });
+      } else {
+        const newSeo = new BlogSEO({
+          title: metaTitle,
+          description: metaDescription,
+          keywords: metaKeywords,
+          canonical: blogUrl,
+        });
+        const savedSeo = await newSeo.save();
+        updatedFields.seo = savedSeo._id;
+      }
+    }
+
     const updated = await Banner.findByIdAndUpdate(id, updatedFields, {
       new: true,
     }).populate("BlogCategory");
 
     if (!updated) {
-      return res.status(404).json({ message: "Blog not found." });
+      return res.status(404).json({ message: "Blog not found for update." });
     }
 
     // ✅ Success

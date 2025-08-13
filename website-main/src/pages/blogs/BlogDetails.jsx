@@ -65,6 +65,17 @@ export const BlogDetails = ({ courseId }) => {
         keywordTag.content = currentSEO.keywords || "";
         document.head.appendChild(keywordTag);
       }
+
+      // Set or update canonical link
+      const canonicalLink = document.querySelector("link[rel='canonical']");
+      if (canonicalLink) {
+        canonicalLink.setAttribute("href", currentSEO.canonical || "");
+      } else {
+        const link = document.createElement("link");
+        link.rel = "canonical";
+        link.href = currentSEO.canonical || "";
+        document.head.appendChild(link);
+      }
     }
   }, [currentSEO]);
 
