@@ -2,7 +2,7 @@
 // export default TargetJudiciaryCourse;
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { Card, Button, Modal } from "react-bootstrap";
+import { Card, Button, Modal, Form } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import DOMPurify from "dompurify";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -12,6 +12,7 @@ const TargetJudiciaryCourse = ({ selectedCategoryId }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedDemoUrl, setSelectedDemoUrl] = useState(null);
   const [selectedDemoTitle, setSelectedDemoTitle] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const { category, subcategory, subsubcategory } = useParams();
 
@@ -31,10 +32,10 @@ const TargetJudiciaryCourse = ({ selectedCategoryId }) => {
     },
     {
       _id: "course2",
-      Coursename: "Mp Judiciary Examination",
+      Coursename: "Up Judiciary Examination",
       category: "Recorded Course",
       subCategory: { name: "Target Judiciary" },
-      subsubCategory: { name: "Mp Judiciary" },
+      subsubCategory: { name: "Up Judiciary" },
       Price: "2999",
       Durations: "2 Months",
       TrainerName: "Dr. Kapoor",
@@ -43,11 +44,11 @@ const TargetJudiciaryCourse = ({ selectedCategoryId }) => {
     },
 
      {
-      _id: "course2",
-      Coursename: "Mp Judiciary Examination",
+      _id: "course3",
+      Coursename: "Mains Test Series",
       category: "Recorded Course",
       subCategory: { name: "Target Judiciary" },
-      subsubCategory: { name: "Mp Judiciary" },
+      subsubCategory: { name: "Mains Test Series" },
       Price: "2999",
       Durations: "2 Months",
       TrainerName: "Dr. Kapoor",
@@ -59,10 +60,16 @@ const TargetJudiciaryCourse = ({ selectedCategoryId }) => {
 
   useEffect(() => {
     filterCourses();
-  }, [category, subcategory, subsubcategory, selectedCategoryId]);
+  }, [category, subcategory, subsubcategory, selectedCategoryId, searchTerm]);
 
   const filterCourses = () => {
     let filtered = [...dummyCourses];
+
+    if (searchTerm) {
+      filtered = filtered.filter((course) =>
+        course.Coursename.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
 
     if (category) {
       filtered = filtered.filter(
@@ -111,6 +118,18 @@ const TargetJudiciaryCourse = ({ selectedCategoryId }) => {
   return (
     <div className="py-4" style={{ backgroundColor: "#f5f7fa" }}>
       <div className="container">
+        <div className="row justify-content-center mb-4">
+          <div className="col-md-6">
+            <Form.Group controlId="searchCourses">
+              <Form.Control
+                type="text"
+                placeholder="Search for courses..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </Form.Group>
+          </div>
+        </div>
         <div className="row justify-content-center">
           {filteredCourses.length > 0 ? (
             filteredCourses.map((course) => (

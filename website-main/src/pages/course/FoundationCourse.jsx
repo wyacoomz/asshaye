@@ -213,7 +213,7 @@
 // export default FoundationCourses;
 
 import React, { useState, useEffect } from "react";
-import { Card, Button, Modal, Badge } from "react-bootstrap";
+import { Card, Button, Modal, Badge, Form } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -229,6 +229,7 @@ const FoundationCourses = ({
   const [showModal, setShowModal] = useState(false);
   const [selectedDemoUrl, setSelectedDemoUrl] = useState(null);
   const [selectedDemoTitle, setSelectedDemoTitle] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
   const { id: courseId } = useParams();
 
   const dummyData = [
@@ -269,6 +270,12 @@ const FoundationCourses = ({
 
   const filterCourses = (coursesList) => {
     let filtered = [...coursesList];
+
+    if (searchTerm) {
+      filtered = filtered.filter((course) =>
+        course.Coursename.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
 
     if (useNewFilter) {
       if (selectedCategoryId) {
@@ -321,7 +328,7 @@ const FoundationCourses = ({
     if (courses.length > 0) {
       filterCourses(courses);
     }
-  }, [selectedCategoryId, selectedSubCategoryId, courseId]);
+  }, [selectedCategoryId, selectedSubCategoryId, courseId, searchTerm]);
 
   const handleOpenDemo = (url, title) => {
     setSelectedDemoUrl(url);
@@ -356,6 +363,18 @@ const FoundationCourses = ({
             All Foundation Courses
           </h3>
         )}
+        <div className="row justify-content-center mb-4">
+          <div className="col-md-6">
+            <Form.Group controlId="searchCourses">
+              <Form.Control
+                type="text"
+                placeholder="Search for courses..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </Form.Group>
+          </div>
+        </div>
         <div className='row g-4'>
           {filteredCourses.length > 0 ? (
             filteredCourses.map((course) => {
