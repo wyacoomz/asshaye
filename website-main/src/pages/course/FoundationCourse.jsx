@@ -310,6 +310,27 @@ const FoundationCourses = ({
       }
     }
 
+    // Sort courses if any filter is applied
+    const shouldSort =
+      useNewFilter || courseId || selectedCategoryId || selectedSubCategoryId;
+
+    if (shouldSort) {
+      filtered.sort((a, b) => {
+        // Primary sort by judiciary (subsubCategory.name)
+        const judiciaryA = a.subsubCategory?.name?.toLowerCase() || "";
+        const judiciaryB = b.subsubCategory?.name?.toLowerCase() || "";
+        if (judiciaryA < judiciaryB) return -1;
+        if (judiciaryA > judiciaryB) return 1;
+
+        // Secondary sort by title (subCategory.name)
+        const titleA = a.subCategory?.name?.toLowerCase() || "";
+        const titleB = b.subCategory?.name?.toLowerCase() || "";
+        if (titleA < titleB) return -1;
+        if (titleA > titleB) return 1;
+
+        return 0;
+      });
+    }
     setFilteredCourses(filtered);
   };
 
