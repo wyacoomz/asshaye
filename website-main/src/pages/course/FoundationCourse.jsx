@@ -317,18 +317,26 @@ const FoundationCourses = ({
     if (shouldSort) {
       filtered.sort((a, b) => {
         // Primary sort by judiciary (subsubCategory.name)
-        const judiciaryA = a.subsubCategory?.name?.toLowerCase() || "";
-        const judiciaryB = b.subsubCategory?.name?.toLowerCase() || "";
-        if (judiciaryA < judiciaryB) return -1;
-        if (judiciaryA > judiciaryB) return 1;
+        const judiciaryA = (a.subsubCategory?.name || "").trim();
+        const judiciaryB = (b.subsubCategory?.name || "").trim();
+
+        const judiciaryComparison = judiciaryA.localeCompare(judiciaryB, undefined, {
+          sensitivity: "base",
+          numeric: true,
+        });
+
+        if (judiciaryComparison !== 0) {
+          return judiciaryComparison;
+        }
 
         // Secondary sort by title (subCategory.name)
-        const titleA = a.subCategory?.name?.toLowerCase() || "";
-        const titleB = b.subCategory?.name?.toLowerCase() || "";
-        if (titleA < titleB) return -1;
-        if (titleA > titleB) return 1;
+        const titleA = (a.subCategory?.name || "").trim();
+        const titleB = (b.subCategory?.name || "").trim();
 
-        return 0;
+        return titleA.localeCompare(titleB, undefined, {
+          sensitivity: "base",
+          numeric: true,
+        });
       });
     }
     setFilteredCourses(filtered);
