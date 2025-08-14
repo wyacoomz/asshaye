@@ -245,6 +245,22 @@ const QueryDelete = async (req, res) => {
   res.status(200).send("Task deleted");
 };
 
+const sortCoursesConditionally = (courses) => {
+  courses.sort((a, b) => {
+    const isASpecial = a.category && (a.category.name === "Live Course" || a.category.name === "Recorded Course");
+    const isBSpecial = b.category && (b.category.name === "Live Course" || b.category.name === "Recorded Course");
+
+    if (isASpecial && isBSpecial) {
+      const judiciaryA = a.subsubCategory ? a.subsubCategory.name : "";
+      const judiciaryB = b.subsubCategory ? b.subsubCategory.name : "";
+      return judiciaryA.localeCompare(judiciaryB);
+    }
+
+    return 0;
+  });
+  return courses;
+};
+
 const getAllCourse = async (req, res) => {
   try {
     const products = await Course.find({ homeVisibility: true })
@@ -252,7 +268,8 @@ const getAllCourse = async (req, res) => {
       .populate("subCategory")
       .populate("subsubCategory")
       .sort({ sortOrder: 1, createdAt: 1 });
-    res.status(200).json(products);
+    const sortedProducts = sortCoursesConditionally(products);
+    res.status(200).json(sortedProducts);
   } catch (error) {
     console.error("Error fetching products:", error);
     res.status(500).json({ message: error.message });
@@ -264,10 +281,10 @@ const getAllCoursedisplay = async (req, res) => {
     const productsall = await Course.find()
       .populate("category")
       .populate("subCategory")
-      .populate("subsubCategory") // Add this line to populate subcategory
+      .populate("subsubCategory")
       .sort({ sortOrder: 1, createdAt: 1 });
-
-    res.status(200).json(productsall);
+    const sortedProducts = sortCoursesConditionally(productsall);
+    res.status(200).json(sortedProducts);
   } catch (error) {
     console.error("Error fetching products:", error);
     res.status(500).json({ message: error.message });
@@ -281,8 +298,8 @@ const getAllCourseHome = async (req, res) => {
       .populate("subCategory")
       .populate("subsubCategory")
       .sort({ sortOrder: 1, createdAt: 1 });
-
-    res.status(200).json(product);
+    const sortedProducts = sortCoursesConditionally(product);
+    res.status(200).json(sortedProducts);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
