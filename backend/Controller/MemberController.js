@@ -134,7 +134,7 @@ const editDataSave = async (req, res) => {
       metaDescription:
         formData.metaDescription || existingMember.metaDescription,
       metaKeywords: formData.metaKeywords || existingMember.metaKeywords,
-      metaCanonical: formData.metaCanonical || existingMember.metaCanonical,
+      metaCanonical: `https://backend.aashayeinjudiciary.com/member/${formData.staticUrl || existingMember.staticUrl}`,
     };
 
     // If new images are uploaded, REPLACE the old ones

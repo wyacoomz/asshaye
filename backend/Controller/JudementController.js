@@ -16,8 +16,9 @@ const judegemntcreate = async (req, res) => {
       metaTitle,
       metaDescription,
       metaKeywords,
-      metaCanonical,
     } = req.body;
+
+    const metaCanonical = `https://backend.aashayeinjudiciary.com/judgement/${staticUrl}`;
 
     // Parse size if needed (you may remove if not used in schema)
     let parsedSize;
@@ -169,8 +170,9 @@ const editDataSave = async (req, res) => {
       metaTitle,
       metaDescription,
       metaKeywords,
-      metaCanonical,
     } = req.body;
+
+    const metaCanonical = `https://backend.aashayeinjudiciary.com/judgement/${staticUrl}`;
 
     console.log(req.body);
 

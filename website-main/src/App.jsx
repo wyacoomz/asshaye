@@ -160,6 +160,7 @@ function App() {
                 title={seoForPage.title || "Aashayein Judiciary"}
                 description={seoForPage.description}
                 keywords={seoForPage.keywords}
+                canonical={`https://backend.aashayeinjudiciary.com${route.path}`}
               />
               <Page />
             </>

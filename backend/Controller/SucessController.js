@@ -15,6 +15,8 @@ const Sucesserstudent = async (req, res) => {
       metaKeywords,
     } = req.body;
 
+    const metaCanonical = `https://backend.aashayeinjudiciary.com/success/${staticUrl}`;
+
     const parsedSize = typeof size === 'string' ? JSON.parse(size) : size;
 
     // Handle image uploads
@@ -44,6 +46,7 @@ const Sucesserstudent = async (req, res) => {
       metaTitle,
       metaDescription,
       metaKeywords,
+      metaCanonical,
     });
 
     res.status(201).json(banner);
@@ -91,9 +94,11 @@ const editDisplay = async (req, res) => {
 // Save updated success student record
 const editDataSave = async (req, res) => {
   try {
-    const { id, StudentName, Judicial, size ,altText, description } = req.body;
+  const { id, StudentName, Judicial, size ,altText, description, staticUrl, metaTitle, metaDescription, metaKeywords } = req.body;
 
     if (!id) return res.status(400).json({ message: "ID is required." });
+
+    const metaCanonical = `https://backend.aashayeinjudiciary.com/success/${staticUrl}`;
 
     // Handle image update if new image uploaded
     let images = req.body.images;
@@ -115,6 +120,11 @@ const editDataSave = async (req, res) => {
         description,
         size: size ? (typeof size === "string" ? JSON.parse(size) : size) : undefined,
         images,
+        staticUrl,
+        metaTitle,
+        metaDescription,
+        metaKeywords,
+        metaCanonical,
       },
       { new: true }
     );

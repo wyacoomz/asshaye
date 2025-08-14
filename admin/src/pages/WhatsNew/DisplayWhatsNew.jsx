@@ -104,10 +104,10 @@ const WhatsNewDisplay = () => {
       altText: item.altText || "",
       newImages: null,
       newPDF: null,
+      staticUrl: item.staticUrl || "",
       metaTitle: item.metaTitle || "",
       metaDescription: item.metaDescription || "",
       metaKeywords: item.metaKeywords || "",
-      metaCanonical: item.metaCanonical || "",
     });
     setIsEditFormOpen(true);
   };
@@ -122,10 +122,10 @@ const WhatsNewDisplay = () => {
       formData.append("description", editingItem.CourseDescription);
       formData.append("category", editingItem.category);
       formData.append("altText", editingItem.altText);
+      formData.append("staticUrl", editingItem.staticUrl);
       formData.append("metaTitle", editingItem.metaTitle);
       formData.append("metaDescription", editingItem.metaDescription);
       formData.append("metaKeywords", editingItem.metaKeywords);
-      formData.append("metaCanonical", editingItem.metaCanonical);
 
       if (editingItem.newImages && editingItem.newImages.length > 0) {
         formData.append("removeOldImages", "true");
@@ -614,6 +614,18 @@ const WhatsNewDisplay = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Static URL
+                    </label>
+                    <input
+                      type="text"
+                      name="staticUrl"
+                      value={editingItem?.staticUrl || ""}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
                       Meta Title
                     </label>
                     <input
@@ -646,18 +658,6 @@ const WhatsNewDisplay = () => {
                       onChange={handleInputChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                       rows="3"
-                    />
-                  </div>
-                  <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Canonical URL
-                    </label>
-                    <input
-                      type="text"
-                      name="metaCanonical"
-                      value={editingItem?.metaCanonical || ""}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
                 </div>

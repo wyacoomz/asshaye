@@ -800,7 +800,6 @@ const TeamMemberDisplay = () => {
         metaTitle: currentMember.metaTitle || "",
         metaDescription: currentMember.metaDescription || "",
         metaKeywords: currentMember.metaKeywords || "",
-        metaCanonical: currentMember.metaCanonical || "",
       });
       setImagePreviews(currentMember.images || []);
       setImageFiles([]);
@@ -945,7 +944,6 @@ const TeamMemberDisplay = () => {
     formData.append("metaTitle", editFormData.metaTitle || "");
     formData.append("metaDescription", editFormData.metaDescription || "");
     formData.append("metaKeywords", editFormData.metaKeywords || "");
-    formData.append("metaCanonical", editFormData.metaCanonical || "");
 
     imageFiles.forEach((file) => {
       formData.append("images", file);
@@ -1503,18 +1501,6 @@ const TeamMemberDisplay = () => {
                       onChange={handleEditChange}
                       className='w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 outline-none transition-all'
                       rows='3'
-                    />
-                  </div>
-                  <div className='md:col-span-2'>
-                    <label className='block text-sm font-medium text-gray-700 mb-1'>
-                      Canonical URL
-                    </label>
-                    <input
-                      type='text'
-                      name='metaCanonical'
-                      value={editFormData.metaCanonical}
-                      onChange={handleEditChange}
-                      className='w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 outline-none transition-all'
                     />
                   </div>
                 </div>

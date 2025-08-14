@@ -23,7 +23,6 @@ const TeamMember = () => {
     metaTitle: "",
     metaDescription: "",
     metaKeywords: "",
-    metaCanonical: "",
   });
 
   const [imageFiles, setImageFiles] = useState([]);
@@ -46,7 +45,6 @@ const TeamMember = () => {
         metaTitle: "",
         metaDescription: "",
         metaKeywords: "",
-        metaCanonical: "",
       });
       setImageFiles([]);
       setImagePreviews([]);
@@ -117,7 +115,6 @@ const TeamMember = () => {
     formData.append("metaTitle", input.metaTitle);
     formData.append("metaDescription", input.metaDescription);
     formData.append("metaKeywords", input.metaKeywords);
-    formData.append("metaCanonical", input.metaCanonical);
 
     imageFiles.forEach((file) => formData.append("images", file));
 
@@ -167,7 +164,6 @@ const TeamMember = () => {
             "metaTitle",
             "metaDescription",
             "metaKeywords",
-            "metaCanonical",
           ].map((key) => (
             <div key={key}>
               <label className='block mb-1 font-medium capitalize'>

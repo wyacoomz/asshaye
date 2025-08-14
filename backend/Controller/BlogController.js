@@ -11,23 +11,23 @@ const BlogSave = async (req, res) => {
       title,
       excerpt,
       LastDate,
-      blogUrl,
+      staticUrl,
       Alttage,
       category,
       Description,
       metaTitle,
       metaDescription,
       metaKeywords,
-      metaCanonical,
     } = req.body;
 
     let savedSeo = null;
     if (metaTitle || metaDescription || metaKeywords) {
+      const canonical = `https://backend.aashayeinjudiciary.com/blog/${staticUrl}`;
       const newSeo = new BlogSEO({
         title: metaTitle,
         description: metaDescription,
         keywords: metaKeywords,
-        canonical: metaCanonical,
+        canonical: canonical,
       });
       savedSeo = await newSeo.save();
     }
@@ -68,7 +68,7 @@ const BlogSave = async (req, res) => {
       excerpt,
       BlogCategory: category,
       Description,
-      blogUrl,
+      staticUrl,
       LastDate: parsedLastDate,
       seo: savedSeo ? savedSeo._id : null,
     });
@@ -157,12 +157,11 @@ const editDataSave = async (req, res) => {
       URL,
       LastDate,
       id,
-      blogUrl,
+      staticUrl,
       images,
       metaTitle,
       metaDescription,
       metaKeywords,
-      metaCanonical,
     } = req.body;
 
     // ✅ Validate required fields
@@ -218,7 +217,7 @@ const editDataSave = async (req, res) => {
       Description,
       Alttage,
       URL,
-      blogUrl,
+      staticUrl,
       images: finalImages,
       BlogCategory: category,
     };
@@ -240,21 +239,22 @@ const editDataSave = async (req, res) => {
     });
 
     // Handle SEO updates
-    if (metaTitle || metaDescription || metaKeywords || metaCanonical) {
+    if (metaTitle || metaDescription || metaKeywords) {
       const blog = await Banner.findById(id);
+      const canonical = `https://backend.aashayeinjudiciary.com/blog/${staticUrl}`;
       if (blog && blog.seo) {
         await BlogSEO.findByIdAndUpdate(blog.seo, {
           title: metaTitle,
           description: metaDescription,
           keywords: metaKeywords,
-          canonical: metaCanonical,
+          canonical: canonical,
         });
       } else if (blog) {
         const newSeo = new BlogSEO({
           title: metaTitle,
           description: metaDescription,
           keywords: metaKeywords,
-          canonical: metaCanonical,
+          canonical: canonical,
         });
         const savedSeo = await newSeo.save();
         updatedFields.seo = savedSeo._id;

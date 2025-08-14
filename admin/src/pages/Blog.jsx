@@ -17,11 +17,10 @@ const Blog = () => {
     LastDate: "",
     Description: "",
     category: "",
-    blogUrl: "",
+    staticUrl: "",
     metaTitle: "",
     metaDescription: "",
     metaKeywords: "",
-    metaCanonical: "",
   });
 
   const [categories, setCategories] = useState([]);
@@ -111,12 +110,11 @@ const Blog = () => {
     formData.append("Description", input.Description);
     formData.append("LastDate", input.LastDate);
     formData.append("URL", input.URL);
-    formData.append("blogUrl", input.blogUrl);
+    formData.append("staticUrl", input.staticUrl);
     formData.append("category", input.category);
     formData.append("metaTitle", input.metaTitle);
     formData.append("metaDescription", input.metaDescription);
     formData.append("metaKeywords", input.metaKeywords);
-    formData.append("metaCanonical", input.metaCanonical);
 
     imageFiles.forEach((file) => formData.append("images", file));
 
@@ -137,7 +135,10 @@ const Blog = () => {
         LastDate: "",
         URL: "",
         category: "",
-        blogUrl: "",
+        staticUrl: "",
+        metaTitle: "",
+        metaDescription: "",
+        metaKeywords: "",
       });
       setImageFiles([]);
       setImagePreviews([]);
@@ -175,8 +176,8 @@ const Blog = () => {
           <label className='block mb-1 font-medium'> Static URL</label>
           <input
             type='text'
-            name='blogUrl'
-            value={input.blogUrl}
+            name='staticUrl'
+            value={input.staticUrl}
             onChange={handleInput}
             className='w-full p-2 border border-gray-300 rounded'
           />
@@ -280,16 +281,6 @@ const Blog = () => {
             type='text'
             name='metaKeywords'
             value={input.metaKeywords}
-            onChange={handleInput}
-            className='w-full p-2 border border-gray-300 rounded'
-          />
-        </div>
-        <div>
-          <label className='block mb-1 font-medium'>Meta Canonical</label>
-          <input
-            type='text'
-            name='metaCanonical'
-            value={input.metaCanonical}
             onChange={handleInput}
             className='w-full p-2 border border-gray-300 rounded'
           />

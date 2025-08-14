@@ -15,7 +15,7 @@ const BlogSchema = new mongoose.Schema(
     URL: {
       type: String,
     },
-    blogUrl: {
+    staticUrl: {
       type: String,
     },
 

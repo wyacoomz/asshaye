@@ -12,6 +12,9 @@ const WhyChooseSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    staticUrl: {
+      type: String,
+    },
     altText: {
       type: String,
     },

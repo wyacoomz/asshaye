@@ -19,10 +19,10 @@ const Choose = () => {
     keywordsix: "",
     altText: "",
     description: "",
+    staticUrl: "",
     metaTitle: "",
     metaDescription: "",
     metaKeywords: "",
-    metaCanonical: "",
   });
 
   const [imageFiles, setImageFiles] = useState([]);
@@ -111,10 +111,10 @@ const Choose = () => {
         keywordsix: "",
         altText: "",
         description: "",
+        staticUrl: "",
         metaTitle: "",
         metaDescription: "",
         metaKeywords: "",
-        metaCanonical: "",
       });
       setImageFiles([]);
       setImagePreviews([]);
@@ -183,10 +183,10 @@ const Choose = () => {
         </h3>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
           {[
+            "staticUrl",
             "metaTitle",
             "metaDescription",
             "metaKeywords",
-            "metaCanonical",
           ].map((key) => (
             <div key={key}>
               <label className='block mb-1 font-medium capitalize'>

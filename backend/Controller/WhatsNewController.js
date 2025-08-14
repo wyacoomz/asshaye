@@ -24,8 +24,9 @@ const WhatsNewSave = async (req, res) => {
       metaTitle,
       metaDescription,
       metaKeywords,
-      metaCanonical,
     } = req.body;
+
+    const metaCanonical = `https://backend.aashayeinjudiciary.com/whats-new/${staticUrl}`;
 
     // Handle image uploads
     const imageFiles = req.files?.images || [];
@@ -168,8 +169,9 @@ const editDataSave = async (req, res) => {
       metaTitle,
       metaDescription,
       metaKeywords,
-      metaCanonical,
     } = req.body;
+
+    const metaCanonical = `https://backend.aashayeinjudiciary.com/whats-new/${staticUrl}`;
 
     // Initialize update data with basic fields
     const updateData = {

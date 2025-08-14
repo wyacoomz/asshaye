@@ -18,8 +18,10 @@ const SuccesserStudent = async (req, res) => {
       metaTitle,
       metaDescription,
       metaKeywords,
-      metaCanonical,
+      staticUrl,
     } = req.body;
+
+    const metaCanonical = `https://backend.aashayeinjudiciary.com/why-choose-us/${staticUrl}`;
 
     const parsedSize = typeof size === 'string' ? JSON.parse(size) : size;
 
@@ -50,6 +52,7 @@ const SuccesserStudent = async (req, res) => {
       altText,
       images: uploadedImages,
       size: parsedSize,
+      staticUrl,
       metaTitle,
       metaDescription,
       metaKeywords,
@@ -118,8 +121,10 @@ const editDataSave = async (req, res) => {
       metaTitle,
       metaDescription,
       metaKeywords,
-      metaCanonical,
+      staticUrl,
     } = req.body;
+
+    const metaCanonical = `https://backend.aashayeinjudiciary.com/why-choose-us/${staticUrl}`;
 
     const { id } = req.params;
     if (!id) return res.status(400).json({ message: "ID is required." });
@@ -151,6 +156,7 @@ const editDataSave = async (req, res) => {
       altText,
       keywordsix,
       size: parsedSize,
+      staticUrl,
       metaTitle,
       metaDescription,
       metaKeywords,

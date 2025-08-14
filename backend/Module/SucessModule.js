@@ -33,6 +33,9 @@ const SucessSchema = new mongoose.Schema(
     metaKeywords: {
       type: String,
     },
+    metaCanonical: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

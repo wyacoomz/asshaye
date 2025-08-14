@@ -17,8 +17,9 @@ const ContactSave = async (req, res) => {
       metaTitle,
       metaDescription,
       metaKeywords,
-      metaCanonical,
     } = req.body;
+
+    const metaCanonical = `https://backend.aashayeinjudiciary.com/event/${staticUrl}`;
 
     // Handle image uploads
     const uploadedImages = [];
@@ -194,8 +195,9 @@ const editDataSave = async (req, res) => {
       metaTitle,
       metaDescription,
       metaKeywords,
-      metaCanonical,
     } = req.body;
+
+    const metaCanonical = `https://backend.aashayeinjudiciary.com/event/${staticUrl}`;
 
     // Handle image uploads if any
     const uploadedImages = [];

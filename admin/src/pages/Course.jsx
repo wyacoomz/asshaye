@@ -35,7 +35,6 @@ const Course = () => {
     metaTitle: "",
     metaDescription: "",
     metaKeywords: "",
-    metaCanonical: "",
   };
 
   const [formData, setFormData] = useState(initialFormState);
@@ -241,7 +240,6 @@ const Course = () => {
     { name: "metaTitle", label: "Meta Title", type: "text" },
     { name: "metaDescription", label: "Meta Description", type: "text" },
     { name: "metaKeywords", label: "Meta Keywords", type: "text" },
-    { name: "metaCanonical", label: "Meta Canonical", type: "text" },
   ];
 
   // Render category select dropdown

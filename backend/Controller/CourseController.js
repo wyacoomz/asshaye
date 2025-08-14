@@ -89,6 +89,9 @@ const editDataSave = async (req, res) => {
         return res.status(400).json({ error: "Invalid LastDate format" });
       }
     }
+    if (updateData.staticUrl) {
+      updateData.metaCanonical = `https://backend.aashayeinjudiciary.com/course/${updateData.staticUrl}`;
+    }
 
     const updatedCourse = await Course.findByIdAndUpdate(id, updateData, {
       new: true,
@@ -152,8 +155,9 @@ const CourseSave = async (req, res) => {
       metaTitle,
       metaDescription,
       metaKeywords,
-      metaCanonical,
     } = req.body;
+
+    const metaCanonical = `https://backend.aashayeinjudiciary.com/course/${staticUrl}`;
 
     // if (!subCategory || !category) {
     //   return res.status(400).json({ error: "Course name and category are required" });

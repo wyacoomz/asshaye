@@ -126,7 +126,6 @@ const JudgementDisplay = () => {
       metaTitle: judgement.metaTitle || "",
       metaDescription: judgement.metaDescription || "",
       metaKeywords: judgement.metaKeywords || "",
-      metaCanonical: judgement.metaCanonical || "",
     });
     setImagePreviews([]);
     setEditingJudgement(judgement._id);
@@ -178,7 +177,6 @@ const JudgementDisplay = () => {
       formData.append("metaTitle", editFormData.metaTitle);
       formData.append("metaDescription", editFormData.metaDescription);
       formData.append("metaKeywords", editFormData.metaKeywords);
-      formData.append("metaCanonical", editFormData.metaCanonical);
 
       if (editFormData.newImages) {
         Array.from(editFormData.newImages).forEach((file) => {
@@ -779,18 +777,6 @@ const JudgementDisplay = () => {
                     onChange={handleInputChange}
                     className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
                     rows='3'
-                  />
-                </div>
-                <div className='md:col-span-2'>
-                  <label className='block text-sm font-medium text-gray-700 mb-1'>
-                    Canonical URL
-                  </label>
-                  <input
-                    type='text'
-                    name='metaCanonical'
-                    value={editFormData.metaCanonical}
-                    onChange={handleInputChange}
-                    className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
                   />
                 </div>
               </div>

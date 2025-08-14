@@ -36,14 +36,13 @@ const BlogDisplay = () => {
     URL: "",
     Alttage: "",
     LastDate: "",
-    blogUrl: "",
+    staticUrl: "",
     images: [],
     newImages: null,
     previewImages: [],
     metaTitle: "",
     metaDescription: "",
     metaKeywords: "",
-    metaCanonical: "",
   });
 
   // Clean up blob URLs when component unmounts or form closes
@@ -141,7 +140,7 @@ const BlogDisplay = () => {
       Description: blog.Description || "",
       category: blog?.BlogCategory?._id || "",
       URL: blog.URL || "",
-      blogUrl: blog.blogUrl || "",
+      staticUrl: blog.staticUrl || "",
       Alttage: blog.Alttage,
       LastDate: blog.LastDate?.split("T")[0] || "",
       images: blog.images || [],
@@ -150,7 +149,6 @@ const BlogDisplay = () => {
       metaTitle: blog.seo?.title || "",
       metaDescription: blog.seo?.description || "",
       metaKeywords: blog.seo?.keywords || "",
-      metaCanonical: blog.seo?.canonical || "",
     });
     setEditingBlog(blog._id);
     setIsEditFormOpen(true);
@@ -164,7 +162,7 @@ const BlogDisplay = () => {
       Description: "",
       category: "",
       URL: "",
-      blogUrl: "",
+      staticUrl: "",
       Alttage: "",
       LastDate: "",
       images: [],
@@ -173,7 +171,6 @@ const BlogDisplay = () => {
     metaTitle: "",
     metaDescription: "",
     metaKeywords: "",
-    metaCanonical: "",
     });
     setEditingBlog(null);
     setIsEditFormOpen(true);
@@ -194,9 +191,8 @@ const BlogDisplay = () => {
 
       if (editFormData.URL) {
         formData.append("URL", editFormData.URL);
-        formData.append("blogUrl", editFormData.blogUrl);
       }
-
+      formData.append("staticUrl", editFormData.staticUrl);
       formData.append("LastDate", editFormData.LastDate);
 
       if (editingBlog) {
@@ -207,7 +203,6 @@ const BlogDisplay = () => {
       formData.append("metaTitle", editFormData.metaTitle);
       formData.append("metaDescription", editFormData.metaDescription);
       formData.append("metaKeywords", editFormData.metaKeywords);
-      formData.append("metaCanonical", editFormData.metaCanonical);
 
       if (editFormData.newImages && editFormData.newImages.length > 0) {
         Array.from(editFormData.newImages).forEach((file) => {
@@ -699,15 +694,15 @@ const BlogDisplay = () => {
 
                 <div>
                   <label className='block text-sm font-medium text-gray-700 mb-1'>
-                    Blog URL
+                    Static URL (for Slug)
                   </label>
                   <input
                     type='text'
-                    name='blogUrl'
-                    value={editFormData.blogUrl}
+                    name='staticUrl'
+                    value={editFormData.staticUrl}
                     onChange={handleInputChange}
                     className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-                    placeholder='Do Something'
+                    placeholder='my-awesome-blog-post'
                   />
                 </div>
 
@@ -865,18 +860,6 @@ const BlogDisplay = () => {
                       onChange={handleInputChange}
                       className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
                       rows='3'
-                    />
-                  </div>
-                  <div className='md:col-span-2'>
-                    <label className='block text-sm font-medium text-gray-700 mb-1'>
-                      Canonical URL
-                    </label>
-                    <input
-                      type='text'
-                      name='metaCanonical'
-                      value={editFormData.metaCanonical}
-                      onChange={handleInputChange}
-                      className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
                     />
                   </div>
                 </div>
