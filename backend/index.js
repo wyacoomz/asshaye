@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 
 const app = express();
@@ -6,14 +7,12 @@ const dbconnect = require("./Utils/db.config");
 const cors = require("cors");
 const morgan = require("morgan");
 
-require("dotenv").config();
 const mongoose = require("mongoose");
 const bodyparser = require("body-parser");
 const fileUpload = require("express-fileupload");
 
 app.use(morgan("tiny"));
 
-require("dotenv").config();
 app.use(cors());
 // app.use(cors());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
@@ -55,6 +54,7 @@ const OtherCourse = require("./Routes/OtherRoute/OtherRoute");
 const SocialRoute = require("./Routes/SocialMedia/SocailRoute");
 const PlayStoreRoute = require("./Routes/PlayStoreRoute/PlayStoreRoute");
 const seoRoutes = require("./Routes/seo/seoRoutes");
+const SitemapRoute = require("./Routes/SitemapRoute");
 
 // app.use("/uploads", express.static("uploads"));
 mongoose.connect(process.env.MONGO_URI, {
@@ -106,6 +106,8 @@ app.use("/dynamics", dynamicRoute);
 app.use("/othercourse", OtherCourse);
 app.use("/social", SocialRoute);
 app.use("/playstore", PlayStoreRoute);
+
+app.use("/", SitemapRoute);
 
 app.listen(PORT, function (error) {
   if (error) throw error;
