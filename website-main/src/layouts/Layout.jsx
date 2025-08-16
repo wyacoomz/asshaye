@@ -1,5 +1,7 @@
 import React, { useLayoutEffect } from "react";
 import { ScrollToTop } from "../components/scroll_to_top/ScrollToTop";
+import SEO from "../common/Seo";
+import { generateCanonicalUrl } from "../utils/canonical";
 import { HeaderOne } from "../components/headers/HeaderOne";
 import { FooterOne } from "../components/footers/FooterOne";
 import { HeaderTwo } from "../components/headers/HeaderTwo";
@@ -29,6 +31,7 @@ export const Layout = ({
   breadcrumbSubtitle,
 }) => {
   const { pathname } = useLocation();
+  const canonicalUrl = generateCanonicalUrl(pathname);
 
   // theme
   useLayoutEffect(() => {
@@ -39,6 +42,7 @@ export const Layout = ({
 
   return (
     <>
+      <SEO canonical={canonicalUrl} />
       {/* scroll to top */}
       <ScrollToTop />
 
