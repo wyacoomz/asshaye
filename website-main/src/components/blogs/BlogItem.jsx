@@ -5,27 +5,28 @@ import calendarIcon from "../../assets/img/icons/calendar.svg";
 import userIcon from "../../assets/img/icons/user.svg";
 import { useSelector } from "react-redux";
 
+const generateSlug = (text) => {
+  if (!text) return "";
+  return text
+    .toLowerCase()
+    .replace(/"/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)+/g, "");
+};
+
 export const BlogItem = ({
   image,
   date,
   author,
   title,
   excerpt,
-  blogId,
-  link = "/blog-details",
+  blogUrl,
 }) => {
-  const { routesData, loading: routesLoading } = useSelector(
-    (state) => state.routes
-  );
-
-  const blogRoute = routesData.find((route) => route.element === "BlogDetails");
-
-  // console.log(blogRoute?.path, "BLOG");
+  const slug = generateSlug(blogUrl);
 
   return (
     <div className='td_post td_style_1'>
-      {/* <Link to={`${link}/${blogId}`}> */}
-      <Link to={`${blogRoute?.path}`} state={{ blogId: blogId }}>
+      <Link to={`/blog-details/${slug}`}>
         <div id='block-section' className='td_post_thumb d-block'>
           <img src={image} alt={title} />
           <i className='fa-solid fa-link'></i>

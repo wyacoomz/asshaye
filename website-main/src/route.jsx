@@ -117,7 +117,7 @@ function App() {
         <Route path='/faqs' element={<Faq />} />
         <Route path='/blog' element={<Blog />} />
         <Route path='/blog-with-sidebar' element={<BlogWithSidebar />} />
-        <Route path='/blog-details' element={<BlogDetails />} />
+        <Route path='/blog-details/:slug' element={<BlogDetails />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/enquiry' element={<Enquiry />} />
         <Route path='/enroll/:id' element={<Enroll />} />

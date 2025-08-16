@@ -1,22 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { Layout } from "../../layouts/Layout";
 import { BlogContainer } from "../../components/blogs/BlogContainer";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import dayjs from "dayjs";
 
-import blogDetails1 from "../../assets/alec-img/blogs/one.jpg";
-import avatar1 from "../../assets/alec-img/testi/aryan.jpg";
 import OtherCoursesSlider from "../course/OtherCourses";
 import MarqueeStrike from "../../components/popup/MarqueeStrike";
 import { useDispatch, useSelector } from "react-redux";
 import { getBlogSEOById } from "../../Redux/features/blogSeo/blogSeoThunk";
 import SEO from "../../common/Seo";
 
-export const BlogDetails = ({ courseId }) => {
+const generateSlug = (text) => {
+  if (!text) return "";
+  return text
+    .toLowerCase()
+    .replace(/"/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)+/g, "");
+};
+
+export const BlogDetails = () => {
   const navigate = useNavigate();
-  const { id } = useParams();
-  const { state } = useLocation();
+  const { slug } = useParams();
   const [product, setProduct] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -40,60 +46,30 @@ export const BlogDetails = ({ courseId }) => {
 
 
   useEffect(() => {
-    if (courseId) {
-      axios
-        .get(`/blog/display/${courseId}`)
-        .then((res) => {
-          setProduct(res.data);
-        })
-        .catch((err) => {
-          setError("Failed to load course details");
-          console.error(err);
-        });
-    }
-  }, [courseId]);
-
-  useEffect(() => {
     const fetchProduct = async () => {
       try {
         setLoading(true);
         const res = await axios.get(
-          `https://backend.aashayeinjudiciary.com/blog/${state.blogId}`
+          `https://backend.aashayeinjudiciary.com/blog/display`
         );
-        setProduct(res.data);
+        const foundProduct = res.data.find(p => generateSlug(p.blogUrl) === slug);
+        if (foundProduct) {
+          setProduct(foundProduct);
+          document.title = foundProduct.title || "Your Default Title";
+        } else {
+          setError("Blog post not found");
+        }
       } catch (err) {
-        console.error("Failed to fetch product", err);
-        setError("Failed to load product details");
+        console.error("Failed to fetch blogs", err);
+        setError("Failed to load blog details");
       } finally {
         setLoading(false);
       }
     };
-    fetchProduct();
-  }, [id]);
-
-  // ! url
-  useEffect(() => {
-    if (product) {
-      // Set tab title
-      document.title = product.title || "Your Default Title";
-
-      if (product.blogUrl) {
-        const slug = product.blogUrl
-          .toLowerCase()
-          .replace(/"/g, "")
-          .replace(/[^a-z0-9]+/g, "-")
-          .replace(/(^-|-$)+/g, "");
-
-        const newUrl = `/blog-details/${slug}`;
-
-        const currentPath = window.location.pathname;
-
-        if (!currentPath.includes(slug)) {
-          window.history.replaceState(null, "", newUrl);
-        }
-      }
+    if (slug) {
+      fetchProduct();
     }
-  }, [product]);
+  }, [slug]);
 
   function cleanCKEditorHtml(html) {
     return html

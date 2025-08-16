@@ -287,6 +287,7 @@ const BlogList = ({ blogs }) => (
             title={blog.title || "No Title"}
             excerpt={blog.excerpt || "No excerpt available"}
             blogId={blog._id}
+            blogUrl={blog.blogUrl}
           />
         </div>
       );
