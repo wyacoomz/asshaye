@@ -238,7 +238,12 @@ const Course = () => {
   ];
   const seoFields = [
     { name: "metaTitle", label: "Meta Title", type: "text" },
-    { name: "metaDescription", label: "Meta Description", type: "text" },
+    {
+      name: "metaDescription",
+      label: "Meta Description",
+      type: "text",
+      textarea: true,
+    },
     { name: "metaKeywords", label: "Meta Keywords", type: "text" },
   ];
 

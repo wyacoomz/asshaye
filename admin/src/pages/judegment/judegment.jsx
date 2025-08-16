@@ -139,7 +139,7 @@ const Judgement = () => {
     { name: "altText", label: "altText", type: "text" },
     { name: "staticUrl", label: "Static Url", type: "text" },
     { name: "metaTitle", label: "Meta Title", type: "text" },
-    { name: "metaDescription", label: "Meta Description", type: "text" },
+    { name: "metaDescription", label: "Meta Description", type: "text", textarea: true },
     { name: "metaKeywords", label: "Meta Keywords", type: "text" },
   ];
 
@@ -193,6 +193,29 @@ const Judgement = () => {
               }}
             />
           </div>
+          {errors[field.name] && (
+            <p className='text-red-500 text-xs mt-1'>{errors[field.name]}</p>
+          )}
+        </div>
+      );
+    }
+
+    if (field.textarea) {
+      return (
+        <div key={field.name} className='space-y-1'>
+          <label className='block text-sm font-medium text-gray-700'>
+            {field.label}
+            {field.required && <span className='text-red-500'>*</span>}
+          </label>
+          <textarea
+            name={field.name}
+            value={formData[field.name]}
+            onChange={handleInputChange}
+            className={`w-full p-2 border ${
+              errors[field.name] ? "border-red-500" : "border-gray-300"
+            } rounded-md`}
+            rows={3}
+          />
           {errors[field.name] && (
             <p className='text-red-500 text-xs mt-1'>{errors[field.name]}</p>
           )}
