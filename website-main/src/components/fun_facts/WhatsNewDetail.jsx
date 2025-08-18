@@ -7,12 +7,17 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DOMPurify from "dompurify";
 import SEO from "../../common/Seo";
+import { useSelector } from "react-redux";
 
 const DetailSection = () => {
   const { id } = useParams();
   const [whatsNew, setWhatsNew] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const location = useLocation();
+
+  const { seoData } = useSelector((state) => state.seo);
+  const seoForPage = seoData.find((seo) => seo.path === location.pathname);
 
   const { state } = useLocation();
 
@@ -125,10 +130,10 @@ const DetailSection = () => {
   return (
     <Layout header={9} footer={1}>
       <SEO
-        title={whatsNew?.metaTitle}
-        description={whatsNew?.metaDescription}
-        keywords={whatsNew?.metaKeywords}
-        canonical={whatsNew?.metaCanonical}
+        title={seoForPage?.title}
+        description={seoForPage?.description}
+        keywords={seoForPage?.keywords}
+        canonical={`https://aashayeinjudiciary.com${seoForPage?.path}`}
       />
       <ToastContainer position='top-right' autoClose={3000} />
       <div className='td_height_120 td_height_lg_60' />

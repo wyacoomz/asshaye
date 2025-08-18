@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import DOMPurify from "dompurify";
 import OtherCoursesSlider from "./OtherCourses";
 import SEO from "../../common/Seo";
+import { useSelector } from "react-redux";
 
 export const JudgementDetails = ({ courseId }) => {
   const { id } = useParams();
@@ -14,6 +15,10 @@ export const JudgementDetails = ({ courseId }) => {
   const [course, setCourse] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const location = useLocation();
+
+  const { seoData } = useSelector((state) => state.seo);
+  const seoForPage = seoData.find((seo) => seo.path === location.pathname);
 
   const { state } = useLocation();
 
@@ -82,10 +87,10 @@ export const JudgementDetails = ({ courseId }) => {
   return (
     <Layout header={9} footer={1}>
       <SEO
-        title={product?.metaTitle}
-        description={product?.metaDescription}
-        keywords={product?.metaKeywords}
-        canonical={product?.metaCanonical}
+        title={seoForPage?.title}
+        description={seoForPage?.description}
+        keywords={seoForPage?.keywords}
+        canonical={`https://aashayeinjudiciary.com${seoForPage?.path}`}
       />
       <JudgementDetailContent
         id={id}

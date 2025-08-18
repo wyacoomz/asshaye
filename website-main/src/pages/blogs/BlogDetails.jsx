@@ -9,8 +9,7 @@ import blogDetails1 from "../../assets/alec-img/blogs/one.jpg";
 import avatar1 from "../../assets/alec-img/testi/aryan.jpg";
 import OtherCoursesSlider from "../course/OtherCourses";
 import MarqueeStrike from "../../components/popup/MarqueeStrike";
-import { useDispatch, useSelector } from "react-redux";
-import { getBlogSEOById } from "../../Redux/features/blogSeo/blogSeoThunk";
+import { useSelector } from "react-redux";
 import SEO from "../../common/Seo";
 
 export const BlogDetails = ({ courseId }) => {
@@ -20,23 +19,10 @@ export const BlogDetails = ({ courseId }) => {
   const [product, setProduct] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
 
-  const { routesData, loading: routesLoading } = useSelector(
-    (state) => state.routes
-  );
-
-  const blogRoute = routesData.find((route) => route.element === "BlogDetails");
-
-  const { currentSEO } = useSelector((state) => state.blogSeo);
-  // console.log(currentSEO, "SBSBSBSBSB");
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (product && product?.seo) {
-      dispatch(getBlogSEOById(product.seo));
-    }
-  }, [product]);
+  const { seoData } = useSelector((state) => state.seo);
+  const seoForPage = seoData.find((seo) => seo.path === location.pathname);
 
 
   useEffect(() => {
@@ -134,10 +120,10 @@ export const BlogDetails = ({ courseId }) => {
   return (
     <Layout header={9} footer={1}>
       <SEO
-        title={currentSEO?.title}
-        description={currentSEO?.description}
-        keywords={currentSEO?.keywords}
-        canonical={currentSEO?.canonical}
+        title={seoForPage?.title}
+        description={seoForPage?.description}
+        keywords={seoForPage?.keywords}
+        canonical={`https://aashayeinjudiciary.com${seoForPage?.path}`}
       />
       {/* <MarqueeStrike /> */}
       <BlogContainer>

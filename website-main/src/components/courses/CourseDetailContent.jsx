@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useTabs } from "../../lib/hooks/useTabs";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import authorImg from "../../assets/img/others/author_1.jpg";
 import videoThumb from "../../assets/img/others/video_thumb.jpg";
 import { VideoPlayer } from "../videos/VideoPlayer";
@@ -11,6 +16,7 @@ import CoursesSummry from "./CoursesSummry";
 import { CoursesAllGrid } from "./CoursesAllGrid";
 import CoursesnewSidebar from "../../pages/course/CoursesnewSidebar";
 import MpSidebar from "../../pages/course/MpSidebar";
+import { useSelector } from "react-redux";
 
 export const CourseDetailContent = ({ courseId }) => {
   const navigate = useNavigate();
@@ -19,6 +25,10 @@ export const CourseDetailContent = ({ courseId }) => {
   const [error, setError] = useState(false);
   const [course, setCourse] = useState({});
   const [loading, setLoading] = useState(false);
+  const location = useLocation();
+
+  const { seoData } = useSelector((state) => state.seo);
+  const seoForPage = seoData.find((seo) => seo.path === location.pathname);
 
   useTabs();
 
@@ -48,10 +58,10 @@ export const CourseDetailContent = ({ courseId }) => {
   return (
     <section>
       <SEO
-        title={product?.metaTitle}
-        description={product?.metaDescription}
-        keywords={product?.metaKeywords}
-        canonical={product?.metaCanonical}
+        title={seoForPage?.title}
+        description={seoForPage?.description}
+        keywords={seoForPage?.keywords}
+        canonical={`https://aashayeinjudiciary.com${seoForPage?.path}`}
       />
       <div className="td_height_140 td_height_lg_10" />
 

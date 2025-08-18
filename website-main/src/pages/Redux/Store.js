@@ -8,7 +8,6 @@ import subSubcategoryReducer from "../../Redux/features/sub-subCategory/subSubca
 
 import routesReducer from "../../Redux/features/routes/routesSlice";
 import seoReducer from "../../Redux/features/seo/seoSlice";
-import blogSeoReducer from "../../Redux/features/blogSeo/blogSeoSlice";
 
 export const store = configureStore({
   reducer: {
@@ -21,6 +20,5 @@ export const store = configureStore({
 
     routes: routesReducer,
     seo: seoReducer,
-    blogSeo: blogSeoReducer,
   },
 });

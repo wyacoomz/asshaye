@@ -12,6 +12,7 @@ const AddSEO = () => {
   const [editId, setEditId] = useState(null);
   const [routes, setRoutes] = useState([]);
   const [loading, setLoading] = useState(false); // loading state
+  const [pathError, setPathError] = useState("");
   const [formData, setFormData] = useState({
     path: "",
     element: "",
@@ -60,14 +61,30 @@ const AddSEO = () => {
   }, []);
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "path") {
+      if (!/^\//.test(value)) {
+        setPathError("Path must start with /");
+      } else if (value.includes(":")) {
+        setPathError("Path cannot contain dynamic params like :slug or :id");
+      } else if (!/^\/[a-zA-Z0-9\-\/]*$/.test(value)) {
+        setPathError("Path contains invalid characters");
+      } else {
+        setPathError("");
+      }
+    }
     setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value,
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (pathError) {
+      toast.error("Please fix the errors before submitting");
+      return;
+    }
     setLoading(true);
     try {
       if (isEditMode) {
@@ -97,7 +114,7 @@ const AddSEO = () => {
       fetchSeoData();
     } catch (error) {
       console.error(error);
-      toast.error("Failed to save SEO data");
+      toast.error(error.response?.data?.message || "Failed to save SEO data");
     } finally {
       setLoading(false);
     }
@@ -216,30 +233,15 @@ const AddSEO = () => {
             </div> */}
             <div>
               <label className='block text-sm font-medium'>Path</label>
-              <select
+              <input
+                type='text'
                 name='path'
                 value={formData.path}
-                onChange={(e) => {
-                  const selectedPath = e.target.value;
-                  const selectedRoute = routes.find(
-                    (r) => r.path === selectedPath
-                  );
-                  setFormData({
-                    ...formData,
-                    path: selectedPath,
-                    element: selectedRoute ? selectedRoute.element : "",
-                  });
-                }}
+                onChange={handleChange}
                 required
                 className='w-full mt-1 px-4 py-2 border rounded-md'
-              >
-                <option value=''>-- Select Path --</option>
-                {routes.map((route) => (
-                  <option key={route._id} value={route.path}>
-                    {route.path}
-                  </option>
-                ))}
-              </select>
+              />
+              {pathError && <p className='text-red-500 text-sm'>{pathError}</p>}
             </div>
 
             {/* Element field hidden from UI but still set via route selection */}

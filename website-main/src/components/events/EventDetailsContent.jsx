@@ -5,6 +5,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import DOMPurify from "dompurify";
 import SEO from "../../common/Seo";
+import { useSelector } from "react-redux";
 
 import eventThumb1 from "../../assets/img/home_1/event_thumb_1.jpg";
 import eventThumb5 from "../../assets/img/home_1/event_thumb_5.jpg";
@@ -15,6 +16,10 @@ export const EventDetailsContent = () => {
   const [event, setEvent] = useState(null);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const location = useLocation();
+
+  const { seoData } = useSelector((state) => state.seo);
+  const seoForPage = seoData.find((seo) => seo.path === location.pathname);
 
   const { state } = useLocation();
 
@@ -79,10 +84,10 @@ export const EventDetailsContent = () => {
   return (
     <section>
       <SEO
-        title={event?.metaTitle}
-        description={event?.metaDescription}
-        keywords={event?.metaKeywords}
-        canonical={event?.metaCanonical}
+        title={seoForPage?.title}
+        description={seoForPage?.description}
+        keywords={seoForPage?.keywords}
+        canonical={`https://aashayeinjudiciary.com${seoForPage?.path}`}
       />
       <div className='td_height_120 td_height_lg_80' />
       <div className='container'>

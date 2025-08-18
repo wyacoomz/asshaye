@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 import DOMPurify from "dompurify";
 import SEO from "../../common/Seo";
+import { useSelector } from "react-redux";
 
 export const TeamDetails = () => {
   const [member, setMember] = useState({});
@@ -11,6 +11,10 @@ export const TeamDetails = () => {
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
   const { state } = useLocation();
+  const location = useLocation();
+
+  const { seoData } = useSelector((state) => state.seo);
+  const seoForPage = seoData.find((seo) => seo.path === location.pathname);
 
   // console.log(state, "team details ");
 
@@ -56,10 +60,10 @@ export const TeamDetails = () => {
   return (
     <section>
       <SEO
-        title={member?.metaTitle}
-        description={member?.metaDescription}
-        keywords={member?.metaKeywords}
-        canonical={member?.metaCanonical}
+        title={seoForPage?.title}
+        description={seoForPage?.description}
+        keywords={seoForPage?.keywords}
+        canonical={`https://aashayeinjudiciary.com${seoForPage?.path}`}
       />
       <div className='td_height_120 td_height_lg_80' />
       <div className='container'>

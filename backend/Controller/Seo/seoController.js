@@ -7,6 +7,9 @@ exports.createSEO = async (req, res) => {
     await seo.save();
     res.status(201).json({ message: "SEO data saved", seo });
   } catch (error) {
+    if (error.name === "ValidationError") {
+      return res.status(400).json({ message: error.message });
+    }
     console.error(error);
     res.status(500).json({ message: "Error saving SEO data" });
   }
@@ -30,7 +33,7 @@ exports.updateSeo = async (req, res) => {
     const updatedSeo = await SEO.findByIdAndUpdate(
       seoId,
       { path, title, description, keywords },
-      { new: true }
+      { new: true, runValidators: true }
     );
 
     if (!updatedSeo) {
@@ -39,6 +42,9 @@ exports.updateSeo = async (req, res) => {
 
     res.status(200).json(updatedSeo);
   } catch (err) {
+    if (err.name === "ValidationError") {
+      return res.status(400).json({ message: err.message });
+    }
     res.status(500).json({ error: "Failed to update SEO data", details: err });
   }
 };

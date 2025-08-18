@@ -123,7 +123,7 @@ const componentMap = {
 
 // Constants
 const WHATSAPP_NUMBER = "918888888888";
-const CANONICAL_BASE_URL = "https://backend.aashayeinjudiciary.com";
+const CANONICAL_BASE_URL = "https://aashayeinjudiciary.com";
 const DEFAULT_SEO_TITLE = "Aashayein Judiciary";
 
 /**
@@ -185,7 +185,8 @@ function App() {
                 title={seoForPage.title || DEFAULT_SEO_TITLE}
                 description={seoForPage.description}
                 keywords={seoForPage.keywords}
-                canonical={`${CANONICAL_BASE_URL}${route.path}`}
+                canonical={`${CANONICAL_BASE_URL}${seoForPage.path ||
+                  route.path}`}
               />
               <Page />
             </>
